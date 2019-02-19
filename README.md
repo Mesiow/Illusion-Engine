@@ -1,0 +1,5 @@
+# Illusion-Engine
+A game framework for 2D games
+
+#External Libraries
+SFML-2.5.0 is used to implement all graphics, input and events
