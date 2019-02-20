@@ -55,25 +55,25 @@ namespace Illusion
 
 	void Game::initSupportedKeys()
 	{
-		//std::fstream file("../res/Input/supported_keys.ini");
+		std::fstream file("res/Input/supported_keys.ini");
 
-		//if (!file.is_open())
-		//	throw("File failed to open supported keys");
+		if (!file.is_open())
+			throw("File failed to open supported keys");
 
-		//supported_keyMap map;
+		supported_keyMap map;
 
-		//std::string key;
-		//int code;
+		std::string key;
+		int code;
 
-		//while (!file.eof()) //while the file has not reached the end
-		//{
-		//	file >> key >> code;
-		//	map[key] = code;
-		//}
-		//file.close();
+		while (!file.eof()) //while the file has not reached the end
+		{
+			file >> key >> code;
+			map[key] = code;
+		}
+		file.close();
 
-		//Keyboard::addSupportedKeys(map);
-		//Keyboard::printSupportedKeys();
+		Keyboard::addSupportedKeys(map);
+		Keyboard::printSupportedKeys();
 	}
 
 	void Game::run()

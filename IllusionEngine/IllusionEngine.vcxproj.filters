@@ -22,12 +22,6 @@
     <ClInclude Include="src\Utils\Keyboard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utils\Message.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Utils\Subject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\States\EditorState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -77,6 +71,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Gui\Gui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\Random.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Gui\Button.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Gui\DropDownList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Gui\StackMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -136,7 +142,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Gui\Gui.cpp" />
+    <ClCompile Include="src\Gui\Button.cpp" />
+    <ClCompile Include="src\Gui\DropDownList.cpp" />
+    <ClCompile Include="src\Gui\StackMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Input\editor_state_key_binds.ini">

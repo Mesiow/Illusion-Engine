@@ -20,7 +20,7 @@ namespace Illusion
 		void freeTextures()override;
 		
 	private:
-		const float waitTime_ = 3.0f;
+		const float waitTime_ = 1.0f;
 		sf::RectangleShape splashScreen_;
 
 		const float transitionTime_ = 1.0f;

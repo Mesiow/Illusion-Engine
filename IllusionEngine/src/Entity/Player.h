@@ -1,11 +1,10 @@
 #pragma once
 #include "Entity.h"
 #include "../Utils/Keyboard.h"
-#include "../Utils/Subject.h"
 
 namespace Illusion
 {
-	class Player : public Entity, public Subject
+	class Player : public Entity
 	{
 	public:
 		Player(sf::Texture &texSheet, sf::Vector2f pos);

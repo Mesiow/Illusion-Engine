@@ -26,7 +26,10 @@
     <ClInclude Include="src\Entity\Entity.h" />
     <ClInclude Include="src\Entity\Player.h" />
     <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\Gui\Button.h" />
+    <ClInclude Include="src\Gui\DropDownList.h" />
     <ClInclude Include="src\Gui\Gui.h" />
+    <ClInclude Include="src\Gui\StackMenu.h" />
     <ClInclude Include="src\LevelEditor\LevelEditor.h" />
     <ClInclude Include="src\LevelEditor\Tile.h" />
     <ClInclude Include="src\ResourceManagement\ResourceManager.h" />
@@ -40,8 +43,7 @@
     <ClInclude Include="src\Utils\Controller.h" />
     <ClInclude Include="src\Utils\FPS.h" />
     <ClInclude Include="src\Utils\Keyboard.h" />
-    <ClInclude Include="src\Utils\Message.h" />
-    <ClInclude Include="src\Utils\Subject.h" />
+    <ClInclude Include="src\Utils\Random.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\AnimationComponent.cpp" />
@@ -50,7 +52,9 @@
     <ClCompile Include="src\Entity\Entity.cpp" />
     <ClCompile Include="src\Entity\Player.cpp" />
     <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\Gui\Gui.cpp" />
+    <ClCompile Include="src\Gui\Button.cpp" />
+    <ClCompile Include="src\Gui\DropDownList.cpp" />
+    <ClCompile Include="src\Gui\StackMenu.cpp" />
     <ClCompile Include="src\LevelEditor\LevelEditor.cpp" />
     <ClCompile Include="src\LevelEditor\Tile.cpp" />
     <ClCompile Include="src\main.cpp" />

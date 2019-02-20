@@ -13,6 +13,7 @@ namespace Illusion
 	{
 		font_ = nullptr;
 		initKeyBinds();
+		initGui();
 	}
 
 	MenuState::~MenuState()
@@ -22,7 +23,7 @@ namespace Illusion
 
 	void MenuState::handleEvents(sf::Event &e)
 	{
-		
+		button->handleEvents(e);
 	}
 
 	void MenuState::update(float &dt)
@@ -33,6 +34,8 @@ namespace Illusion
 
 	void MenuState::draw(sf::RenderTarget &target)
 	{
+
+		button->draw(target);
 
 		//DELETE LATER
 		sf::Text text;
@@ -50,31 +53,43 @@ namespace Illusion
 
 	void MenuState::updateGui()
 	{
-		
+		button->update();
+	}
+
+	void MenuState::initGui()
+	{
+		button = new gui::Button(sf::Vector2f(400, 200), gui::Size::small, 
+			sf::Color(70, 70, 70, 100), 
+			sf::Color(90, 90, 90, 100), 
+			sf::Color(110, 110, 110, 150));
+
+		button->setFunction([&]() {										  
+		std::cout << "button clicked :D" << std::endl;				   
+		});
 	}
 
 	void MenuState::initKeyBinds()
 	{
-		//std::fstream file("../res/Input/game_key_binds.ini");
+		std::fstream file("res/Input/game_key_binds.ini");
 
-		//if (!file.is_open())
-		//	throw("File failed to open key binds");
+		if (!file.is_open())
+			throw("File failed to open key binds");
 
-		//keyMapBinds map;
+		keyMapBinds map;
 
-		//std::string action;
-		//std::string key;
+		std::string action;
+		std::string key;
 
-		//while (!file.eof())
-		//{
-		//	file >> action >> key;
-		//	map[action] = Keyboard::getSupportedKeys().at(key); //map action to supported key at location key in supported key map
-		//}
+		while (!file.eof())
+		{
+			file >> action >> key;
+			map[action] = Keyboard::getSupportedKeys().at(key); //map action to supported key at location key in supported key map
+		}
 
-		//file.close();
+		file.close();
 
-		//Keyboard::addKeyBinds(map);
-		//Keyboard::printBoundKeys();
+		Keyboard::addKeyBinds(map);
+		Keyboard::printBoundKeys();
 
 	}
 }

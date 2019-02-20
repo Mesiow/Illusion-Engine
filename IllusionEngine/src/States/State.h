@@ -1,4 +1,5 @@
 #pragma once
+#include "../Gui/Gui.h"
 #include "../ResourceManagement/ResourceManager.h"
 #include "../Utils/Keyboard.h"
 

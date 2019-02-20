@@ -20,9 +20,11 @@ namespace Illusion
 
 	private:
 		void updateGui();
+		void initGui();
 		void initKeyBinds();
 
 	private:
+		gui::Button *button;
 		sf::Font *font_;
 		sf::Text text_;
 
