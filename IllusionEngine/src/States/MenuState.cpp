@@ -11,7 +11,7 @@ namespace Illusion
 	MenuState::MenuState(Game &game)
 		:State(game)
 	{
-		font_ = nullptr;
+		font_ = &ResourceManager::getFont("rubik");
 		initKeyBinds();
 		initGui();
 	}
@@ -24,6 +24,7 @@ namespace Illusion
 	void MenuState::handleEvents(sf::Event &e)
 	{
 		button->handleEvents(e);
+		button2->handleEvents(e);
 	}
 
 	void MenuState::update(float &dt)
@@ -36,6 +37,7 @@ namespace Illusion
 	{
 
 		button->draw(target);
+		button2->draw(target);
 
 		//DELETE LATER
 		sf::Text text;
@@ -54,6 +56,7 @@ namespace Illusion
 	void MenuState::updateGui()
 	{
 		button->update();
+		button2->update();
 	}
 
 	void MenuState::initGui()
@@ -63,9 +66,17 @@ namespace Illusion
 			sf::Color(90, 90, 90, 100), 
 			sf::Color(110, 110, 110, 150));
 
+		button->setText(std::string("Start"), *font_, NULL,
+			sf::Color(85, 85, 85, 120),
+			sf::Color(95, 95, 95, 120),
+			sf::Color(105, 105, 105, 120));
 		button->setFunction([&]() {										  
 		std::cout << "button clicked :D" << std::endl;				   
 		});
+
+		button2 = new gui::Button(*button);
+		button2->setPosition(sf::Vector2f(400, 300));
+		button2->setString(std::string("Exit"));
 	}
 
 	void MenuState::initKeyBinds()

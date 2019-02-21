@@ -36,13 +36,13 @@ namespace Illusion
 
 		Button::~Button()
 		{
-		
+
 		}
 
 		void Button::handleEvents(sf::Event &e)
 		{
 			flag = Flag::idle;
-			if (contains())
+			if (containsMouse())
 				flag = Flag::hover;
 
 			switch (e.type)
@@ -51,7 +51,7 @@ namespace Illusion
 			{
 				if (e.mouseButton.button == sf::Mouse::Left)
 				{
-					if (contains())
+					if (containsMouse())
 					{
 						flag = Flag::pressed;
 						function_();
@@ -64,7 +64,6 @@ namespace Illusion
 			default:
 				break;
 			} 
-
 		}
 
 		void Button::update()
@@ -73,12 +72,15 @@ namespace Illusion
 			{
 			case Flag::idle:
 				button_.setFillColor(btnColors_[Colors::idleColor]);
+				text_.setFillColor(txtColors_[Colors::idleColor]);
 				break;
 			case Flag::hover:
 				button_.setFillColor(btnColors_[Colors::hoverColor]);
+				text_.setFillColor(txtColors_[Colors::hoverColor]);
 				break;
 			case Flag::pressed:
 				button_.setFillColor(btnColors_[Colors::pressColor]);
+				text_.setFillColor(txtColors_[Colors::pressColor]);
 				break;
 
 			default:
@@ -97,7 +99,7 @@ namespace Illusion
 			button_.setPosition(pos);
 		}
 
-		void Button::setText(const std::string &str, sf::Font &font,
+		void Button::setText(const std::string &str, sf::Font &font, uint charSize,
 			sf::Color idle, sf::Color hover, sf::Color pressed)
 		{
 			txtColors_[Colors::idleColor] = idle;
@@ -106,7 +108,31 @@ namespace Illusion
 
 			text_.setFont(font);
 			text_.setString(str);
+
+			text_.setOrigin(text_.getGlobalBounds().left + text_.getGlobalBounds().width / 2,
+				text_.getGlobalBounds().top - text_.getGlobalBounds().height / 2);
+
+			/*text_.setPosition((button_.getPosition().x + button_.getGlobalBounds().width / 2.0f) - text_.getGlobalBounds().width,
+				(button_.getPosition().y + button_.getGlobalBounds().height / 2.f) + text_.getGlobalBounds().height / 2.f);*/
+			text_.setPosition(button_.getPosition().x + text_.getGlobalBounds().width / 10,
+				button_.getPosition().y + text_.getGlobalBounds().height);
+
 			text_.setFillColor(txtColors_[Colors::idleColor]);
+		}
+
+		void Button::setString(const std::string &str)
+		{
+			text_.setString(str);
+			updateText();
+		}
+
+		void Button::updateText()
+		{
+			/*text_.setPosition((button_.getPosition().x + button_.getGlobalBounds().width / 2.0f) - text_.getGlobalBounds().width,
+				(button_.getPosition().y + button_.getGlobalBounds().height / 2.f) + text_.getGlobalBounds().height / 2.f);*/
+			text_.setPosition(button_.getPosition().x + text_.getGlobalBounds().width/10,
+				button_.getPosition().y + text_.getGlobalBounds().height);
+
 		}
 
 		void Button::setFunction(std::function<void(void)> func)
@@ -114,7 +140,7 @@ namespace Illusion
 			function_ = func;
 		}
 
-		bool Button::contains()
+		bool Button::containsMouse()const
 		{
 			auto mousePos = sf::Mouse::getPosition(Game::getWindow());
 			if (button_.getGlobalBounds().contains((float)mousePos.x, (float)mousePos.y))

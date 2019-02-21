@@ -25,6 +25,7 @@ namespace Illusion
 
 	private:
 		gui::Button *button;
+		gui::Button *button2;
 		sf::Font *font_;
 		sf::Text text_;
 

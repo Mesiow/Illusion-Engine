@@ -19,18 +19,24 @@ namespace Illusion
 				sf::Color idle, sf::Color hover, sf::Color pressed);
 			~Button();
 
+			Button(const Button &other)=default; //copy construct
+			Button(Button &&other)=default;//move construct
+			Button &operator=(const Button &other)=default; //assignment op
+
 			void handleEvents(sf::Event &e);
 			void update();
 			void draw(sf::RenderTarget &target);
 
 		public:
 			void setPosition(const sf::Vector2f pos);
-			void setText(const std::string &str, sf::Font &font,
+			void setText(const std::string &str, sf::Font &font, uint charSize,
 				sf::Color idle, sf::Color hover, sf::Color pressed);
+			void setString(const std::string &str);
 			void setFunction(std::function<void(void)> func); //pass in pointer to func that returns void and takes no param
 
 		private:
-			bool contains();
+			void updateText();
+			bool containsMouse()const;
 
 		private:
 			std::function<void(void)> function_;
@@ -38,7 +44,6 @@ namespace Illusion
 			Flag flag;
 			sf::Color btnColors_[3];
 			sf::Color txtColors_[3];
-			sf::Font *font_;
 			sf::Text text_;
 			sf::RectangleShape button_;
 
