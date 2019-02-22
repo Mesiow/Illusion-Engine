@@ -12,6 +12,7 @@ namespace Illusion
 			btnColors_[Colors::pressColor] = pressed;
 
 			this->position_ = position;
+			this->size_ = size;
 
 			switch (size)
 			{
@@ -41,9 +42,9 @@ namespace Illusion
 
 		void Button::handleEvents(sf::Event &e)
 		{
-			flag = Flag::idle;
+			flag_ = Flag::idle;
 			if (containsMouse())
-				flag = Flag::hover;
+				flag_ = Flag::hover;
 
 			switch (e.type)
 			{
@@ -53,7 +54,7 @@ namespace Illusion
 				{
 					if (containsMouse())
 					{
-						flag = Flag::pressed;
+						flag_ = Flag::pressed;
 						function_();
 					}
 
@@ -68,7 +69,7 @@ namespace Illusion
 
 		void Button::update()
 		{
-			switch (flag)
+			switch (flag_)
 			{
 			case Flag::idle:
 				button_.setFillColor(btnColors_[Colors::idleColor]);
@@ -140,6 +141,21 @@ namespace Illusion
 			function_ = func;
 		}
 
+		sf::Vector2f Button::getSize()const
+		{
+			switch (size_)
+			{
+			case Size::large:
+				return sf::Vector2f(256, 80);
+
+			case Size::medium:
+				return sf::Vector2f(156, 80);
+
+			case Size::small:
+				return sf::Vector2f(156, 40);
+			}
+		}
+
 		bool Button::containsMouse()const
 		{
 			auto mousePos = sf::Mouse::getPosition(Game::getWindow());
@@ -148,5 +164,20 @@ namespace Illusion
 
 			return false;
 		}
-	}
+
+		/*sf::Vector2f getButtonSize(Size size)
+		{
+			switch (size)
+			{
+			case Size::large:
+				return sf::Vector2f(256, 80);
+
+			case Size::medium:
+				return sf::Vector2f(156, 80);
+
+			case Size::small:
+				return sf::Vector2f(156, 40);
+			}
+		}*/
+}
 }

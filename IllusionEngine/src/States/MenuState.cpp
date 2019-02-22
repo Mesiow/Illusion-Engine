@@ -18,13 +18,12 @@ namespace Illusion
 
 	MenuState::~MenuState()
 	{
-		
+		delete menu;
 	}
 
 	void MenuState::handleEvents(sf::Event &e)
 	{
-		button->handleEvents(e);
-		button2->handleEvents(e);
+		menu->handleEvents(e);
 	}
 
 	void MenuState::update(float &dt)
@@ -35,9 +34,8 @@ namespace Illusion
 
 	void MenuState::draw(sf::RenderTarget &target)
 	{
-
-		button->draw(target);
-		button2->draw(target);
+		
+		menu->draw(target);
 
 		//DELETE LATER
 		sf::Text text;
@@ -55,28 +53,20 @@ namespace Illusion
 
 	void MenuState::updateGui()
 	{
-		button->update();
-		button2->update();
+		menu->update();
 	}
 
 	void MenuState::initGui()
 	{
-		button = new gui::Button(sf::Vector2f(400, 200), gui::Size::small, 
-			sf::Color(70, 70, 70, 100), 
-			sf::Color(90, 90, 90, 100), 
-			sf::Color(110, 110, 110, 150));
+		std::string names[3] = { "Start", "Settings", "Exit" };
+		menu = new gui::StackMenu(sf::Vector2f(400, 200), names, gui::Size::small, 3);
 
-		button->setText(std::string("Start"), *font_, NULL,
-			sf::Color(85, 85, 85, 120),
-			sf::Color(95, 95, 95, 120),
-			sf::Color(105, 105, 105, 120));
-		button->setFunction([&]() {										  
-		std::cout << "button clicked :D" << std::endl;				   
+		menu->setFunctionality("Start", [&]() {
+			std::cout << "Start pressed" << std::endl;
 		});
-
-		button2 = new gui::Button(*button);
-		button2->setPosition(sf::Vector2f(400, 300));
-		button2->setString(std::string("Exit"));
+		menu->setFunctionality("Exit", [&]() {
+			_game->exit();
+		});
 	}
 
 	void MenuState::initKeyBinds()

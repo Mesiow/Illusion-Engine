@@ -4,6 +4,14 @@ namespace Illusion
 {
 	namespace gui
 	{
+		DropDownList::DropDownList()
+		{
 
+		}
+
+		DropDownList::~DropDownList()
+		{
+
+		}
 	}
 }

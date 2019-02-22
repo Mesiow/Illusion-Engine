@@ -1,5 +1,6 @@
 #pragma once
 #include "State.h"
+#include "../Gui/StackMenu.h"
 
 namespace Illusion
 {
@@ -24,8 +25,7 @@ namespace Illusion
 		void initKeyBinds();
 
 	private:
-		gui::Button *button;
-		gui::Button *button2;
+		gui::StackMenu *menu;
 		sf::Font *font_;
 		sf::Text text_;
 

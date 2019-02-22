@@ -1,6 +1,7 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+#include "Gui.h"
 #include <functional>
+
 namespace Illusion
 {
 	namespace gui
@@ -11,7 +12,22 @@ namespace Illusion
 		
 		using uint = unsigned int;
 
-		class Button
+		static sf::Vector2f getButtonSize(Size size)
+		{
+			switch (size)
+			{
+			case Size::large:
+				return sf::Vector2f(256, 80);
+
+			case Size::medium:
+				return sf::Vector2f(156, 80);
+
+			case Size::small:
+				return sf::Vector2f(156, 40);
+			}
+		}
+
+		class Button : public Gui
 		{
 
 		public:
@@ -23,7 +39,7 @@ namespace Illusion
 			Button(Button &&other)=default;//move construct
 			Button &operator=(const Button &other)=default; //assignment op
 
-			void handleEvents(sf::Event &e);
+			void handleEvents(sf::Event &e)override;
 			void update();
 			void draw(sf::RenderTarget &target);
 
@@ -34,6 +50,9 @@ namespace Illusion
 			void setString(const std::string &str);
 			void setFunction(std::function<void(void)> func); //pass in pointer to func that returns void and takes no param
 
+		public:
+			sf::Vector2f getSize()const;
+
 		private:
 			void updateText();
 			bool containsMouse()const;
@@ -41,15 +60,14 @@ namespace Illusion
 		private:
 			std::function<void(void)> function_;
 
-			Flag flag;
+			Flag flag_;
+			Size size_;
 			sf::Color btnColors_[3];
 			sf::Color txtColors_[3];
 			sf::Text text_;
 			sf::RectangleShape button_;
 
-		private:
 			sf::Vector2f position_;
-			sf::Vector2f size_;
 		};
 	}
 }
