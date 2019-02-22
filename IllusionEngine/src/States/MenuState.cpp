@@ -58,8 +58,8 @@ namespace Illusion
 
 	void MenuState::initGui()
 	{
-		std::string names[3] = { "Start", "Settings", "Exit" };
-		menu = new gui::StackMenu(sf::Vector2f(400, 200), names, gui::Size::small, 3);
+		std::string names[4] = { "Start","Editor", "Settings", "Exit" };
+		menu = new gui::StackMenu(sf::Vector2f(400, 200), names, gui::Size::small, 4);
 
 		menu->setFunctionality("Start", [&]() {
 			std::cout << "Start pressed" << std::endl;

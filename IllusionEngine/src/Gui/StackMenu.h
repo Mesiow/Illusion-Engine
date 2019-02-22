@@ -23,8 +23,6 @@ namespace Illusion
 
 		public:
 			void setFunctionality(const std::string &str, std::function<void(void)> func);
-			void setText();
-			void initStackMenu();
 
 		private:
 			std::map<std::string, gui::Button*> buttonMap_;

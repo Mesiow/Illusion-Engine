@@ -59,15 +59,5 @@ namespace Illusion
 		{
 			buttonMap_[id]->setFunction(func);
 		}
-
-		void StackMenu::setText()
-		{
-
-		}
-
-		void StackMenu::initStackMenu()
-		{
-
-		}
 	}
 }

@@ -17,21 +17,21 @@ namespace Illusion
 			switch (size)
 			{
 			case Size::large:
-				button_.setSize({ 256, 80 });
+				button_.setSize(getButtonSize(size));
 				break;
 
 			case Size::medium:
-				button_.setSize({ 156, 80 });
+				button_.setSize(getButtonSize(size));
 
 			case Size::small:
-				button_.setSize({ 156, 40 });
+				button_.setSize(getButtonSize(size));
 				break;
 			}
 
-			button_.setOrigin(button_.getGlobalBounds().left + button_.getGlobalBounds().width / 2,
-				button_.getGlobalBounds().top - button_.getGlobalBounds().height / 2);
+			//set position of button in middle of window without setting the buttons origin
+			button_.setPosition(sf::Vector2f(position.x - button_.getGlobalBounds().width/2, 
+				position.y + button_.getGlobalBounds().height/2));
 
-			button_.setPosition(position);
 			button_.setFillColor(btnColors_[Colors::idleColor]);
 		}
 
@@ -110,13 +110,13 @@ namespace Illusion
 			text_.setFont(font);
 			text_.setString(str);
 
-			text_.setOrigin(text_.getGlobalBounds().left + text_.getGlobalBounds().width / 2,
-				text_.getGlobalBounds().top - text_.getGlobalBounds().height / 2);
+			/*text_.setOrigin(text_.getGlobalBounds().left + text_.getGlobalBounds().width / 2,
+				text_.getGlobalBounds().top - text_.getGlobalBounds().height / 2);*/
 
-			/*text_.setPosition((button_.getPosition().x + button_.getGlobalBounds().width / 2.0f) - text_.getGlobalBounds().width,
-				(button_.getPosition().y + button_.getGlobalBounds().height / 2.f) + text_.getGlobalBounds().height / 2.f);*/
-			text_.setPosition(button_.getPosition().x + text_.getGlobalBounds().width / 10,
-				button_.getPosition().y + text_.getGlobalBounds().height);
+			text_.setPosition(
+				button_.getPosition().x + (button_.getGlobalBounds().width / 2.f) - text_.getGlobalBounds().width / 2.f,
+				button_.getPosition().y + (button_.getGlobalBounds().height / 3.f) - text_.getGlobalBounds().height / 2.f
+			);
 
 			text_.setFillColor(txtColors_[Colors::idleColor]);
 		}
