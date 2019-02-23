@@ -17,8 +17,25 @@ namespace Illusion
 
 	void Settings::initGui()
 	{
-		std::string list[4] = { "1920 x 1080", "1680 x 1050", "1600 x 1024", "1280 x 1024" };
-		list_ = new gui::DropDownList(sf::Vector2f(400, 200), list, gui::Size::small, 4, 0);
+		std::string list[5] = { "1920 x 1080", "1680 x 1050", "1600 x 1024", "1280 x 1024", "800 x 600"};
+		list_ = new gui::DropDownList(sf::Vector2f(400, 200), list, gui::Size::small, 5, 0);
+
+
+	
+
+		back_ = new gui::Button(sf::Vector2f(90, 540), gui::Size::small);
+		back_->setText("Back", ResourceManager::getFont("rubik"), 20,
+			sf::Color(85, 85, 85, 200), sf::Color(120, 120, 120, 220), sf::Color(150, 150, 150, 250));
+		back_->setFunction([&]() {
+			_game->changeState<MenuState>(*_game);
+		});
+
+		apply_ = new gui::Button(sf::Vector2f(700, 540), gui::Size::small);
+		apply_->setText("Apply", ResourceManager::getFont("rubik"), 20,
+			sf::Color(85, 85, 85, 200), sf::Color(120, 120, 120, 220), sf::Color(150, 150, 150, 250));
+		apply_->setFunction([&]() {
+			std::cout << "Settings applied" << std::endl;
+		});
 	}
 
 	void Settings::update(float &dt)
@@ -29,17 +46,26 @@ namespace Illusion
 
 	void Settings::handleEvents(sf::Event &e)
 	{
+		back_->handleEvents(e);
+		apply_->handleEvents(e);
+
 		list_->handleEvents(e);
 	}
 
 	void Settings::draw(sf::RenderTarget &target)
 	{
+		back_->draw(target);
+		apply_->draw(target);
+
 		list_->draw(target);
 	}
 
 
 	void Settings::updateGui(float &dt)
 	{
+		back_->update();
+		apply_->update();
+
 		list_->update();
 	}
 }

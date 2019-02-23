@@ -25,6 +25,8 @@ namespace Illusion
 
 	private:
 		gui::DropDownList *list_;
+		gui::Button *back_;
+		gui::Button *apply_;
 
 		std::size_t modeIndex = 1;
 		const sf::VideoMode desktopRes = sf::VideoMode::getDesktopMode();

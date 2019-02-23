@@ -1,5 +1,6 @@
 #include "DropDownList.h"
 #include <iostream>
+
 namespace Illusion
 {
 	namespace gui
@@ -14,18 +15,24 @@ namespace Illusion
 
 		DropDownList::~DropDownList()
 		{
+			delete activeButton_;
+
 			for (auto &b : buttonsList_)
 				delete b.second;
 		}
 
 		void DropDownList::handleEvents(sf::Event &e)
 		{
+			activeButton_->handleEvents(e);
+
 			for (auto &b : buttonsList_)
 				b.second->handleEvents(e);
 		}
 
 		void DropDownList::update()
 		{
+			activeButton_->update();
+
 			for (auto &b : buttonsList_)
 				b.second->update();
 		}
@@ -59,10 +66,17 @@ namespace Illusion
 					15, sf::Color(70, 70, 70, 200), sf::Color(95, 95, 95, 200), sf::Color(130, 130, 130, 255));
 			}
 
-			activeButton_ = buttonsList_[list[activeIndex]]; //set the active button to show before dropping down
+			//create a new button based on the active index one
+			activeButton_ = new gui::Button(*buttonsList_[list[activeIndex]]); 
+			activeButton_->setPosition(sf::Vector2f(activeButton_->getPosition().x, activeButton_->getPosition().y - size.y));
 			activeButton_->setFunction([&]() {
-				show == true ? show = false : show = true;
+				show == true ? show = false : show = true; //show all buttons when clicked
 			});
+		}
+
+		void DropDownList::setButtonFunction(const std::string &id, std::function<void(void)> func)
+		{
+			buttonsList_[id]->setFunction(func);
 		}
 	}
 }

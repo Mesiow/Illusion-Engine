@@ -32,7 +32,8 @@ namespace Illusion
 
 		public:
 			Button(sf::Vector2f position, Size size, 
-				sf::Color idle, sf::Color hover, sf::Color pressed);
+				sf::Color idle=sf::Color::Transparent, 
+				sf::Color hover=sf::Color::Transparent, sf::Color pressed=sf::Color::Transparent);
 			~Button();
 
 			Button(const Button &other)=default; //copy construct
@@ -49,6 +50,9 @@ namespace Illusion
 				sf::Color idle, sf::Color hover, sf::Color pressed);
 			void setString(const std::string &str);
 			void setFunction(std::function<void(void)> func); //pass in pointer to func that returns void and takes no parameters
+
+		public:
+			sf::Vector2f getPosition()const;
 
 		private:
 			void updateText();

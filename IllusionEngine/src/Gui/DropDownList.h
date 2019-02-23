@@ -17,6 +17,9 @@ namespace Illusion
 			void update();
 			void draw(sf::RenderTarget &target)override;
 
+		public:
+			void setButtonFunction(const std::string &id, std::function<void(void)> func);
+
 		private:
 			void initialize(const sf::Vector2f &position, std::string list[],
 				const Size buttonsSize, const uint listSize, const uint activeIndex);

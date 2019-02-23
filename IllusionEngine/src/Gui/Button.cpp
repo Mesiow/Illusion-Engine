@@ -99,6 +99,7 @@ namespace Illusion
 		void Button::setPosition(const sf::Vector2f pos)
 		{
 			button_.setPosition(pos);
+			updateText();
 		}
 
 		void Button::setText(const std::string &str, sf::Font &font, uint charSize,
@@ -113,8 +114,8 @@ namespace Illusion
 			text_.setString(str);
 
 			/*text_.setOrigin(text_.getGlobalBounds().left + text_.getGlobalBounds().width / 2,
-				text_.getGlobalBounds().top - text_.getGlobalBounds().height / 2);*/
-
+				text_.getGlobalBounds().top - text_.getGlobalBounds().height / 2);
+*/
 			text_.setPosition(
 				button_.getPosition().x + (button_.getGlobalBounds().width / 2.f) - text_.getGlobalBounds().width / 2.f,
 				button_.getPosition().y + (button_.getGlobalBounds().height / 3.f) - text_.getGlobalBounds().height / 2.f
@@ -131,13 +132,23 @@ namespace Illusion
 
 		void Button::updateText()
 		{
-			text_.setPosition(button_.getPosition().x + text_.getGlobalBounds().width/10,
-	  		button_.getPosition().y + text_.getGlobalBounds().height);
+			text_.setPosition(
+				button_.getPosition().x + (button_.getGlobalBounds().width / 2.f) - text_.getGlobalBounds().width / 2.f,
+				button_.getPosition().y + (button_.getGlobalBounds().height / 3.f) - text_.getGlobalBounds().height / 2.f
+			);
+			/*text_.setPosition(button_.getPosition().x + text_.getGlobalBounds().width/10,
+	  		button_.getPosition().y + text_.getGlobalBounds().height);*/
 		}
 
 		void Button::setFunction(std::function<void(void)> func)
 		{
 			function_ = func;
+		}
+
+		sf::Vector2f Button::getPosition() const
+		{
+			return sf::Vector2f(position_.x - button_.getGlobalBounds().width / 2,
+				position_.y + button_.getGlobalBounds().height / 2); //get position of origin
 		}
 
 		bool Button::containsMouse()const

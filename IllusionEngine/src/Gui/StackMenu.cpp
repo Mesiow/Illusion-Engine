@@ -8,7 +8,6 @@ namespace Illusion
 			Size sizeofButtons, uint stackSize)
 			:stackSize_(stackSize)
 		{
-			font_ = &ResourceManager::getFont("rubik");
 			initialize(position, buttonNames, sizeofButtons, stackSize);
 		}
 
@@ -56,7 +55,7 @@ namespace Illusion
 						sf::Color(110, 110, 110, 150)*/sf::Color::Transparent, sf::Color::Transparent, sf::Color::Transparent))
 				);
 
-				buttonMap_[buttonNames[i]]->setText(buttonNames[i], *font_, 15,
+				buttonMap_[buttonNames[i]]->setText(buttonNames[i], ResourceManager::getFont("rubik"), 15,
 					sf::Color(130, 130, 130, 200),
 					sf::Color(195, 195, 195, 210),
 					sf::Color(210, 210, 210, 255));

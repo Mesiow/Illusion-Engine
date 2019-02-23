@@ -30,8 +30,7 @@ namespace Illusion
 
 		private:
 			std::map<std::string, gui::Button*> buttonMap_;
-			sf::Font *font_;
-
+		
 			sf::Vector2f position_;
 			uint stackSize_;
 		};
