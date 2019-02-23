@@ -7,6 +7,7 @@ namespace Illusion
 		Button::Button(sf::Vector2f position, Size size, 
 			sf::Color idle, sf::Color hover, sf::Color pressed)
 		{
+			flag_ = Flag::idle;
 			btnColors_[Colors::idleColor] = idle;
 			btnColors_[Colors::hoverColor] = hover;
 			btnColors_[Colors::pressColor] = pressed;
@@ -107,6 +108,7 @@ namespace Illusion
 			txtColors_[Colors::hoverColor] = hover;
 			txtColors_[Colors::pressColor] = pressed;
 
+			text_.setCharacterSize(charSize);
 			text_.setFont(font);
 			text_.setString(str);
 
@@ -129,31 +131,13 @@ namespace Illusion
 
 		void Button::updateText()
 		{
-			/*text_.setPosition((button_.getPosition().x + button_.getGlobalBounds().width / 2.0f) - text_.getGlobalBounds().width,
-				(button_.getPosition().y + button_.getGlobalBounds().height / 2.f) + text_.getGlobalBounds().height / 2.f);*/
 			text_.setPosition(button_.getPosition().x + text_.getGlobalBounds().width/10,
-				button_.getPosition().y + text_.getGlobalBounds().height);
-
+	  		button_.getPosition().y + text_.getGlobalBounds().height);
 		}
 
 		void Button::setFunction(std::function<void(void)> func)
 		{
 			function_ = func;
-		}
-
-		sf::Vector2f Button::getSize()const
-		{
-			switch (size_)
-			{
-			case Size::large:
-				return sf::Vector2f(256, 80);
-
-			case Size::medium:
-				return sf::Vector2f(156, 80);
-
-			case Size::small:
-				return sf::Vector2f(156, 40);
-			}
 		}
 
 		bool Button::containsMouse()const
@@ -164,20 +148,5 @@ namespace Illusion
 
 			return false;
 		}
-
-		/*sf::Vector2f getButtonSize(Size size)
-		{
-			switch (size)
-			{
-			case Size::large:
-				return sf::Vector2f(256, 80);
-
-			case Size::medium:
-				return sf::Vector2f(156, 80);
-
-			case Size::small:
-				return sf::Vector2f(156, 40);
-			}
-		}*/
-}
+    }
 }

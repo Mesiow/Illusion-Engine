@@ -6,6 +6,7 @@
 #include <fstream>
 #include <string>
 #include <iostream>
+#include <sstream>
 
 //Game class manages and runs all states in the game
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "State.h"
+#include "../Gui/DropDownList.h"
 
 namespace Illusion
 {
@@ -13,28 +14,18 @@ namespace Illusion
 
 
 	public:
-		void initOptions();
+		void initGui();
 
 		void update(float &dt)override;
 		void handleEvents(sf::Event &e)override;
 		void draw(sf::RenderTarget &target)override;
 
-
-
-		//debug function
-		void print()const noexcept
-		{
-			std::cout << "desktop res: " << desktopRes.width << ", " << desktopRes.height << std::endl;
-			for (auto it = modes.begin(); it != modes.end(); it++)
-			{
-				std::cout << it->width << ", " << it->height << std::endl;
-			}
-		}
+	private:
+		void updateGui(float &dt);
 
 	private:
-		void updateGui();
+		gui::DropDownList *list_;
 
-	private:
 		std::size_t modeIndex = 1;
 		const sf::VideoMode desktopRes = sf::VideoMode::getDesktopMode();
 		const std::vector<sf::VideoMode> modes = sf::VideoMode::getFullscreenModes();

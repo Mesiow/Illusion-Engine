@@ -26,8 +26,12 @@ namespace Illusion
 		virtual void freeFonts(){}
 		virtual void freeSoundBuffers(){}
 
+	protected:
+		void updateMousePositions();
+		void showMouseCoordinates();
 
-		void updateMousePositions()noexcept;
+	protected:
+		bool enable = false;
 
 	protected:
 		Game *_game;

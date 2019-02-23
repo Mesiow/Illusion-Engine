@@ -48,10 +48,7 @@ namespace Illusion
 			void setText(const std::string &str, sf::Font &font, uint charSize,
 				sf::Color idle, sf::Color hover, sf::Color pressed);
 			void setString(const std::string &str);
-			void setFunction(std::function<void(void)> func); //pass in pointer to func that returns void and takes no param
-
-		public:
-			sf::Vector2f getSize()const;
+			void setFunction(std::function<void(void)> func); //pass in pointer to func that returns void and takes no parameters
 
 		private:
 			void updateText();

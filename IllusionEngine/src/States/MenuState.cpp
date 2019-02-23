@@ -23,6 +23,18 @@ namespace Illusion
 
 	void MenuState::handleEvents(sf::Event &e)
 	{
+		switch (e.type)
+		{
+		case sf::Event::KeyPressed:
+			if (e.key.code == sf::Keyboard::LControl)
+			{
+				if (enable)
+					enable = false;
+				else
+					enable = true;
+			}
+			break;
+		}
 		menu->handleEvents(e);
 	}
 
@@ -34,21 +46,10 @@ namespace Illusion
 
 	void MenuState::draw(sf::RenderTarget &target)
 	{
-		
+		if (enable)
+			showMouseCoordinates();
+
 		menu->draw(target);
-
-		//DELETE LATER
-		sf::Text text;
-		text.setFillColor(sf::Color::White);
-		text.setFont(*font_);
-		text.setCharacterSize(15);
-		text.setPosition(_mousePosView.x, _mousePosView.y - 50);
-
-		std::stringstream ss;
-		ss << _mousePosView.x << ", " << _mousePosView.y;
-		text.setString(ss.str());
-
-		target.draw(text);
 	}
 
 	void MenuState::updateGui()
@@ -61,10 +62,15 @@ namespace Illusion
 		std::string names[4] = { "Start","Editor", "Settings", "Exit" };
 		menu = new gui::StackMenu(sf::Vector2f(400, 200), names, gui::Size::small, 4);
 
-		menu->setFunctionality("Start", [&]() {
+		menu->setButtonFunction("Start", [&]() {
 			std::cout << "Start pressed" << std::endl;
 		});
-		menu->setFunctionality("Exit", [&]() {
+
+		menu->setButtonFunction("Settings", [&]() {
+			_game->changeState<Settings>(*_game);
+		});
+
+		menu->setButtonFunction("Exit", [&]() {
 			_game->exit();
 		});
 	}

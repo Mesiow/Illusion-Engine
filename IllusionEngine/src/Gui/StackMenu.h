@@ -22,7 +22,11 @@ namespace Illusion
 			void draw(sf::RenderTarget &target);
 
 		public:
-			void setFunctionality(const std::string &str, std::function<void(void)> func);
+			void setButtonFunction(const std::string &str, std::function<void(void)> func);
+
+		private:
+			void initialize(sf::Vector2f position, std::string buttonNames[],
+				Size sizeofButtons, uint stackSize);
 
 		private:
 			std::map<std::string, gui::Button*> buttonMap_;
