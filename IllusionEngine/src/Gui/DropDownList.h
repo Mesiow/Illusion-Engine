@@ -10,7 +10,7 @@ namespace Illusion
 		class DropDownList : public Gui
 		{
 		public:
-			DropDownList(sf::Vector2f position, std::vector<std::string> &list,
+			DropDownList(const sf::Vector2f position, const std::vector<std::string> list,
 				Size buttonsSize, uint activeIndex);
 			~DropDownList();
 
@@ -22,12 +22,15 @@ namespace Illusion
 			void setButtonFunction(const std::string &id, std::function<void(void)> func);
 
 		private:
-			void initialize(const sf::Vector2f &position, const std::vector<std::string> &list,
+			void initialize(const sf::Vector2f &position,
 				const Size buttonsSize, const uint activeIndex);
+
+			void printList();
 
 		private:
 			gui::Button *activeButton_;
 			std::map<std::string, gui::Button*> buttonsList_;
+			std::vector<std::string> itemList;
 
 			sf::Vector2f position_;
 			bool show;

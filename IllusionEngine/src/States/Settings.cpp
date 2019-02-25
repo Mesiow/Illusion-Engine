@@ -12,16 +12,27 @@ namespace Illusion
 
 	Settings::~Settings()
 	{
-		
+		delete list_;
+		delete back_;
+		delete apply_;
+		delete slider_;
 	}
 
 	void Settings::initGui()
 	{
-		list.push_back(std::string("1920 x 1080"));
-		list.push_back(std::string("1024 x 720"));
-		list.push_back(std::string("800 x 600"));
 
-		list_ = new gui::DropDownList(sf::Vector2f(400, 200), list, gui::Size::small, 0);
+		std::vector<std::string> videoModeStrings;
+
+		//convert sf video mode values to string values to be passed into the list
+		for (int i = 0; i < videoModes_.size(); i++)
+		{
+			videoModeStrings.push_back(
+				std::string(std::to_string(videoModes_[i].width) + " x " + std::to_string(videoModes_[i].height))
+			);
+		}
+
+
+		list_ = new gui::DropDownList(sf::Vector2f(400, 200), videoModeStrings, gui::Size::small, 0);
 
 		back_ = new gui::Button(sf::Vector2f(90, 540), gui::Size::small);
 		back_->setText("Back", ResourceManager::getFont("rubik"), 20,
@@ -36,6 +47,9 @@ namespace Illusion
 		apply_->setFunction([&]() {
 			std::cout << "Settings applied" << std::endl;
 		});
+
+
+		slider_ = new gui::Slider(sf::Vector2f(300, 500));
 	}
 
 	void Settings::update(float &dt)
@@ -58,6 +72,8 @@ namespace Illusion
 		apply_->draw(target);
 
 		list_->draw(target);
+
+		slider_->draw(target);
 	}
 
 

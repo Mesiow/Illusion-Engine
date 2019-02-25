@@ -1,6 +1,7 @@
 #pragma once
 #include "State.h"
 #include "../Gui/DropDownList.h"
+#include "../Gui/Slider.h"
 
 namespace Illusion
 {
@@ -24,17 +25,15 @@ namespace Illusion
 		void updateGui(float &dt);
 
 	private:
-		std::vector<std::string> list;
+		gui::Slider *slider_;
 		gui::DropDownList *list_;
 		gui::Button *back_;
 		gui::Button *apply_;
 
-		std::size_t modeIndex = 1;
-		const sf::VideoMode desktopRes = sf::VideoMode::getDesktopMode();
-		const std::vector<sf::VideoMode> modes = sf::VideoMode::getFullscreenModes();
+		const std::vector<sf::VideoMode> videoModes_ = sf::VideoMode::getFullscreenModes();
 
-		sf::Font *font;
-		sf::Text text;
+		sf::Font *font_;
+		sf::Text text_;
 	
 	};
 }

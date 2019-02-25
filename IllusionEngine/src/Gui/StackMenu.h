@@ -19,7 +19,7 @@ namespace Illusion
 			void handleEvents(sf::Event &e)override;
 			void update();
 			void update(float &dt){}
-			void draw(sf::RenderTarget &target);
+			void draw(sf::RenderTarget &target)override;
 
 		public:
 			void setButtonFunction(const std::string &str, std::function<void(void)> func);

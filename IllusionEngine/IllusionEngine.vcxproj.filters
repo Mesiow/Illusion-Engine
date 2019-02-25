@@ -149,6 +149,7 @@
     <ClCompile Include="src\Gui\DropDownList.cpp" />
     <ClCompile Include="src\Gui\StackMenu.cpp" />
     <ClCompile Include="src\Gui\Gui.cpp" />
+    <ClCompile Include="src\Gui\Slider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Input\editor_state_key_binds.ini">
