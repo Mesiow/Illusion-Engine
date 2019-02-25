@@ -67,7 +67,7 @@ namespace Illusion
 		});
 
 		menu->setButtonFunction("Settings", [&]() {
-			_game->changeState<Settings>(*_game);
+			_game->pushState<Settings>(*_game);
 		});
 
 		menu->setButtonFunction("Exit", [&]() {

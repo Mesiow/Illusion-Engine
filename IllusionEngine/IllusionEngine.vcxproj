@@ -29,6 +29,7 @@
     <ClInclude Include="src\Gui\Button.h" />
     <ClInclude Include="src\Gui\DropDownList.h" />
     <ClInclude Include="src\Gui\Gui.h" />
+    <ClInclude Include="src\Gui\Slider.h" />
     <ClInclude Include="src\Gui\StackMenu.h" />
     <ClInclude Include="src\LevelEditor\LevelEditor.h" />
     <ClInclude Include="src\LevelEditor\Tile.h" />
@@ -54,6 +55,7 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Gui\Button.cpp" />
     <ClCompile Include="src\Gui\DropDownList.cpp" />
+    <ClCompile Include="src\Gui\Gui.cpp" />
     <ClCompile Include="src\Gui\StackMenu.cpp" />
     <ClCompile Include="src\LevelEditor\LevelEditor.cpp" />
     <ClCompile Include="src\LevelEditor\Tile.cpp" />

@@ -24,6 +24,7 @@ namespace Illusion
 		void updateGui(float &dt);
 
 	private:
+		std::vector<std::string> list;
 		gui::DropDownList *list_;
 		gui::Button *back_;
 		gui::Button *apply_;

@@ -1,6 +1,7 @@
 #pragma once
 #include "Gui.h"
 #include "Button.h"
+#include <vector>
 
 namespace Illusion
 {
@@ -9,8 +10,8 @@ namespace Illusion
 		class DropDownList : public Gui
 		{
 		public:
-			DropDownList(sf::Vector2f position, std::string list[],
-				Size buttonsSize, uint listSize, uint activeIndex);
+			DropDownList(sf::Vector2f position, std::vector<std::string> &list,
+				Size buttonsSize, uint activeIndex);
 			~DropDownList();
 
 			void handleEvents(sf::Event &e)override;
@@ -21,8 +22,8 @@ namespace Illusion
 			void setButtonFunction(const std::string &id, std::function<void(void)> func);
 
 		private:
-			void initialize(const sf::Vector2f &position, std::string list[],
-				const Size buttonsSize, const uint listSize, const uint activeIndex);
+			void initialize(const sf::Vector2f &position, const std::vector<std::string> &list,
+				const Size buttonsSize, const uint activeIndex);
 
 		private:
 			gui::Button *activeButton_;

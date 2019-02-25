@@ -124,7 +124,7 @@ namespace Illusion
 			text_.setFillColor(txtColors_[Colors::idleColor]);
 		}
 
-		void Button::setString(const std::string &str)
+		void Button::setStr(const std::string str)
 		{
 			text_.setString(str);
 			updateText();

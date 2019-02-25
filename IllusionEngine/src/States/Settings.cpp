@@ -17,11 +17,11 @@ namespace Illusion
 
 	void Settings::initGui()
 	{
-		std::string list[5] = { "1920 x 1080", "1680 x 1050", "1600 x 1024", "1280 x 1024", "800 x 600"};
-		list_ = new gui::DropDownList(sf::Vector2f(400, 200), list, gui::Size::small, 5, 0);
+		list.push_back(std::string("1920 x 1080"));
+		list.push_back(std::string("1024 x 720"));
+		list.push_back(std::string("800 x 600"));
 
-
-	
+		list_ = new gui::DropDownList(sf::Vector2f(400, 200), list, gui::Size::small, 0);
 
 		back_ = new gui::Button(sf::Vector2f(90, 540), gui::Size::small);
 		back_->setText("Back", ResourceManager::getFont("rubik"), 20,

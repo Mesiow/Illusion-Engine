@@ -1,6 +1,7 @@
 #pragma once
 #include "Gui.h"
 #include <functional>
+#include <string>
 
 namespace Illusion
 {
@@ -24,6 +25,9 @@ namespace Illusion
 
 			case Size::small:
 				return sf::Vector2f(156, 40);
+
+			default:
+				return sf::Vector2f(10, 10);
 			}
 		}
 
@@ -48,11 +52,12 @@ namespace Illusion
 			void setPosition(const sf::Vector2f pos);
 			void setText(const std::string &str, sf::Font &font, uint charSize,
 				sf::Color idle, sf::Color hover, sf::Color pressed);
-			void setString(const std::string &str);
+			void setStr(const std::string str);
 			void setFunction(std::function<void(void)> func); //pass in pointer to func that returns void and takes no parameters
 
 		public:
 			sf::Vector2f getPosition()const;
+			std::string getString()const { return text_.getString(); }
 
 		private:
 			void updateText();

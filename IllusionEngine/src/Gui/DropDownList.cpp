@@ -1,24 +1,25 @@
 #include "DropDownList.h"
 #include <iostream>
+#include <string>
 
 namespace Illusion
 {
 	namespace gui
 	{
-		DropDownList::DropDownList(sf::Vector2f position, std::string list[],
-			Size buttonsSize, uint listSize, uint activeIndex)
+		DropDownList::DropDownList(sf::Vector2f position, std::vector<std::string> &list,
+			Size buttonsSize, uint activeIndex)
 			:show(false)
 		{
 			activeButton_ = nullptr;
-			initialize(position, list, buttonsSize, listSize, activeIndex);
+			initialize(position, list, buttonsSize, activeIndex);
 		}
 
 		DropDownList::~DropDownList()
 		{
-			delete activeButton_;
-
 			for (auto &b : buttonsList_)
 				delete b.second;
+
+			delete activeButton_;
 		}
 
 		void DropDownList::handleEvents(sf::Event &e)
@@ -48,14 +49,14 @@ namespace Illusion
 			}
 		}
 
-		void DropDownList::initialize(const sf::Vector2f &position, std::string list[],
-			const Size buttonsSize, const uint listSize, const uint activeIndex)
+		void DropDownList::initialize(const sf::Vector2f &position, const std::vector<std::string> &list,
+			const Size buttonsSize,  const uint activeIndex)
 		{
 			sf::Vector2f size = gui::getButtonSize(buttonsSize);
 
-			for (uint i = 0; i < listSize; ++i)
+			for (int i = 0; i < list.size(); i++)
 			{
-				buttonsList_.emplace(std::make_pair(
+				buttonsList_.insert(std::make_pair(
 					list[i], new gui::Button(sf::Vector2f(position.x, (size.y * i + position.y)), buttonsSize,
 						sf::Color(70, 70, 70, 100),
 						sf::Color(90, 90, 90, 100),
@@ -67,11 +68,20 @@ namespace Illusion
 			}
 
 			//create a new button based on the active index one
-			activeButton_ = new gui::Button(*buttonsList_[list[activeIndex]]); 
+			activeButton_ = new gui::Button(*buttonsList_[list[activeIndex]]);
+
 			activeButton_->setPosition(sf::Vector2f(activeButton_->getPosition().x, activeButton_->getPosition().y - size.y));
 			activeButton_->setFunction([&]() {
 				show == true ? show = false : show = true; //show all buttons when clicked
 			});
+
+			for (int i = 0; i < list.size(); i++) //make sure active button becomes the button clicked
+			{
+				buttonsList_[list[i]]->setFunction([=]() {
+					activeButton_->setStr(list[i]);
+				});
+			}
+
 		}
 
 		void DropDownList::setButtonFunction(const std::string &id, std::function<void(void)> func)
