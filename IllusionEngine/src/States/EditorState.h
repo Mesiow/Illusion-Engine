@@ -19,7 +19,6 @@ namespace Illusion
 	     void draw(sf::RenderTarget &target)override;
 
 		 void initKeyBinds();
-		 void updateMouseGridPositions();
 		 void updateGui();
 
 	private:

@@ -93,12 +93,6 @@ namespace Illusion
 
 		}
 
-		void DropDownList::printList()
-		{
-			for (int i = 0; i < itemList.size(); i++)
-				std::cout << itemList[i] << std::endl;
-		}
-
 		void DropDownList::setButtonFunction(const std::string &id, std::function<void(void)> func)
 		{
 			buttonsList_[id]->setFunction(func);

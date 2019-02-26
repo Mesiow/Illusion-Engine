@@ -21,11 +21,12 @@ namespace Illusion
 		public:
 			void setButtonFunction(const std::string &id, std::function<void(void)> func);
 
+		public:
+			gui::Button *getActiveButton() { return this->activeButton_; }
+
 		private:
 			void initialize(const sf::Vector2f &position,
 				const Size buttonsSize, const uint activeIndex);
-
-			void printList();
 
 		private:
 			gui::Button *activeButton_;

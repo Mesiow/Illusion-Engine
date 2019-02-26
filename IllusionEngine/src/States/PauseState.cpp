@@ -8,7 +8,7 @@ namespace Illusion
 	PauseState::PauseState(Game &game)
 		:State(game)
 	{
-		font = nullptr;
+		
 	}
 
 	PauseState::~PauseState()

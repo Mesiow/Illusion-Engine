@@ -26,7 +26,7 @@ namespace Illusion
 
 	private:
 		gui::Slider *slider_;
-		gui::DropDownList *list_;
+		gui::DropDownList *ResolutionList_;
 		gui::Button *back_;
 		gui::Button *apply_;
 

@@ -15,8 +15,5 @@ namespace Illusion
 		void draw(sf::RenderTarget &target)override;
 
 		void updateGui();
-
-	private:
-		sf::Font *font;
 	};
 }

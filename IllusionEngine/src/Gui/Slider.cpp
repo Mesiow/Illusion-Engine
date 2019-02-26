@@ -5,16 +5,21 @@ namespace Illusion
 {
 	namespace gui
 	{
-		Slider::Slider(sf::Vector2f position)
+		Slider::Slider(sf::Vector2f position, sf::Vector2f size,
+			sf::Color idle, sf::Color hover, sf::Color pressed)
 		{
 			this->position_ = position;
+			colors_[Colors::idleColor] = idle;
+			colors_[Colors::hoverColor] = hover;
+			colors_[Colors::pressColor] = pressed;
 
-			slider_.setSize(sf::Vector2f(20, 30));
+
+			slider_.setSize(size);
 			slider_.setOrigin(sf::Vector2f(slider_.getGlobalBounds().left + slider_.getGlobalBounds().width / 2.0f,
 				slider_.getGlobalBounds().top + slider_.getGlobalBounds().height / 2.0f));
 
 			slider_.setPosition(position);
-			slider_.setFillColor(sf::Color::Green);
+			slider_.setFillColor(colors_[Colors::idleColor]);
 			initialize();
 		}
 
@@ -25,31 +30,37 @@ namespace Illusion
 
 		void Slider::handleEvents(sf::Event &e)
 		{
+			flag_ = Flag::idle;
+
+			if (containsMouse(slider_.getGlobalBounds()))
+				flag_ = Flag::hover;
+
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
 				if (containsMouse(slider_.getGlobalBounds()))
 				{
+					flag_ = Flag::pressed;
 					if(onLine())
 						moveSlider();
 				}
 			}
-
-			switch (e.type)
-			{
-			case sf::Event::MouseButtonPressed:
-			{
-				if (e.mouseButton.button == sf::Mouse::Left)
-				{
-					
-				}
-			}
-			break;
-			}
 		}
 
-		void Slider::update(float &dt)
+		void Slider::update()
 		{
+			switch (flag_)
+			{
+			case Flag::idle:
+				slider_.setFillColor(colors_[Colors::idleColor]);
+				break;
+			case Flag::hover:
+				slider_.setFillColor(colors_[Colors::hoverColor]);
+				break;
 
+			case Flag::pressed:
+				slider_.setFillColor(colors_[Colors::pressColor]);
+				break;
+			}
 		}
 
 		void Slider::draw(sf::RenderTarget &target)
