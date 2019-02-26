@@ -44,7 +44,7 @@ namespace Illusion
 		void Button::handleEvents(sf::Event &e)
 		{
 			flag_ = Flag::idle;
-			if (containsMouse())
+			if (containsMouse(button_.getGlobalBounds()))
 				flag_ = Flag::hover;
 
 			switch (e.type)
@@ -53,7 +53,7 @@ namespace Illusion
 			{
 				if (e.mouseButton.button == sf::Mouse::Left)
 				{
-					if (containsMouse())
+					if (containsMouse(button_.getGlobalBounds()))
 					{
 						flag_ = Flag::pressed;
 						function_();
@@ -149,15 +149,6 @@ namespace Illusion
 		{
 			return sf::Vector2f(position_.x - button_.getGlobalBounds().width / 2,
 				position_.y + button_.getGlobalBounds().height / 2); //get position of origin
-		}
-
-		bool Button::containsMouse()const
-		{
-			auto mousePos = sf::Mouse::getPosition(Game::getWindow());
-			if (button_.getGlobalBounds().contains((float)mousePos.x, (float)mousePos.y))
-				return true;
-
-			return false;
 		}
     }
 }

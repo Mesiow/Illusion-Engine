@@ -20,17 +20,15 @@ namespace Illusion
 
 	void Settings::initGui()
 	{
-
 		std::vector<std::string> videoModeStrings;
 
 		//convert sf video mode values to string values to be passed into the list
-		for (int i = 0; i < videoModes_.size(); i++)
+		for (int i = 1; i < videoModes_.size(); i++)
 		{
 			videoModeStrings.push_back(
 				std::string(std::to_string(videoModes_[i].width) + " x " + std::to_string(videoModes_[i].height))
 			);
 		}
-
 
 		list_ = new gui::DropDownList(sf::Vector2f(400, 200), videoModeStrings, gui::Size::small, 0);
 
@@ -56,6 +54,7 @@ namespace Illusion
 	{
 		updateMousePositions();
 		updateGui(dt);
+		showMouseCoordinates();
 	}
 
 	void Settings::handleEvents(sf::Event &e)
@@ -64,6 +63,8 @@ namespace Illusion
 		apply_->handleEvents(e);
 
 		list_->handleEvents(e);
+
+		slider_->handleEvents(e);
 	}
 
 	void Settings::draw(sf::RenderTarget &target)

@@ -12,10 +12,15 @@ namespace Illusion
 			~Slider();
 
 		public:
+			void handleEvents(sf::Event &e)override;
+			void update(float &dt)override;
 			void draw(sf::RenderTarget &target)override;
 
 		private:
+			void moveSlider();
 			void initialize();
+
+			bool onLine();
 
 		private:
 			sf::RectangleShape slider_;

@@ -7,11 +7,6 @@ namespace Illusion
 {
 	namespace gui
 	{
-		enum Colors { idleColor = 0, hoverColor = 1, pressColor = 2 };
-		enum Flag { idle = 0, hover = 1, pressed = 2 };
-		enum Size { large = 0, medium = 1, small = 2 };
-		
-		using uint = unsigned int;
 
 		static sf::Vector2f getButtonSize(Size size)
 		{
@@ -61,7 +56,6 @@ namespace Illusion
 
 		private:
 			void updateText();
-			bool containsMouse()const;
 
 		private:
 			std::function<void(void)> function_;

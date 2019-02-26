@@ -28,16 +28,22 @@ namespace Illusion
 		{
 			activeButton_->handleEvents(e);
 
-			for (auto &b : buttonsList_)
-				b.second->handleEvents(e);
+			if (show)
+			{
+				for (auto &b : buttonsList_)
+					b.second->handleEvents(e);
+			}
 		}
 
 		void DropDownList::update()
 		{
 			activeButton_->update();
 
-			for (auto &b : buttonsList_)
-				b.second->update();
+			if (show)
+			{
+				for (auto &b : buttonsList_)
+					b.second->update();
+			}
 		}
 
 		void DropDownList::draw(sf::RenderTarget &target)
