@@ -31,7 +31,7 @@ namespace Illusion
 		void showMouseCoordinates();
 
 	private:
-		bool enable = false;
+		bool enableMousePos = false;
 
 	protected:
 		Game *_game;

@@ -32,7 +32,6 @@ namespace Illusion
 
 		const std::vector<sf::VideoMode> videoModes_ = sf::VideoMode::getFullscreenModes();
 
-		sf::Font *font_;
 		sf::Text text_;
 	
 	};

@@ -12,6 +12,7 @@ namespace Illusion
 			colors_[Colors::idleColor] = idle;
 			colors_[Colors::hoverColor] = hover;
 			colors_[Colors::pressColor] = pressed;
+			this->sliderClicked_ = false;
 
 
 			slider_.setSize(size);
@@ -35,12 +36,14 @@ namespace Illusion
 			if (containsMouse(slider_.getGlobalBounds()))
 				flag_ = Flag::hover;
 
+
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
 				if (containsMouse(slider_.getGlobalBounds()))
 				{
+					sliderClicked_ = true;
 					flag_ = Flag::pressed;
-					if(onLine())
+					if (onLine())
 						moveSlider();
 				}
 			}
@@ -91,12 +94,12 @@ namespace Illusion
 		{
 			if (slider_.getPosition().x < line_[0].position.x)  //left vertex point of line
 			{
-				slider_.setPosition(sf::Vector2f(slider_.getPosition().x + 1, slider_.getPosition().y));
+				slider_.setPosition(sf::Vector2f(slider_.getPosition().x + 5, slider_.getPosition().y));
 				return false;
 			}
 			else if (slider_.getPosition().x > line_[1].position.x)//right vertex point of the line
 			{
-				slider_.setPosition(sf::Vector2f(slider_.getPosition().x - 1, slider_.getPosition().y));
+				slider_.setPosition(sf::Vector2f(slider_.getPosition().x - 5, slider_.getPosition().y));
 				return false;
 			}
 

@@ -91,6 +91,9 @@
     <ClInclude Include="src\pcHeaders.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\LevelEditor\TileMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\AnimationComponent.cpp">
@@ -156,6 +159,7 @@
     <ClCompile Include="src\Utils\Random.cpp" />
     <ClCompile Include="src\Utils\FPS.cpp" />
     <ClCompile Include="src\pcHeaders.cpp" />
+    <ClCompile Include="src\LevelEditor\TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Input\editor_state_key_binds.ini">
@@ -164,13 +168,7 @@
     <None Include="res\Input\game_key_binds.ini">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="src\Utils\key_binds.ini">
-      <Filter>Source Files</Filter>
-    </None>
     <None Include="res\Input\supported_keys.ini">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="src\Utils\supported_keys.ini">
       <Filter>Source Files</Filter>
     </None>
     <None Include="res\Window\supported_resolutions.ini">

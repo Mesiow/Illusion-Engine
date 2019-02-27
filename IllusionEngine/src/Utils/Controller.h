@@ -13,8 +13,6 @@ namespace Illusion
 			LJOYSTICKPRESS = 8,
 			RJOYSTICKPRESS = 9
 		};
-		Controller() = default;
-		~Controller() = default;
 
 		static bool isConnected();
 		static bool isButtonPressed(button pressed);

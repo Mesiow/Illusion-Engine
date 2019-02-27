@@ -17,13 +17,13 @@ namespace Illusion
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
 		{
-			if (enable)
-				enable = false;
+			if (enableMousePos)
+				enableMousePos = false;
 			else
-				enable = true;
+				enableMousePos = true;
 		}
 
-		if (enable)
+		if (enableMousePos)
 		{
 			//DELETE LATER
 			sf::Text text;

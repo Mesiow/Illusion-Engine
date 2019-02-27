@@ -8,9 +8,6 @@ namespace Illusion
 
 	class Keyboard : public sf::NonCopyable
 	{
-	public:
-		Keyboard() = default;
-		~Keyboard() = default;
 
 	public:
 		static void addSupportedKeys(supported_keyMap &map);

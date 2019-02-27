@@ -50,7 +50,7 @@ namespace Illusion
 		menu = new gui::StackMenu(sf::Vector2f(400, 200), names, gui::Size::small, 4);
 
 		menu->setButtonFunction("Start", [&]() {
-			std::cout << "Start pressed" << std::endl;
+			_game->pushState<PlayingState>(*_game);
 		});
 
 		menu->setButtonFunction("Settings", [&]() {

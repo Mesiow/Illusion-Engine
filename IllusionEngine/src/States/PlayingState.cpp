@@ -10,12 +10,14 @@ namespace Illusion
 	{
 		//TEST
 		p1 = new Player(ResourceManager::getTexture("player"), sf::Vector2f(200, 200));
+		map_ = new TileMap(ResourceManager::getTexture("dungeon"), 20, 20, 32);
 		//
 	}
 
 	PlayingState::~PlayingState()
 	{
-
+		delete p1;
+		delete map_;
 	}
 
 	void PlayingState::handleInput(const float &dt)
@@ -43,6 +45,7 @@ namespace Illusion
 
 	void PlayingState::draw(sf::RenderTarget &target)
 	{
+		map_->draw(target);
 		p1->draw(target);
 	}
 

@@ -4,7 +4,7 @@
 
 namespace Illusion
 {
-	Tile::Tile(sf::Texture &texture, const sf::IntRect &textureRect,
+	Tile::Tile(const sf::Texture &texture, const sf::IntRect &textureRect,
 		const sf::Vector2f & position, bool scale)
 	{
 		tile.setTexture(texture);
@@ -22,7 +22,7 @@ namespace Illusion
 		target.draw(tile);
 	}
 
-	void Tile::scaleTexture(sf::Texture & texture)
+	void Tile::scaleTexture(const sf::Texture & texture)
 	{
 		auto texSize = texture.getSize();
 		auto windowSize = Game::getWindow().getSize();

@@ -31,6 +31,7 @@ namespace Illusion
 			sf::Vector2f position_;
 
 			Flag flag_;
+			bool sliderClicked_;
 		};
 	}
 }
