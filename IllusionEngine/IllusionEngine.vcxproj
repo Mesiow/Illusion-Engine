@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\pcHeaders.h" />
     <ClInclude Include="src\Components\AnimationComponent.h" />
     <ClInclude Include="src\Components\Components.h" />
     <ClInclude Include="src\Components\HitBoxComponent.h" />
@@ -47,12 +48,31 @@
     <ClInclude Include="src\Utils\Random.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\pcHeaders.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="src\Components\AnimationComponent.cpp" />
     <ClCompile Include="src\Components\HitBoxComponent.cpp" />
     <ClCompile Include="src\Components\MovementComponent.cpp" />
     <ClCompile Include="src\Entity\Entity.cpp" />
     <ClCompile Include="src\Entity\Player.cpp" />
-    <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\Game.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pcHeaders.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pcHeaders.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pcHeaders.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pcHeaders.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="src\Gui\Button.cpp" />
     <ClCompile Include="src\Gui\DropDownList.cpp" />
     <ClCompile Include="src\Gui\Gui.cpp" />
@@ -60,7 +80,12 @@
     <ClCompile Include="src\Gui\StackMenu.cpp" />
     <ClCompile Include="src\LevelEditor\LevelEditor.cpp" />
     <ClCompile Include="src\LevelEditor\Tile.cpp" />
-    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\main.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pcHeaders.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pcHeaders.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pcHeaders.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pcHeaders.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="src\ResourceManagement\ResourceManager.cpp" />
     <ClCompile Include="src\States\EditorState.cpp" />
     <ClCompile Include="src\States\MenuState.cpp" />
@@ -70,7 +95,9 @@
     <ClCompile Include="src\States\SplashState.cpp" />
     <ClCompile Include="src\States\State.cpp" />
     <ClCompile Include="src\Utils\Controller.cpp" />
+    <ClCompile Include="src\Utils\FPS.cpp" />
     <ClCompile Include="src\Utils\Keyboard.cpp" />
+    <ClCompile Include="src\Utils\Random.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Input\editor_state_key_binds.ini" />
@@ -140,6 +167,8 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\Mesio\Desktop\Programming\External Libraries\SFML-2.5.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>../pcHeaders.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\Users\Mesio\Desktop\Programming\External Libraries\SFML-2.5.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -153,6 +182,8 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\Mesio\Desktop\Programming\External Libraries\SFML-2.5.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>../pcHeaders.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\Users\Mesio\Desktop\Programming\External Libraries\SFML-2.5.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -168,6 +199,8 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\Mesio\Desktop\Programming\External Libraries\SFML-2.5.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>../pcHeaders.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -185,6 +218,8 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\Mesio\Desktop\Programming\External Libraries\SFML-2.5.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>../pcHeaders.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

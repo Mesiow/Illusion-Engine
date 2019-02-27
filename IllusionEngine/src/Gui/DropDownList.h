@@ -1,7 +1,6 @@
 #pragma once
 #include "Gui.h"
 #include "Button.h"
-#include <vector>
 
 namespace Illusion
 {

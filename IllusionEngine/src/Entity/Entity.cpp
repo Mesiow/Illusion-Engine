@@ -1,3 +1,4 @@
+#include "../pcHeaders.h"
 #include "Entity.h"
 
 namespace Illusion

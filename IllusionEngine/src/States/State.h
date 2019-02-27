@@ -30,7 +30,7 @@ namespace Illusion
 		void updateMousePositions();
 		void showMouseCoordinates();
 
-	protected:
+	private:
 		bool enable = false;
 
 	protected:

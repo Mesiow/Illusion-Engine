@@ -88,6 +88,9 @@
     <ClInclude Include="src\Gui\Slider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\pcHeaders.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\AnimationComponent.cpp">
@@ -150,6 +153,9 @@
     <ClCompile Include="src\Gui\StackMenu.cpp" />
     <ClCompile Include="src\Gui\Gui.cpp" />
     <ClCompile Include="src\Gui\Slider.cpp" />
+    <ClCompile Include="src\Utils\Random.cpp" />
+    <ClCompile Include="src\Utils\FPS.cpp" />
+    <ClCompile Include="src\pcHeaders.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Input\editor_state_key_binds.ini">

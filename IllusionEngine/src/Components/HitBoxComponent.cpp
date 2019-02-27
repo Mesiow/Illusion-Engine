@@ -1,3 +1,4 @@
+#include "../pcHeaders.h"
 #include "HitBoxComponent.h"
 
 namespace Illusion

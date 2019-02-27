@@ -1,4 +1,5 @@
 #pragma once
+#include "../pcHeaders.h"
 #include "PauseState.h"
 #include "../Game.h"
 #include "PlayingState.h"
@@ -28,8 +29,7 @@ namespace Illusion
 
 	void PauseState::update(float & dt)
 	{
-		updateMousePositions();
-		updateGui();
+		
 	}
 
 	void PauseState::draw(sf::RenderTarget &target)

@@ -1,9 +1,7 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 #include "../ResourceManagement/ResourceManager.h"
 #include "Tile.h"
-#include <map>
-#include <vector>
+
 
 
 namespace Illusion

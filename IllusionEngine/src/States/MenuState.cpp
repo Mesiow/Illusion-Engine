@@ -1,9 +1,9 @@
+#include "../pcHeaders.h"
 #include "MenuState.h"
 #include "../Game.h"
 #include "EditorState.h"
 #include "Settings.h"
 #include "PlayingState.h"
-#include <sstream>
 
 namespace Illusion
 {
@@ -23,18 +23,6 @@ namespace Illusion
 
 	void MenuState::handleEvents(sf::Event &e)
 	{
-		switch (e.type)
-		{
-		case sf::Event::KeyPressed:
-			if (e.key.code == sf::Keyboard::LControl)
-			{
-				if (enable)
-					enable = false;
-				else
-					enable = true;
-			}
-			break;
-		}
 		menu->handleEvents(e);
 	}
 
@@ -46,8 +34,7 @@ namespace Illusion
 
 	void MenuState::draw(sf::RenderTarget &target)
 	{
-		if (enable)
-			showMouseCoordinates();
+		showMouseCoordinates();
 
 		menu->draw(target);
 	}

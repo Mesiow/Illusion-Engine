@@ -1,5 +1,6 @@
+#include "../pcHeaders.h"
 #include "StackMenu.h"
-#include <iostream>
+
 namespace Illusion
 {
 	namespace gui

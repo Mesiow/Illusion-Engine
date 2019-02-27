@@ -1,5 +1,5 @@
+#include "../pcHeaders.h"
 #include "Slider.h"
-#include <iostream>
 
 namespace Illusion
 {

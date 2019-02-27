@@ -1,3 +1,4 @@
+#include "../pcHeaders.h"
 #include "AnimationComponent.h"
 
 namespace Illusion

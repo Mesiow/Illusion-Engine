@@ -1,3 +1,4 @@
+#include "../pcHeaders.h"
 #include "State.h"
 #include "../Game.h"
 
@@ -13,18 +14,30 @@ namespace Illusion
 	
 	void State::showMouseCoordinates()
 	{
-		//DELETE LATER
-		sf::Text text;
-		text.setFillColor(sf::Color::White);
-		text.setFont(ResourceManager::getFont("rubik"));
-		text.setCharacterSize(15);
-		text.setPosition(_mousePosView.x, _mousePosView.y - 50);
 
-		std::stringstream ss;
-		ss << _mousePosView.x << ", " << _mousePosView.y;
-		text.setString(ss.str());
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
+		{
+			if (enable)
+				enable = false;
+			else
+				enable = true;
+		}
 
-		_game->getWindow().draw(text);
+		if (enable)
+		{
+			//DELETE LATER
+			sf::Text text;
+			text.setFillColor(sf::Color::White);
+			text.setFont(ResourceManager::getFont("rubik"));
+			text.setCharacterSize(15);
+			text.setPosition(_mousePosView.x, _mousePosView.y - 50);
+
+			std::stringstream ss;
+			ss << _mousePosView.x << ", " << _mousePosView.y;
+			text.setString(ss.str());
+
+			_game->getWindow().draw(text);
+		}
 	}
 
 }

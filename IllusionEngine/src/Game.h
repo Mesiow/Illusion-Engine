@@ -1,15 +1,10 @@
 #pragma once
 #include "Utils/FPS.h"
 #include "States/State.h"
-#include <vector>
-#include <memory>
-#include <fstream>
-#include <string>
-#include <iostream>
-#include <sstream>
 
 //Game class manages and runs all states in the game
 
+#define FPS_LIMIT 60
 namespace Illusion
 {
 	using statePtr = std::unique_ptr<State>;

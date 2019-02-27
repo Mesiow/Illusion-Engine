@@ -1,5 +1,5 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+
 namespace Illusion
 {
 	class Controller : public sf::NonCopyable

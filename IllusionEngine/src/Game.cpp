@@ -1,3 +1,4 @@
+#include "pcHeaders.h"
 #include "Game.h"
 #include "States/SplashState.h"
 #include "Utils/Keyboard.h"
@@ -48,7 +49,7 @@ namespace Illusion
 			fullScreenFlag = sf::Style::Fullscreen;
 
 		window_ = new sf::RenderWindow(sf::VideoMode(width, height), title, sf::Style::Default | fullScreenFlag);
-		window_->setFramerateLimit(60);
+		window_->setFramerateLimit(FPS_LIMIT);
 
 		pushState<SplashState>(*this); //push the splash state
 	}

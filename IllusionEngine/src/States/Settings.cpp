@@ -1,7 +1,7 @@
+#include "../pcHeaders.h"
 #include "Settings.h"
 #include "../Game.h"
 #include "MenuState.h"
-#include <string>
 
 namespace Illusion
 {
@@ -58,6 +58,7 @@ namespace Illusion
 			int resHeight = std::stoi(heightStr);
 		
 			_game->getWindow().create(sf::VideoMode(resWidth, resHeight), _game->getWindowTitle(), sf::Style::Default); //re-create the window
+			_game->getWindow().setFramerateLimit(FPS_LIMIT);
 
 		});
 
@@ -85,6 +86,7 @@ namespace Illusion
 
 	void Settings::draw(sf::RenderTarget &target)
 	{
+		showMouseCoordinates();
 		back_->draw(target);
 		apply_->draw(target);
 

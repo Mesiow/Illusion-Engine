@@ -1,7 +1,4 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include <map>
-#include <iostream>
 
 namespace Illusion
 {

@@ -1,3 +1,4 @@
+#include "../pcHeaders.h"
 #include "ResourceManager.h"
 
 namespace Illusion
