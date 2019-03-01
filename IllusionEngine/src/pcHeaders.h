@@ -12,6 +12,7 @@
 #include <sstream>
 #include <memory>
 #include <fstream>
+#include <assert.h>
 
 
 //SFML Includes

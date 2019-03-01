@@ -74,7 +74,7 @@ namespace Illusion
 
 		void Slider::moveSlider()
 		{
-			slider_.setPosition(sf::Vector2f(getMousePosition().x, line_[0].position.y));
+			slider_.setPosition(sf::Vector2f(getMousePositionView().x, line_[0].position.y));
 		}
 
 		void Slider::initialize()

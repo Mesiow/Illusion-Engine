@@ -18,7 +18,7 @@ namespace Illusion
 		{
 		public:
 			Gui(){}
-			~Gui(){}
+			virtual ~Gui(){}
 
 			virtual void update(float &dt){}
 			virtual void handleEvents(sf::Event &e){}
@@ -26,7 +26,7 @@ namespace Illusion
 
 		protected:
 			bool containsMouse(const sf::FloatRect &rect);
-			sf::Vector2i getMousePosition();
+			sf::Vector2f getMousePositionView();
 		};
 	}
 }

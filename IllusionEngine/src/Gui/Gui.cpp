@@ -8,17 +8,18 @@ namespace Illusion
 	{
 		bool Gui::containsMouse(const sf::FloatRect & rect)
 		{
-			auto mousePos = sf::Mouse::getPosition(Game::getWindow());
+			auto mousePos = getMousePositionView();
 			if (rect.contains((float)mousePos.x, (float)mousePos.y))
 				return true;
 
 			return false;
 		}
 
-		sf::Vector2i Gui::getMousePosition()
+		sf::Vector2f Gui::getMousePositionView()
 		{
-			auto mousepos = sf::Mouse::getPosition(Game::getWindow());
-			return mousepos;
+			auto windowpos = sf::Mouse::getPosition(Game::getWindow());
+			auto mouseposView = Game::getWindow().mapPixelToCoords(windowpos);
+			return mouseposView;
 		}
 	}
 }

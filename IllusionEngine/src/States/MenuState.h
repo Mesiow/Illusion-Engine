@@ -26,7 +26,6 @@ namespace Illusion
 
 	private:
 		gui::StackMenu *menu;
-		sf::Font *font_;
 		sf::Text text_;
 
 	};

@@ -1,8 +1,9 @@
 #pragma once
 #include "../ResourceManagement/ResourceManager.h"
-#include "Tile.h"
+#include "TileMap.h"
 
 
+//TODO: add tilemap
 
 namespace Illusion
 {
@@ -10,7 +11,7 @@ namespace Illusion
 	class LevelEditor
 	{
 	public:
-		LevelEditor(sf::Texture &textureSheet, const float levelGridSize);
+		LevelEditor(const sf::Texture &textureSheet, const int levelGridSize);
 		~LevelEditor();
 
 
@@ -19,18 +20,17 @@ namespace Illusion
 		void addTile(const sf::Vector2f &position, const sf::IntRect &rect = sf::IntRect(0, 0, 32, 32));
 		void deleteTile(const sf::Vector2f &position);
 		void update(sf::RenderTarget &target);
-		void drawTiles(sf::RenderTarget &target);
+		void drawMap(sf::RenderTarget &target);
 
 	public:
 		inline const float getGridSize()const { return gridSize; }
 		sf::View &getView() { return view; }
 
 	private:
-		sf::Texture &textureSheet_;
-		std::vector<Tile*> tiles;
+		const sf::Texture &textureSheet_;
+		TileMap *map_;
 
-		const float gridSize;
-
+		const int gridSize;
 		sf::View view;
 	};
 }

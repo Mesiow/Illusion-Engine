@@ -94,6 +94,9 @@
     <ClInclude Include="src\LevelEditor\TileMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Gui\PopUpContainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\AnimationComponent.cpp">
@@ -160,6 +163,7 @@
     <ClCompile Include="src\Utils\FPS.cpp" />
     <ClCompile Include="src\pcHeaders.cpp" />
     <ClCompile Include="src\LevelEditor\TileMap.cpp" />
+    <ClCompile Include="src\Gui\PopUpContainer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Input\editor_state_key_binds.ini">

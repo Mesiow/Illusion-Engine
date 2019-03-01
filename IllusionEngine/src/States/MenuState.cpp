@@ -11,7 +11,6 @@ namespace Illusion
 	MenuState::MenuState(Game &game)
 		:State(game)
 	{
-		font_ = &ResourceManager::getFont("rubik");
 		initKeyBinds();
 		initGui();
 	}
@@ -51,6 +50,10 @@ namespace Illusion
 
 		menu->setButtonFunction("Start", [&]() {
 			_game->pushState<PlayingState>(*_game);
+		});
+
+		menu->setButtonFunction("Editor", [&]() {
+			_game->pushState<EditorState>(*_game);
 		});
 
 		menu->setButtonFunction("Settings", [&]() {

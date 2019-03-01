@@ -23,6 +23,6 @@ namespace Illusion
 
 	private:
 		Player *p1;
-		TileMap *map_;
+
 	};
 }

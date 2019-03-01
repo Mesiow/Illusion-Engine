@@ -9,6 +9,7 @@ namespace Illusion
 		:State(game)
 	{
 	    initKeyBinds();
+		initGui();
 		editor_ = new LevelEditor(ResourceManager::getTexture("dungeon"),  32);
 	}
 
@@ -19,7 +20,10 @@ namespace Illusion
 
 	void EditorState::handleInput()
 	{
-		
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		{
+			editor_->addTile(_mousePosView, sf::IntRect(32 * 6, 32 * 8, 32, 32));
+		}
 	}
 
 	void EditorState::handleInput(const float &dt)
@@ -36,31 +40,31 @@ namespace Illusion
 
 	void EditorState::handleEvents(sf::Event &e)
 	{
+		tileSelectionContainer_->handleEvents(e);
 		switch (e.type)
 		{
 		case sf::Event::MouseButtonReleased:
 		{
-			if (e.mouseButton.button == sf::Mouse::Left)
+			if (e.mouseButton.button == sf::Mouse::Right)
 			{
-				editor_->addTile(_mousePosView, sf::IntRect(0, 0, 32, 32));
-			}
-			else if (e.mouseButton.button == sf::Mouse::Right)
-			{
-				
+				editor_->deleteTile(_mousePosView);
 			}
 		}
-		break;
-
-		case sf::Event::KeyPressed:
+		}
+		/*case sf::Event::KeyPressed:
 		{
 		 if (e.key.code == Keyboard::getCurrentKeyBinds().at("BACK"))
 			{
 				_game->changeState<MenuState>(*_game);
 		    }
 		}
-		break;
+		break;*/
 
-		}
+	}
+
+	void EditorState::update(float &dt)
+	{
+		tileSelectionContainer_->update(dt);
 	}
 
 	void EditorState::update(sf::RenderTarget &target)
@@ -73,12 +77,15 @@ namespace Illusion
 
 	void EditorState::draw(sf::RenderTarget & target)
 	{
-		editor_->drawTiles(target);
+		showMouseCoordinates();
+		editor_->drawMap(target);
+
+		tileSelectionContainer_->draw(target);
 	}
 
 	void EditorState::initKeyBinds()
 	{
-			std::fstream file("../res/Input/editor_state_key_binds.ini");
+			std::fstream file("res/Input/editor_state_key_binds.ini");
 
 			if (!file.is_open())
 				throw("File failed to open key binds");
@@ -98,6 +105,14 @@ namespace Illusion
 
 			Keyboard::addKeyBinds(map);
 			Keyboard::printBoundKeys();
+	}
+
+	void EditorState::initGui()
+	{
+		tileSelectionContainer_ = new gui::PopUpContainer(
+			sf::Vector2f(Game::getWindow().getPosition().x, Game::getWindow().getPosition().y),
+			sf::Vector2f(32, Game::getWindow().getSize().y / 1.2),
+			sf::Color::Transparent, sf::Color(195, 195, 195, 190));
 	}
 
 	void EditorState::updateGui()
