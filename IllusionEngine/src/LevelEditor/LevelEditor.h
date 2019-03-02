@@ -11,7 +11,7 @@ namespace Illusion
 	class LevelEditor
 	{
 	public:
-		LevelEditor(const sf::Texture &textureSheet, const int levelGridSize);
+		LevelEditor(sf::Texture &textureSheet);
 		~LevelEditor();
 
 
@@ -23,14 +23,12 @@ namespace Illusion
 		void drawMap(sf::RenderTarget &target);
 
 	public:
-		inline const float getGridSize()const { return gridSize; }
 		sf::View &getView() { return view; }
 
 	private:
 		const sf::Texture &textureSheet_;
 		TileMap *map_;
 
-		const int gridSize;
 		sf::View view;
 	};
 }

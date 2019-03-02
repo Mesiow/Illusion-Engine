@@ -4,7 +4,7 @@
 
 //Game class manages and runs all states in the game
 
-#define FPS_LIMIT 60
+#define FPS_LIMIT 120
 namespace Illusion
 {
 	using statePtr = std::unique_ptr<State>;

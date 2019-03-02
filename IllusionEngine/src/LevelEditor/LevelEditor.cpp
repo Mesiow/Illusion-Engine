@@ -6,13 +6,13 @@
 
 namespace Illusion
 {
-	LevelEditor::LevelEditor(const sf::Texture &textureSheet, const int levelGridSize)
-		:textureSheet_(textureSheet), gridSize(levelGridSize)
+	LevelEditor::LevelEditor(sf::Texture &textureSheet)
+		:textureSheet_(textureSheet)
 	{
 		view.reset(sf::FloatRect(0, 0, Game::getWindow().getSize().x, Game::getWindow().getSize().y));
 		//view.setCenter(sf::Vector2f(Game::getWindow().getPosition().x, Game::getWindow().getPosition().y));
 
-		map_ = new TileMap(textureSheet, 40, 40, levelGridSize);
+		map_ = new TileMap(textureSheet, 10, 10, 32.0f, 32.0f);
 		
 	}
 
@@ -28,18 +28,12 @@ namespace Illusion
 
 	void LevelEditor::addTile(const sf::Vector2f &position, const sf::IntRect &rect)
 	{
-		auto x = position.x / gridSize; //get grid position
-		auto y = position.y / gridSize;
 
-		map_->addTile(position, rect, (int)x, (int)y);
 	}
 
 	void LevelEditor::deleteTile(const sf::Vector2f &position)
 	{
-		auto x = position.x / gridSize;
-		auto y = position.y / gridSize;
-
-		map_->deleteTile((int)x, (int)y);
+		
 	}
 
 	void LevelEditor::update(sf::RenderTarget &target)
@@ -50,7 +44,6 @@ namespace Illusion
 
 	void LevelEditor::drawMap(sf::RenderTarget &target)
 	{
-		map_->drawGrid(target);
-		map_->draw(target);
+		target.draw(*map_);
 	}
 }

@@ -29,12 +29,14 @@ namespace Illusion
 		}
 
 		void PopUpContainer::update(float &dt)
-		{/*
+		{
 			showPosition_ = sf::Vector2f(Game::getWindow().getView().getCenter().x + Game::getWindow().getView().getSize().x / 2.1,
-				Game::getWindow().getView().getCenter().y - Game::getWindow().getView().getSize().y / 6.0f + 100);*/
+				Game::getWindow().getView().getCenter().y - Game::getWindow().getView().getSize().y / 6.0f + 100);
 
-			hiddenContainerRect_.setPosition(sf::Vector2f(Game::getWindow().getView().getCenter().x + Game::getWindow().getView().getSize().x / 2.1,
-				Game::getWindow().getView().getCenter().y - Game::getWindow().getView().getSize().y / 6.0f + 100));
+			container_.setPosition(showPosition_);
+
+			/*hiddenContainerRect_.setPosition(sf::Vector2f(Game::getWindow().getView().getCenter().x + Game::getWindow().getView().getSize().x / 2.1,
+				Game::getWindow().getView().getCenter().y - Game::getWindow().getView().getSize().y / 6.0f + 100));*/
 			
 			//if (hidden)
 			{
@@ -47,16 +49,6 @@ namespace Illusion
 
 		void PopUpContainer::handleEvents(sf::Event &e)
 		{
-			if (containsMouse(hiddenContainerRect_.getGlobalBounds()))
-			{
-				std::cout << "Show container" << std::endl;
-				//hidden = false;
-				showContainer();
-			}
-
-			//if()
-
-
 			switch (e.type)
 			{
 
@@ -65,7 +57,6 @@ namespace Illusion
 
 		void PopUpContainer::draw(sf::RenderTarget &target)
 		{
-			target.draw(hiddenContainerRect_);
 			target.draw(container_);
 		}
 

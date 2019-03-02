@@ -1,35 +1,28 @@
 #pragma once
 #include "Tile.h"
 
-//load tilemap with tiles once we are done editing
-
 namespace Illusion
 {
-	class TileMap
+	class TileMap : public sf::Drawable
 	{
 	public:
-		TileMap(const sf::Texture &sheet, int width, int height, float gridSize);
+		TileMap(sf::Texture &sheet, int width, int height,
+			float tileTextureDim, float tileWorldDim);
 		~TileMap();
 
-		void addTile(const sf::Vector2f position, const sf::IntRect &rect, int x, int y);
-		void deleteTile(int x, int y);
-
-		void draw(sf::RenderTarget &target);
-		void drawGrid(sf::RenderTarget &target);
-
-
-	public:
-		int getCellIndex(int x, int y);
-		sf::Vector2f getGridPos(float x, float y);
+		void draw(sf::RenderTarget &target, sf::RenderStates states)const override;
 
 	private:
-		const sf::Texture &sheet;
-		
-		std::vector<sf::RectangleShape> grid_;
-		std::vector<Tile> tiles_;
-		
+		void addTileVertices(Tile tile, sf::Vector2f pos);
+
+	private:
+		const sf::Texture &sheet_;
+		sf::VertexArray *array_; //used to generate vertices of the map
+
 		int width_;
 		int height_;
-		unsigned int layers_;
+
+		float tileTextureDim_; //how big a tile is in the texture sheet, 32 pixels by 32 pixels
+		float tileWorldDim_; //how big we want to draw our tiles to the screen
 	};
 }

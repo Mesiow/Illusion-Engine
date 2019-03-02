@@ -3,91 +3,60 @@
 
 namespace Illusion
 {
-	TileMap::TileMap(const sf::Texture &sheet, int width, int height, float gridSize)
-		:sheet(sheet)
+	TileMap::TileMap(sf::Texture &sheet, int width, int height, float tileTextureDim, float tileWorldDim)
+		:sheet_(sheet)
 	{
 		this->width_ = width;
 		this->height_ = height;
+		this->tileTextureDim_ = tileTextureDim;
+		this->tileWorldDim_ = tileWorldDim;
 
-		//size of each tile in pixels
-		auto sizeX = sheet.getSize().x / 16; //32
-		auto sizeY = sheet.getSize().y / 16; //32 - size of each tile
+		//width * height = how many tiles we have in our tile map and times 4 because 
+		//we have 4 vertices per tile because each tile is a quad
+		array_ = new sf::VertexArray(sf::Quads, (std::size_t)width * height * 4);
 
-		tiles_.resize(width * height);
-		grid_.resize(width * height);
+		Tile tile(sf::Vector2f(0, 1), sf::Color::White);
 
-		//visible grid
 		for (int x = 0; x < width; x++)
 		{
-			//grid_.push_back(sf::RectangleShape(sf::Vector2f(gridSize, gridSize)));
 			for (int y = 0; y < height; y++)
 			{
-				//grid_.push_back(sf::RectangleShape(sf::Vector2f(gridSize, gridSize)));
-				grid_[getCellIndex(x, y)] = sf::RectangleShape(sf::Vector2f(gridSize, gridSize));
-				grid_[getCellIndex(x, y)].setFillColor(sf::Color::Transparent);
-				grid_[getCellIndex(x, y)].setOutlineThickness(1.f);
-				grid_[getCellIndex(x, y)].setOutlineColor(sf::Color::Green);
-				grid_[getCellIndex(x, y)].setPosition(sf::Vector2f(x * (int)gridSize, y * (int)gridSize));
+				addTileVertices(tile, sf::Vector2f((float)x, float(y)));
 			}
 		}
-			
 	}
 
 	TileMap::~TileMap()
 	{
-		
+
 	}
 
-	void TileMap::addTile(const sf::Vector2f position, const sf::IntRect & rect, int x, int y)
+	void TileMap::draw(sf::RenderTarget &target, sf::RenderStates states)const
 	{
-		if (x < 0 || x >= width_ || y < 0 || y >= height_) //check out of bounds in grid space
-		{
-			std::cout << "outside of grid" << std::endl;
-			return;
-		}
-
-		tiles_[getCellIndex(x,y)] = Tile(this->sheet, rect, getGridPos(x,y));
+		states.texture = &sheet_; //give the render state our texture
+		target.draw(*array_, states); //draw the vertex array
 	}
 
-	void TileMap::deleteTile(int x, int y)
+	void TileMap::addTileVertices(Tile tile, sf::Vector2f pos)
 	{
-		int index = getCellIndex(x, y);
-		std::cout << "Cell index: " << index << std::endl;
+		//first parameter is the position of the vertex and the second is the texture coordinates
 
-		if (index < 0 || index > tiles_.size())
-			return;
+		//first vertex at 0,0 , top left
+		//vertex added to position to give us an offset
+		//vertex multiplied by tileWorldDim determines how big the tile will draw on screen
+		array_->append(sf::Vertex((sf::Vector2f(0.0f, 0.0f) + pos) * tileWorldDim_, 
+			sf::Vector2f(tileTextureDim_ * tile.position.x, tileTextureDim_ * tile.position.y))); //32 times position which is 0 so the top left, 32 times 1 for the y
 
-		auto it = tiles_.begin() + index;
-		std::cout << "Erasing tile at: " << it->getPosition().x << ", " << it->getPosition().y << std::endl;
-		tiles_.erase(tiles_.begin() + index); //erase tile at index
-	}
+		//second vertex at top right 1,0
+		array_->append(sf::Vertex((sf::Vector2f(1.0f, 0.0f) + pos) * tileWorldDim_,
+			sf::Vector2f(tileTextureDim_ * tile.position.x + tileTextureDim_, tileTextureDim_ * tile.position.y)));
 
-	void TileMap::draw(sf::RenderTarget & target)
-	{
-		for (int i = 0; i < tiles_.size(); ++i)
-		{
-			tiles_[i].draw(target);
-		}
-	}
+		//third vertex at bottom right, 1,1
+		array_->append(sf::Vertex((sf::Vector2f(1.0f, 1.0f) + pos) * tileWorldDim_, 
+			sf::Vector2f(tileTextureDim_ * tile.position.x + tileTextureDim_, tileTextureDim_ * tile.position.y + tileTextureDim_)));
 
-	void TileMap::drawGrid(sf::RenderTarget & target)
-	{
-		for (int i = 0; i < grid_.size(); ++i)
-		{
-			target.draw(grid_[i]);	
-		}
-	}
-
-	int TileMap::getCellIndex(int x, int y)
-	{
-		return (y * width_) + x;
-	}
-
-	sf::Vector2f TileMap::getGridPos(float x, float y)
-	{
-		auto xpos = x * 32; //get size of one tile and multiply it by grid position x
-		auto ypos = y * 32;
-
-		return sf::Vector2f(xpos, ypos);
+		//fourth vertex at bottom left, 0,1
+		array_->append(sf::Vertex((sf::Vector2f(0.0f, 1.0f) + pos) * tileWorldDim_,
+			sf::Vector2f(tileTextureDim_ * tile.position.x, tileTextureDim_ * tile.position.y + tileTextureDim_)));
 	}
 }

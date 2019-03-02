@@ -10,7 +10,7 @@ namespace Illusion
 	{
 	    initKeyBinds();
 		initGui();
-		editor_ = new LevelEditor(ResourceManager::getTexture("dungeon"),  32);
+		editor_ = new LevelEditor(ResourceManager::getTexture("dungeon"));
 	}
 
 	EditorState::~EditorState()
@@ -50,16 +50,17 @@ namespace Illusion
 				editor_->deleteTile(_mousePosView);
 			}
 		}
-		}
-		/*case sf::Event::KeyPressed:
+		break;
+
+		case sf::Event::KeyPressed:
 		{
 		 if (e.key.code == Keyboard::getCurrentKeyBinds().at("BACK"))
 			{
 				_game->changeState<MenuState>(*_game);
-		    }
+			}
 		}
-		break;*/
-
+		break;
+		}
 	}
 
 	void EditorState::update(float &dt)
