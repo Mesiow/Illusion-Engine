@@ -11,6 +11,23 @@ namespace Illusion
 		this->tileTextureDim_ = tileTextureDim;
 		this->tileWorldDim_ = tileWorldDim;
 
+		grid_.resize(width * height);
+
+
+
+		for (int i = 0; i < width_; i++)
+		{
+			for (int j = 0; j < height_; j++)
+			{
+				int index = getCellIndex(i, j);
+				grid_[index]=sf::RectangleShape(sf::Vector2f(tileWorldDim, tileWorldDim));
+				grid_[index].setPosition(sf::Vector2f(i * tileWorldDim, j * tileWorldDim));
+				grid_[index].setFillColor(sf::Color::Transparent);
+				grid_[index].setOutlineColor(sf::Color::Green);
+				grid_[index].setOutlineThickness(1.0f);
+			}
+		}
+
 		//width * height = how many tiles we have in our tile map and times 4 because 
 		//we have 4 vertices per tile because each tile is a quad
 		array_ = new sf::VertexArray(sf::Quads, (std::size_t)width * height * 4);
@@ -28,7 +45,7 @@ namespace Illusion
 
 	TileMap::~TileMap()
 	{
-
+		delete array_;
 	}
 
 	void TileMap::draw(sf::RenderTarget &target, sf::RenderStates states)const
@@ -37,7 +54,25 @@ namespace Illusion
 		target.draw(*array_, states); //draw the vertex array
 	}
 
-	void TileMap::addTileVertices(Tile tile, sf::Vector2f pos)
+	void TileMap::drawGrid(sf::RenderTarget & target)
+	{
+		for (int i = 0; i < grid_.size(); i++)
+		{
+			target.draw(grid_[i]);
+		}
+	}
+
+	void TileMap::addTile(Tile tile, sf::Vector2i pos)
+	{
+		addTileVertices(tile, static_cast<sf::Vector2f>(pos));
+	}
+
+	void TileMap::deleteTile()
+	{
+		array_->clear();
+	}
+
+	void TileMap::addTileVertices(Tile &tile, sf::Vector2f pos)
 	{
 		//first parameter is the position of the vertex and the second is the texture coordinates
 

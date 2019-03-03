@@ -12,10 +12,22 @@ namespace Illusion
 
 		void draw(sf::RenderTarget &target, sf::RenderStates states)const override;
 
-	private:
-		void addTileVertices(Tile tile, sf::Vector2f pos);
+		void drawGrid(sf::RenderTarget &target);
+
+	public:
+		void addTile(Tile tile, sf::Vector2i pos);
+		void deleteTile();
 
 	private:
+		void addTileVertices(Tile &tile, sf::Vector2f pos);
+
+		int getCellIndex(int x, int y)
+		{
+			return (y * width_) + x;
+		}
+
+	private:
+		std::vector<sf::RectangleShape> grid_;
 		const sf::Texture &sheet_;
 		sf::VertexArray *array_; //used to generate vertices of the map
 

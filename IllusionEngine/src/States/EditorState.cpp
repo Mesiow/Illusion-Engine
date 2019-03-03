@@ -22,7 +22,7 @@ namespace Illusion
 	{
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
-			editor_->addTile(_mousePosView, sf::IntRect(32 * 6, 32 * 8, 32, 32));
+			editor_->addTile(_mousePosGrid, sf::IntRect(32 * 6, 32 * 8, 32, 32));
 		}
 	}
 
@@ -78,10 +78,10 @@ namespace Illusion
 
 	void EditorState::draw(sf::RenderTarget & target)
 	{
-		showMouseCoordinates();
 		editor_->drawMap(target);
 
 		tileSelectionContainer_->draw(target);
+		showMouseCoordinates();
 	}
 
 	void EditorState::initKeyBinds()

@@ -9,6 +9,9 @@ namespace Illusion
 		this->_mousePosScreen = sf::Mouse::getPosition();
 		this->_mousePosWindow = sf::Mouse::getPosition(Game::getWindow());
 		this->_mousePosView = Game::getWindow().mapPixelToCoords(_mousePosWindow); //map pixel on the window to coordinates
+
+		this->_mousePosGrid.x = (int)this->_mousePosView.x / 32;
+		this->_mousePosGrid.y = (int)this->_mousePosView.y / 32;
 	}
 
 	
@@ -33,7 +36,7 @@ namespace Illusion
 			text.setPosition(_mousePosView.x, _mousePosView.y - 50);
 
 			std::stringstream ss;
-			ss << _mousePosView.x << ", " << _mousePosView.y;
+			ss << _mousePosGrid.x << ", " << _mousePosGrid.y;
 			text.setString(ss.str());
 
 			_game->getWindow().draw(text);

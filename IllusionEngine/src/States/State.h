@@ -39,6 +39,6 @@ namespace Illusion
 		sf::Vector2i _mousePosScreen;
 		sf::Vector2f _mousePosView;
 		sf::Vector2i _mousePosWindow;
-		sf::Vector2f _mousePosGrid;
+		sf::Vector2i _mousePosGrid;
 	};
 }
