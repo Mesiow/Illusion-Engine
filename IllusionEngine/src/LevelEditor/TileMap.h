@@ -3,38 +3,49 @@
 
 namespace Illusion
 {
-	class TileMap : public sf::Drawable
+	class TileMap
 	{
-	public:
-		TileMap(sf::Texture &sheet, int width, int height,
-			float tileTextureDim, float tileWorldDim);
-		~TileMap();
+		
+		public:
+			TileMap(const std::string &path, sf::Texture &sheet, int width, int height,
+				int tileTextureDim, int tileWorldDim);
+			~TileMap();
 
-		void draw(sf::RenderTarget &target, sf::RenderStates states)const override;
+		public:
+			void draw(sf::RenderTarget &target);
 
-		void drawGrid(sf::RenderTarget &target);
+			void initTiles(int width, int height);
+			void addTile(sf::Vector2u position);
+			void removeTile(sf::Vector2u position);
 
-	public:
-		void addTile(Tile tile, sf::Vector2i pos);
-		void deleteTile();
+    	public:
+			/*void loadMap(const std::string &path);
+			void saveMap();*/
 
-	private:
-		void addTileVertices(Tile &tile, sf::Vector2f pos);
+	    public:
+			Tile &getTileAtIndex(int index);
+			int getTileIndex(int x, int y);
+			int getTileDimension()const { return tileWorldDim_; }
 
-		int getCellIndex(int x, int y)
-		{
-			return (y * width_) + x;
-		}
+    	public:
+			int getWidth()const { return width_; }
+			int getHeight()const { return height_; }
+		    sf::Vector2f getBorderPosition()const { return border_.getPosition(); }
+			sf::FloatRect getBorderBounds()const { return border_.getGlobalBounds(); }
 
-	private:
-		std::vector<sf::RectangleShape> grid_;
-		const sf::Texture &sheet_;
-		sf::VertexArray *array_; //used to generate vertices of the map
+		private:
+			std::vector<Tile> tiles_;
+			sf::RectangleShape border_;
 
-		int width_;
-		int height_;
+			sf::Texture &sheet_;
 
-		float tileTextureDim_; //how big a tile is in the texture sheet, 32 pixels by 32 pixels
-		float tileWorldDim_; //how big we want to draw our tiles to the screen
-	};
+
+			int mapSize_;
+			int width_;
+			int height_;
+
+			int tileWorldDim_;
+			int tileTextureDim_;
+
+		};
 }

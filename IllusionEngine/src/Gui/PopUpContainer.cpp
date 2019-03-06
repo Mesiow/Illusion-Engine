@@ -28,22 +28,17 @@ namespace Illusion
 
 		}
 
-		void PopUpContainer::update(float &dt)
+		void PopUpContainer::update()
 		{
 			showPosition_ = sf::Vector2f(Game::getWindow().getView().getCenter().x + Game::getWindow().getView().getSize().x / 2.1,
 				Game::getWindow().getView().getCenter().y - Game::getWindow().getView().getSize().y / 6.0f + 100);
 
 			container_.setPosition(showPosition_);
 
-			/*hiddenContainerRect_.setPosition(sf::Vector2f(Game::getWindow().getView().getCenter().x + Game::getWindow().getView().getSize().x / 2.1,
-				Game::getWindow().getView().getCenter().y - Game::getWindow().getView().getSize().y / 6.0f + 100));*/
-			
-			//if (hidden)
+			for (int i = 0; i < items.size(); i++)
 			{
-				/*hiddenPosition_ = sf::Vector2f(hiddenContainerRect_.getPosition().x + container_.getGlobalBounds().width,
-					hiddenContainerRect_.getPosition().y);
-
-				container_.setPosition(hiddenPosition_);*/
+				items[i].setPosition(sf::Vector2f(container_.getPosition().x - container_.getGlobalBounds().width / 2.7,
+					container_.getPosition().y - container_.getGlobalBounds().height/2.5 * i));
 			}
 		}
 
@@ -58,6 +53,14 @@ namespace Illusion
 		void PopUpContainer::draw(sf::RenderTarget &target)
 		{
 			target.draw(container_);
+
+			for (auto &i : items)
+				target.draw(i);
+		}
+
+		void PopUpContainer::addItem(sf::Sprite item)
+		{
+			items.push_back(item);
 		}
 
 		void PopUpContainer::showContainer()

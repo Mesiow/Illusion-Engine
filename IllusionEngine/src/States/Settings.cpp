@@ -31,16 +31,16 @@ namespace Illusion
 			);
 		}
 
-		ResolutionList_ = new gui::DropDownList(sf::Vector2f(400, 100), videoModeStrings, gui::Size::small, 0);
+		ResolutionList_ = new gui::DropDownList(sf::Vector2f(400, 100), videoModeStrings, gui::Size::Small, 0);
 
-		back_ = new gui::Button(sf::Vector2f(90, 540), gui::Size::small);
+		back_ = new gui::Button(sf::Vector2f(90, 540), gui::Size::Small);
 		back_->setText("Back", ResourceManager::getFont("rubik"), 20,
 			sf::Color(85, 85, 85, 200), sf::Color(120, 120, 120, 220), sf::Color(150, 150, 150, 250));
 		back_->setFunction([&]() {
 			_game->changeState<MenuState>(*_game);
 		});
 
-		apply_ = new gui::Button(sf::Vector2f(700, 540), gui::Size::small);
+		apply_ = new gui::Button(sf::Vector2f(700, 540), gui::Size::Small);
 		apply_->setText("Apply", ResourceManager::getFont("rubik"), 20,
 			sf::Color(85, 85, 85, 200), sf::Color(120, 120, 120, 220), sf::Color(150, 150, 150, 250));
 		apply_->setFunction([=]() {

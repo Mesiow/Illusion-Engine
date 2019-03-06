@@ -28,6 +28,7 @@ namespace Illusion
 
 	protected:
 		void updateMousePositions();
+		void updateMouseGridPosition(int gridDimension);
 		void showMouseCoordinates();
 
 	private:
@@ -39,6 +40,6 @@ namespace Illusion
 		sf::Vector2i _mousePosScreen;
 		sf::Vector2f _mousePosView;
 		sf::Vector2i _mousePosWindow;
-		sf::Vector2i _mousePosGrid;
+		sf::Vector2u _mousePosGrid;
 	};
 }

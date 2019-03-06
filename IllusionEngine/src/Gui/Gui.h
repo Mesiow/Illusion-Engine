@@ -9,7 +9,7 @@ namespace Illusion
 	{
 		enum Colors { idleColor = 0, hoverColor = 1, pressColor = 2 };
 		enum Flag { idle = 0, hover = 1, pressed = 2 };
-		enum Size { large = 0, medium = 1, small = 2 };
+		enum class Size { large = 0, medium = 1, Small = 2 };
 
 		using uint = unsigned int;
 

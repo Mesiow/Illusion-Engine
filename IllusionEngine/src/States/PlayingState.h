@@ -1,7 +1,6 @@
 #pragma once
 #include "State.h"
 #include "../Entity/Player.h"
-#include "../LevelEditor/TileMap.h"
 
 namespace Illusion
 {

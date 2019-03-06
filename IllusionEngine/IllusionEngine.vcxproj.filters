@@ -91,10 +91,10 @@
     <ClInclude Include="src\pcHeaders.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\LevelEditor\TileMap.h">
+    <ClInclude Include="src\Gui\PopUpContainer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Gui\PopUpContainer.h">
+    <ClInclude Include="src\LevelEditor\TileMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -162,8 +162,8 @@
     <ClCompile Include="src\Utils\Random.cpp" />
     <ClCompile Include="src\Utils\FPS.cpp" />
     <ClCompile Include="src\pcHeaders.cpp" />
-    <ClCompile Include="src\LevelEditor\TileMap.cpp" />
     <ClCompile Include="src\Gui\PopUpContainer.cpp" />
+    <ClCompile Include="src\LevelEditor\TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Input\editor_state_key_binds.ini">

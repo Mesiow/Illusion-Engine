@@ -9,11 +9,18 @@ namespace Illusion
 	LevelEditor::LevelEditor(sf::Texture &textureSheet)
 		:textureSheet_(textureSheet)
 	{
-		view.reset(sf::FloatRect(0, 0, Game::getWindow().getSize().x, Game::getWindow().getSize().y));
+		view.reset(sf::FloatRect(0.0f, 0.0f, 
+			(float)Game::getWindow().getSize().x, 
+			(float)Game::getWindow().getSize().y));
 		//view.setCenter(sf::Vector2f(Game::getWindow().getPosition().x, Game::getWindow().getPosition().y));
 
-		map_ = new TileMap(textureSheet, 20, 20, 32.0f, 32.0f);
-		
+		map_ = new TileMap(" ", ResourceManager::getTexture("dungeon"), 32, 32, 32, 32);
+
+		selector_.setSize(sf::Vector2f(map_->getTileDimension(), map_->getTileDimension()));
+		selector_.setFillColor(sf::Color::Transparent);
+		selector_.setOutlineThickness(1.0f);
+		selector_.setOutlineColor(sf::Color::Green);
+
 	}
 
 	LevelEditor::~LevelEditor()
@@ -26,29 +33,36 @@ namespace Illusion
 		view.move(x * dt, y * dt);
 	}
 
-	void LevelEditor::addTile(const sf::Vector2i &position, const sf::IntRect &rect)
+	void LevelEditor::addTile(const sf::Vector2u &position, const sf::IntRect &rect)
 	{
-		map_->addTile(Tile(sf::Vector2f(8, 8), sf::Color::White), position);
+		map_->addTile(position);
 	}
 
-	void LevelEditor::deleteTile(const sf::Vector2f &position)
+	void LevelEditor::deleteTile(const sf::Vector2u &position)
 	{
-		map_->deleteTile();
+		map_->removeTile(position);
 	}
 
-	void LevelEditor::update(sf::RenderTarget &target)
+	void LevelEditor::update(sf::RenderTarget &target, sf::Vector2u gridPosition)
 	{
 		target.setView(view);
+
+
+		//if we are in tilemap editing bounds
+		if (gridPosition.x >= 0 && gridPosition.x < map_->getWidth()
+			&& gridPosition.y >= 0 && gridPosition.y < map_->getHeight())
+		{
+			selector_.setPosition(sf::Vector2f(gridPosition.x * map_->getTileDimension(),
+				gridPosition.y * map_->getTileDimension()));
+		}
+		
 	}
 
 
 	void LevelEditor::drawMap(sf::RenderTarget &target)
 	{
-		map_->drawGrid(target);
-		target.draw(*map_);
-	}
-	int LevelEditor::getCellIndex(int x, int y)
-	{
-		return (y * 32) + x;
+		map_->draw(target);
+
+		target.draw(selector_);
 	}
 }

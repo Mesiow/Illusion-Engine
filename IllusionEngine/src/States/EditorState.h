@@ -26,7 +26,5 @@ namespace Illusion
 
 	private:
 		LevelEditor *editor_;
-		gui::PopUpContainer *tileSelectionContainer_;
-		
 	};
 }

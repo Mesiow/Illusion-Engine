@@ -24,6 +24,10 @@ namespace Illusion
 		{
 			editor_->addTile(_mousePosGrid, sf::IntRect(32 * 6, 32 * 8, 32, 32));
 		}
+		else if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+		{
+			editor_->deleteTile(_mousePosGrid);
+		}
 	}
 
 	void EditorState::handleInput(const float &dt)
@@ -40,15 +44,14 @@ namespace Illusion
 
 	void EditorState::handleEvents(sf::Event &e)
 	{
-		tileSelectionContainer_->handleEvents(e);
 		switch (e.type)
 		{
 		case sf::Event::MouseButtonReleased:
 		{
-			if (e.mouseButton.button == sf::Mouse::Right)
+			/*if (e.mouseButton.button == sf::Mouse::Right)
 			{
-				editor_->deleteTile(_mousePosView);
-			}
+				editor_->deleteTile(_mousePosGrid);
+			}*/
 		}
 		break;
 
@@ -65,22 +68,23 @@ namespace Illusion
 
 	void EditorState::update(float &dt)
 	{
-		tileSelectionContainer_->update(dt);
+	
 	}
 
 	void EditorState::update(sf::RenderTarget &target)
 	{
-		editor_->update(target);
+
+		editor_->update(target, _mousePosGrid);
 
 		updateMousePositions();
+		updateMouseGridPosition(editor_->getGridDimension());
+		
 		updateGui();
 	}
 
 	void EditorState::draw(sf::RenderTarget & target)
 	{
 		editor_->drawMap(target);
-
-		tileSelectionContainer_->draw(target);
 		showMouseCoordinates();
 	}
 
@@ -110,10 +114,7 @@ namespace Illusion
 
 	void EditorState::initGui()
 	{
-		tileSelectionContainer_ = new gui::PopUpContainer(
-			sf::Vector2f(Game::getWindow().getPosition().x, Game::getWindow().getPosition().y),
-			sf::Vector2f(32, Game::getWindow().getSize().y / 1.2),
-			sf::Color::Transparent, sf::Color(195, 195, 195, 190));
+		
 	}
 
 	void EditorState::updateGui()

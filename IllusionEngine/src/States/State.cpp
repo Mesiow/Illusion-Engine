@@ -9,12 +9,14 @@ namespace Illusion
 		this->_mousePosScreen = sf::Mouse::getPosition();
 		this->_mousePosWindow = sf::Mouse::getPosition(Game::getWindow());
 		this->_mousePosView = Game::getWindow().mapPixelToCoords(_mousePosWindow); //map pixel on the window to coordinates
-
-		this->_mousePosGrid.x = (int)this->_mousePosView.x / 32;
-		this->_mousePosGrid.y = (int)this->_mousePosView.y / 32;
 	}
 
-	
+	void State::updateMouseGridPosition(int gridDimension)
+	{
+		this->_mousePosGrid.x = (int)this->_mousePosView.x / gridDimension;
+		this->_mousePosGrid.y = (int)this->_mousePosView.y / gridDimension;
+	}
+
 	void State::showMouseCoordinates()
 	{
 

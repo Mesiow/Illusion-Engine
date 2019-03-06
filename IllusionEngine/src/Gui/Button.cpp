@@ -26,7 +26,7 @@ namespace Illusion
 			case Size::medium:
 				button_.setSize(getButtonSize(size));
 
-			case Size::small:
+			case Size::Small:
 				button_.setSize(getButtonSize(size));
 				break;
 			}

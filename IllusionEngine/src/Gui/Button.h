@@ -16,7 +16,7 @@ namespace Illusion
 			case Size::medium:
 				return sf::Vector2f(156, 80);
 
-			case Size::small:
+			case Size::Small:
 				return sf::Vector2f(156, 40);
 
 			default:

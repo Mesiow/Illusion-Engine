@@ -12,14 +12,17 @@ namespace Illusion
 				sf::Color color, sf::Color outlineColor);
 			~PopUpContainer();
 
-			void update(float &dt)override;
+			void update();
 			void handleEvents(sf::Event &e)override;
 			void draw(sf::RenderTarget &target)override;
 
 		public:
+			void addItem(sf::Sprite item);
 			void showContainer();
 
 		private:
+			std::vector<sf::Sprite> items;
+
 			sf::RectangleShape container_;
 			sf::RectangleShape hiddenContainerRect_;
 
