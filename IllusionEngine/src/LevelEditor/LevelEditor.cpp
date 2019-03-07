@@ -54,8 +54,7 @@ namespace Illusion
 		{
 			selector_.setPosition(sf::Vector2f(gridPosition.x * map_->getTileDimension(),
 				gridPosition.y * map_->getTileDimension()));
-		}
-		
+		}	
 	}
 
 

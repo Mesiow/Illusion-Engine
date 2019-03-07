@@ -19,13 +19,14 @@ namespace Illusion
 			void removeTile(sf::Vector2u position);
 
     	public:
-			/*void loadMap(const std::string &path);
-			void saveMap();*/
+			bool loadMap(const std::string &path);
+			bool saveMap();
 
 	    public:
 			Tile &getTileAtIndex(int index);
 			int getTileIndex(int x, int y);
 			int getTileDimension()const { return tileWorldDim_; }
+			bool isInGrid(const sf::Vector2u &position);
 
     	public:
 			int getWidth()const { return width_; }
@@ -34,11 +35,10 @@ namespace Illusion
 			sf::FloatRect getBorderBounds()const { return border_.getGlobalBounds(); }
 
 		private:
-			std::vector<Tile> tiles_;
+			std::vector<Tile*> tiles_;
 			sf::RectangleShape border_;
 
 			sf::Texture &sheet_;
-
 
 			int mapSize_;
 			int width_;

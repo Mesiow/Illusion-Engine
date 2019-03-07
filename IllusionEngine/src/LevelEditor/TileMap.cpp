@@ -6,8 +6,10 @@ namespace Illusion
 
 	TileMap::TileMap(const std::string &path, sf::Texture &sheet, int width, int height, 
 		int tileTextureDim, int tileWorldDim)
-		:sheet_(sheet), tileWorldDim_(tileWorldDim)
+		:sheet_(sheet)
 	{
+		this->tileWorldDim_ = tileWorldDim;
+		this->tileTextureDim_ = tileTextureDim;
 		this->width_ = width;
 		this->height_ = height;
 		this->mapSize_ = width * height;
@@ -21,7 +23,11 @@ namespace Illusion
 
 	TileMap::~TileMap()
 	{
-		
+		for (std::size_t i = 0; i < tiles_.size(); i++)
+		{
+			if (tiles_[i] != nullptr) //delete if not already null
+				delete tiles_[i];
+		}
 	}
 
 
@@ -31,37 +37,61 @@ namespace Illusion
 		if (tiles_.size() > 0)
 		{
 			for (std::size_t i = 0; i < tiles_.size(); ++i)
-				tiles_[i].draw(target);
+			{
+				if (tiles_[i] != nullptr) //draw if there is a tile
+					tiles_[i]->draw(target);
+			}
 		}
 	}
 
 	void TileMap::initTiles(int width, int height)
 	{
-		tiles_.reserve(width * height);
+		tiles_.resize(width * height, nullptr); //resize grid with nullptrs
 	}
 
 	void TileMap::addTile(sf::Vector2u position)
 	{
-		tiles_.push_back(
-			Tile(
-			sf::Vector2f(position.x * tileWorldDim_, position.y * tileWorldDim_),
-			sf::Vector2f(tileWorldDim_, tileWorldDim_),
-			sf::Color::White)
-		);
+		if (isInGrid(position))
+		{
+			int index = getTileIndex(position.x, position.y);
+
+			tiles_[index] = new Tile(sf::Vector2f(position.x * tileWorldDim_, position.y * tileWorldDim_),
+				sf::Vector2f(tileWorldDim_, tileWorldDim_),
+				sf::Color::White); //add a tile at the specified index according to the grid position passed in
+		}
 	}
 
 	void TileMap::removeTile(sf::Vector2u position)
 	{
 		if (tiles_.size() > 0)
 		{
-			int index = getTileIndex(position.x / tileWorldDim_, position.y / tileWorldDim_);
-			tiles_.erase(tiles_.begin() + index);
+			//if we are trying to place a tile within map space
+			if (isInGrid(position))
+			{
+				int index = getTileIndex(position.x, position.y);
+
+				if (tiles_[index] != nullptr)
+				{
+					delete tiles_[index]; //free tile
+					tiles_[index] = nullptr; //set tile at index to null
+				}
+			}
 		}
+	}
+
+	bool TileMap::loadMap(const std::string & path)
+	{
+		return false;
+	}
+
+	bool TileMap::saveMap()
+	{
+		return false;
 	}
 
 	Tile &TileMap::getTileAtIndex(int index)
 	{
-		return tiles_[index];
+		return *tiles_[index];
 	}
 
 	int TileMap::getTileIndex(int x, int y)
@@ -69,9 +99,11 @@ namespace Illusion
 		return (y * width_) + x;
 	}
 
-
-
-
+	bool TileMap::isInGrid(const sf::Vector2u & position)
+	{
+		return (position.x >= 0 && position.x < width_
+			&& position.y >= 0 && position.y < height_);
+	}
 
 
 
