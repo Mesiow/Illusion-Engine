@@ -10,9 +10,8 @@ namespace Illusion
 		this->tileWorldDim_ = tileWorldDim;
 		this->width_ = width;
 		this->height_ = height;
-		this->mapSize_ = width * height;
 		initTiles(width, height);
-		border_.setSize(sf::Vector2f(mapSize_, mapSize_));
+		border_.setSize(sf::Vector2f(width * tileWorldDim, height * tileWorldDim)); //calculate size of entire map/level
 		border_.setPosition(0, 0);
 		border_.setFillColor(sf::Color::Transparent);
 		border_.setOutlineThickness(1.0f);

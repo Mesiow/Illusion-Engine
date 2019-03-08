@@ -47,7 +47,6 @@ namespace Illusion
 	{
 		target.setView(view);
 
-
 		//if we are in tilemap editing bounds
 		if (gridPosition.x >= 0 && gridPosition.x < map_->getWidth()
 			&& gridPosition.y >= 0 && gridPosition.y < map_->getHeight())

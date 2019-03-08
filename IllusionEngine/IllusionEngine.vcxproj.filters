@@ -22,9 +22,6 @@
     <ClInclude Include="src\Utils\Keyboard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\States\EditorState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\States\MenuState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -100,15 +97,18 @@
     <ClInclude Include="src\Utils\UtilityFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\States\EditorStates\EditorState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\States\EditorStates\EditorSetupState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\AnimationComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Utils\Controller.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\States\EditorState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Entity\Entity.cpp">
@@ -168,6 +168,10 @@
     <ClCompile Include="src\Gui\PopUpContainer.cpp" />
     <ClCompile Include="src\LevelEditor\TileMap.cpp" />
     <ClCompile Include="src\Utils\UtilityFunctions.cpp" />
+    <ClCompile Include="src\States\EditorStates\EditorState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\States\EditorStates\EditorSetupState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Input\editor_state_key_binds.ini">

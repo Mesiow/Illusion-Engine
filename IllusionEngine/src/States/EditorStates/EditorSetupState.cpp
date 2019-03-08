@@ -1,23 +1,19 @@
-#include "../pcHeaders.h"
+#include "../../pcHeaders.h"
+#include "EditorSetupState.h"
+#include "../../Game.h"
 #include "EditorState.h"
-#include "../Game.h"
-#include "MenuState.h"
 
 namespace Illusion
 {
-	EditorState::EditorState(Game &game)
+	EditorSetupState::EditorSetupState(Game &game)
 		:State(game)
 	{
-	    initKeyBinds();
 		initGui();
 		initText();
-		editor_ = nullptr;
 	}
 
-	EditorState::~EditorState()
+	EditorSetupState::~EditorSetupState()
 	{
-		delete this->editor_;
-
 		for (auto &i : options_)
 			delete i.second;
 
@@ -25,92 +21,23 @@ namespace Illusion
 		delete backButton_;
 	}
 
-	void EditorState::handleInput()
+	void EditorSetupState::update(float &dt)
 	{
-		if (sf::Mouse::isButtonPressed)
-		{
-			if (editor_ != nullptr)
-			{
-				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-				{
-					editor_->addTile(_mousePosGrid, sf::IntRect(32 * 6, 32 * 8, 32, 32));
-				}
-				else if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
-				{
-					editor_->deleteTile(_mousePosGrid);
-				}
-			}
-		}
+		updateMousePositions();
+		updateGui();
 	}
 
-	void EditorState::handleInput(const float &dt)
-	{
-		if (editor_ != nullptr)
-		{
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-				editor_->moveView(0.0f, -200.0f, dt);
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-				editor_->moveView(-200.0f, 0.0f, dt);
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-				editor_->moveView(0.0f, 200.0f, dt);
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-				editor_->moveView(200.0f, 0.0f, dt);
-		}
-	}
-
-	void EditorState::handleEvents(sf::Event &e)
+	void EditorSetupState::handleEvents(sf::Event &e)
 	{
 		for (auto &i : options_)
 			i.second->handleEvents(e); //handle gui events
 
 		for (auto &b : buttons_)
 			b.handleEvents(e);
-
-		switch (e.type)
-		{
-		case sf::Event::MouseButtonReleased:
-		{
-			/*if (e.mouseButton.button == sf::Mouse::Right)
-			{
-				editor_->deleteTile(_mousePosGrid);
-			}*/
-		}
-		break;
-
-		case sf::Event::KeyPressed:
-		{
-		 if (e.key.code == Keyboard::getCurrentKeyBinds().at("BACK"))
-			{
-				_game->changeState<MenuState>(*_game);
-			}
-		}
-		break;
-		}
 	}
 
-	void EditorState::update(float &dt)
+	void EditorSetupState::draw(sf::RenderTarget &target)
 	{
-		
-	}
-
-	void EditorState::update(sf::RenderTarget &target)
-	{
-		if(editor_!=nullptr)
-			editor_->update(target, _mousePosGrid);
-
-		updateMousePositions();
-
-		if(editor_ != nullptr)
-			updateMouseGridPosition(editor_->getGridDimension());
-		
-		updateGui();
-	}
-
-	void EditorState::draw(sf::RenderTarget &target)
-	{
-		if(editor_ != nullptr)
-			editor_->drawMap(target);
-
 		for (auto &i : options_)
 			i.second->draw(target); //draw options gui , drop down list
 
@@ -119,36 +46,18 @@ namespace Illusion
 
 		for (auto &b : buttons_)
 			b.draw(target);
-
-
-		showMouseCoordinates();
 	}
 
-	void EditorState::initKeyBinds()
+	void EditorSetupState::updateGui()
 	{
-			std::fstream file("res/Input/editor_state_key_binds.ini");
+		for (auto &i : options_)
+			i.second->update();
 
-			if (!file.is_open())
-				throw("File failed to open key binds");
-
-			keyMapBinds map;
-
-			std::string action;
-			std::string key;
-
-			while (!file.eof())
-			{
-				file >> action >> key;
-				map[action] = Keyboard::getSupportedKeys().at(key); //map action to supported key at location key in supported key map
-			}
-
-			file.close();
-
-			Keyboard::addKeyBinds(map);
-			Keyboard::printBoundKeys();
+		for (auto &b : buttons_)
+			b.update();
 	}
 
-	void EditorState::initGui()
+	void EditorSetupState::initGui()
 	{
 		const std::vector<std::string> mapSizes{ "64 x 64", "48 x 48", "32 x 32" };
 		options_["Map_Sizes"] = new gui::DropDownList(sf::Vector2f(150, 200), mapSizes, gui::Size::Small, 0);
@@ -191,8 +100,8 @@ namespace Illusion
 			std::string tileDimstr = options_["Grid_Dimensions"]->getActiveButton()->getString();
 			int tileDim = std::stoi(tileDimstr);
 
-			//create editor based on input
-			editor_ = new LevelEditor(ResourceManager::getTexture("dungeon"), width, height, tileDim);
+			//create editor state based on input
+			_game->changeState<EditorState>(*_game, width, height, tileDim);
 		});
 
 		buttons_.push_back(*createButton_);
@@ -208,7 +117,7 @@ namespace Illusion
 		buttons_.push_back(*backButton_);
 	}
 
-	void EditorState::initText()
+	void EditorSetupState::initText()
 	{
 		//Map Size
 		mapSizeText_.setFont(ResourceManager::getFont("rubik"));
@@ -224,7 +133,7 @@ namespace Illusion
 			);
 		}
 		optionsTexts_.push_back(mapSizeText_);
-		
+
 		//Tile Dim
 
 		tileDimText_ = mapSizeText_;
@@ -243,7 +152,7 @@ namespace Illusion
 
 		textureLoadText_ = mapSizeText_;
 		textureLoadText_.setString("Texture Sheet");
-		
+
 		{
 			auto button = options_["Texture_Sheets"]->getActiveButton();
 			textureLoadText_.setPosition(sf::Vector2f(
@@ -252,14 +161,5 @@ namespace Illusion
 			);
 		}
 		optionsTexts_.push_back(textureLoadText_);
-	}
-
-	void EditorState::updateGui()
-	{
-		for (auto &i : options_)
-			i.second->update();
-
-		for (auto &b : buttons_)
-			b.update();
 	}
 }

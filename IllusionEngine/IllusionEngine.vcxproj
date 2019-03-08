@@ -37,7 +37,8 @@
     <ClInclude Include="src\LevelEditor\LevelEditor.h" />
     <ClInclude Include="src\LevelEditor\Tile.h" />
     <ClInclude Include="src\ResourceManagement\ResourceManager.h" />
-    <ClInclude Include="src\States\EditorState.h" />
+    <ClInclude Include="src\States\EditorStates\EditorSetupState.h" />
+    <ClInclude Include="src\States\EditorStates\EditorState.h" />
     <ClInclude Include="src\States\MenuState.h" />
     <ClInclude Include="src\States\PauseState.h" />
     <ClInclude Include="src\States\PlayingState.h" />
@@ -92,7 +93,18 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pcHeaders.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="src\ResourceManagement\ResourceManager.cpp" />
-    <ClCompile Include="src\States\EditorState.cpp" />
+    <ClCompile Include="src\States\EditorStates\EditorSetupState.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../pcHeaders.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../pcHeaders.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pcHeaders.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../pcHeaders.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="src\States\EditorStates\EditorState.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../pcHeaders.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../pcHeaders.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pcHeaders.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../pcHeaders.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="src\States\MenuState.cpp" />
     <ClCompile Include="src\States\PauseState.cpp" />
     <ClCompile Include="src\States\PlayingState.cpp" />

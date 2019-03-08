@@ -1,7 +1,7 @@
 #include "../pcHeaders.h"
 #include "MenuState.h"
 #include "../Game.h"
-#include "EditorState.h"
+#include "EditorStates/EditorSetupState.h"
 #include "Settings.h"
 #include "PlayingState.h"
 
@@ -53,7 +53,7 @@ namespace Illusion
 		});
 
 		menu->setButtonFunction("Editor", [&]() {
-			_game->pushState<EditorState>(*_game);
+			_game->pushState<EditorSetupState>(*_game);
 		});
 
 		menu->setButtonFunction("Settings", [&]() {
