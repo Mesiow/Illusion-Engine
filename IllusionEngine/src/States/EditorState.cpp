@@ -11,7 +11,7 @@ namespace Illusion
 	    initKeyBinds();
 		initGui();
 		initText();
-		//editor_ = new LevelEditor(ResourceManager::getTexture("dungeon"));
+		editor_ = nullptr;
 	}
 
 	EditorState::~EditorState()
@@ -29,27 +29,33 @@ namespace Illusion
 	{
 		if (sf::Mouse::isButtonPressed)
 		{
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			if (editor_ != nullptr)
 			{
-				//editor_->addTile(_mousePosGrid, sf::IntRect(32 * 6, 32 * 8, 32, 32));
-			}
-			else if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
-			{
-				//editor_->deleteTile(_mousePosGrid);
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+				{
+					editor_->addTile(_mousePosGrid, sf::IntRect(32 * 6, 32 * 8, 32, 32));
+				}
+				else if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+				{
+					editor_->deleteTile(_mousePosGrid);
+				}
 			}
 		}
 	}
 
 	void EditorState::handleInput(const float &dt)
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-			editor_->moveView(0.0f, -200.0f, dt);
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-			editor_->moveView(-200.0f, 0.0f, dt);
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-			editor_->moveView(0.0f, 200.0f, dt);
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-			editor_->moveView(200.0f, 0.0f, dt);
+		if (editor_ != nullptr)
+		{
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+				editor_->moveView(0.0f, -200.0f, dt);
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+				editor_->moveView(-200.0f, 0.0f, dt);
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+				editor_->moveView(0.0f, 200.0f, dt);
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+				editor_->moveView(200.0f, 0.0f, dt);
+		}
 	}
 
 	void EditorState::handleEvents(sf::Event &e)
@@ -84,23 +90,26 @@ namespace Illusion
 
 	void EditorState::update(float &dt)
 	{
-		//ResourceManager::loadTexture("dungeon", "res/Assets/Dungeon_Tileset.png");
+		
 	}
 
 	void EditorState::update(sf::RenderTarget &target)
 	{
 
-		//editor_->update(target, _mousePosGrid);
+		editor_->update(target, _mousePosGrid);
 
 		updateMousePositions();
-		//updateMouseGridPosition(editor_->getGridDimension());
+
+		if(editor_ != nullptr)
+			updateMouseGridPosition(editor_->getGridDimension());
 		
 		updateGui();
 	}
 
 	void EditorState::draw(sf::RenderTarget &target)
 	{
-	//	editor_->drawMap(target);
+		if(editor_ != nullptr)
+			editor_->drawMap(target);
 
 		for (auto &i : options_)
 			i.second->draw(target); //draw options gui , drop down list
@@ -163,6 +172,14 @@ namespace Illusion
 		createButton_ = new gui::Button(sf::Vector2f(Game::getWindow().getSize().x - 50, Game::getWindow().getSize().y - 50), gui::Size::Small);
 		createButton_->setText(std::string("Create"), ResourceManager::getFont("rubik"), 20,
 			sf::Color(70, 70, 70, 200), sf::Color(100, 100, 100, 230), sf::Color(150, 150, 150, 255));
+		createButton_->setFunction([&]() {
+
+			//TODO: parse out grid width and height and store them in integers to pass into the level Editor
+			auto current = options_["Map_Sizes"]->getActiveButton();
+			int width=std::atoi(current->getString().c_str());
+
+			editor_ = new LevelEditor(ResourceManager::getTexture("dungeon"), width);
+		});
 
 		buttons_.push_back(*createButton_);
 
@@ -170,9 +187,11 @@ namespace Illusion
 			gui::Size::Small);
 		backButton_->setText(std::string("Back"), ResourceManager::getFont("rubik"), 20,
 			sf::Color(70, 70, 70, 200), sf::Color(100, 100, 100, 230), sf::Color(150, 150, 150, 255));
+		backButton_->setFunction([&]() {
+			_game->pop();
+		});
 
 		buttons_.push_back(*backButton_);
-
 	}
 
 	void EditorState::initText()

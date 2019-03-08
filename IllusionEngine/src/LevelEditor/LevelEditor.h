@@ -9,7 +9,7 @@ namespace Illusion
 	class LevelEditor
 	{
 	public:
-		LevelEditor(sf::Texture &textureSheet);
+		LevelEditor(sf::Texture &textureSheet, int gridWidth, int gridHeight, int tileWorldDim);
 		~LevelEditor();
 
 	public:

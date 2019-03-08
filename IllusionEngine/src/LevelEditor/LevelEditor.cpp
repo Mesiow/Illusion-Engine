@@ -6,7 +6,7 @@
 
 namespace Illusion
 {
-	LevelEditor::LevelEditor(sf::Texture &textureSheet)
+	LevelEditor::LevelEditor(sf::Texture &textureSheet, int gridWidth, int gridHeight, int tileWorldDim)
 		:textureSheet_(textureSheet)
 	{
 		view.reset(sf::FloatRect(0.0f, 0.0f, 
@@ -14,7 +14,7 @@ namespace Illusion
 			(float)Game::getWindow().getSize().y));
 		//view.setCenter(sf::Vector2f(Game::getWindow().getPosition().x, Game::getWindow().getPosition().y));
 
-		map_ = new TileMap(" ", ResourceManager::getTexture("dungeon"), 32, 32, 32, 32);
+		map_ = new TileMap(textureSheet, gridWidth, gridHeight, tileWorldDim);
 
 		selector_.setSize(sf::Vector2f(map_->getTileDimension(), map_->getTileDimension()));
 		selector_.setFillColor(sf::Color::Transparent);

@@ -4,12 +4,10 @@ namespace Illusion
 {
 
 
-	TileMap::TileMap(const std::string &path, sf::Texture &sheet, int width, int height, 
-		int tileTextureDim, int tileWorldDim)
+	TileMap::TileMap(sf::Texture &sheet, int width, int height, int tileWorldDim)
 		:sheet_(sheet)
 	{
 		this->tileWorldDim_ = tileWorldDim;
-		this->tileTextureDim_ = tileTextureDim;
 		this->width_ = width;
 		this->height_ = height;
 		this->mapSize_ = width * height;

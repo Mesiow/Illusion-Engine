@@ -5,10 +5,8 @@ namespace Illusion
 {
 	class TileMap
 	{
-		
 		public:
-			TileMap(const std::string &path, sf::Texture &sheet, int width, int height,
-				int tileTextureDim, int tileWorldDim);
+			TileMap(sf::Texture &sheet, int width, int height, int tileWorldDim);
 			~TileMap();
 
 		public:
