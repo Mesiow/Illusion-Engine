@@ -49,6 +49,7 @@ namespace Illusion
 			void setFunction(std::function<void(void)> func); //pass in pointer to func that returns void and takes no parameters
 
 		public:
+			sf::FloatRect getBounds()const { return button_.getGlobalBounds(); }
 			sf::Vector2f getPosition()const;
 			std::string getString()const { return text_.getString(); }
 
