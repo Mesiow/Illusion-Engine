@@ -95,8 +95,8 @@ namespace Illusion
 
 	void EditorState::update(sf::RenderTarget &target)
 	{
-
-		editor_->update(target, _mousePosGrid);
+		if(editor_!=nullptr)
+			editor_->update(target, _mousePosGrid);
 
 		updateMousePositions();
 
@@ -174,11 +174,25 @@ namespace Illusion
 			sf::Color(70, 70, 70, 200), sf::Color(100, 100, 100, 230), sf::Color(150, 150, 150, 255));
 		createButton_->setFunction([&]() {
 
-			//TODO: parse out grid width and height and store them in integers to pass into the level Editor
-			auto current = options_["Map_Sizes"]->getActiveButton();
-			int width=std::atoi(current->getString().c_str());
+			//Parse out grid width and height and store them in integers to pass into the level Editor
 
-			editor_ = new LevelEditor(ResourceManager::getTexture("dungeon"), width);
+			std::string sizestr = options_["Map_Sizes"]->getActiveButton()->getString();
+
+			std::string widthstr = util::string::getSubStr(sizestr, "x", 0,
+				util::string::getDelimiterPos(sizestr, "x"));
+
+			std::string heightstr = util::string::getSubStr(sizestr, "x",
+				util::string::getDelimiterPos(sizestr, "x") + 2, sizestr.size());
+
+			int width = std::stoi(widthstr); //convert string to integer
+			int height = std::stoi(heightstr);
+
+			//tile dim
+			std::string tileDimstr = options_["Grid_Dimensions"]->getActiveButton()->getString();
+			int tileDim = std::stoi(tileDimstr);
+
+			//create editor based on input
+			editor_ = new LevelEditor(ResourceManager::getTexture("dungeon"), width, height, tileDim);
 		});
 
 		buttons_.push_back(*createButton_);

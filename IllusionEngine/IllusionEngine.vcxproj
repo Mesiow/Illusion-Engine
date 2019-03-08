@@ -48,6 +48,7 @@
     <ClInclude Include="src\Utils\FPS.h" />
     <ClInclude Include="src\Utils\Keyboard.h" />
     <ClInclude Include="src\Utils\Random.h" />
+    <ClInclude Include="src\Utils\UtilityFunctions.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Gui\PopUpContainer.cpp" />
@@ -102,6 +103,7 @@
     <ClCompile Include="src\Utils\FPS.cpp" />
     <ClCompile Include="src\Utils\Keyboard.cpp" />
     <ClCompile Include="src\Utils\Random.cpp" />
+    <ClCompile Include="src\Utils\UtilityFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Input\editor_state_key_binds.ini" />

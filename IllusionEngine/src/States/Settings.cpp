@@ -46,13 +46,14 @@ namespace Illusion
 		apply_->setFunction([=]() {
 
 			std::string string = ResolutionList_->getActiveButton()->getString();
-			std::string delimiter = "x";
-			std::size_t pos = string.find(delimiter); //position of the "x" in the string
 
-			//retrive width part of string by extracting
-			//a substring starting at position 0 up until "x"
-			std::string widthStr = string.substr(0, pos);
-			std::string heightStr = string.substr(pos + 2, string.size()); //get height after "x" character
+
+			std::string widthStr = util::string::getSubStr(string, "x", 0, //retrieve width string before x delimiter
+				util::string::getDelimiterPos(string, "x"));
+
+			std::string heightStr = util::string::getSubStr(string, "x",
+				util::string::getDelimiterPos(string, "x") + 2, string.size()); //get height after "x" delimiter
+
 
 			int resWidth = std::stoi(widthStr);
 			int resHeight = std::stoi(heightStr);

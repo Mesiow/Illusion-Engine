@@ -2,6 +2,7 @@
 #include "State.h"
 #include "../Gui/DropDownList.h"
 #include "../Gui/Slider.h"
+#include "../Utils/UtilityFunctions.h"
 
 namespace Illusion
 {
