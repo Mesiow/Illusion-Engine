@@ -5,12 +5,12 @@
 
 namespace Illusion
 {
-	EditorState::EditorState(Game &game,
+	EditorState::EditorState(Game &game, sf::Texture &sheet,
 		int mapWidth, int mapHeight, int tileDim)
 		:State(game)
 	{
 	    initKeyBinds();
-		editor_ = new LevelEditor(ResourceManager::getTexture("dungeon"), mapWidth, mapHeight, tileDim);
+		editor_ = new LevelEditor(sheet, mapWidth, mapHeight, tileDim);
 	}
 
 	EditorState::~EditorState()
@@ -20,17 +20,16 @@ namespace Illusion
 
 	void EditorState::handleInput()
 	{
-		if (sf::Mouse::isButtonPressed)
+		
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-			{
-					editor_->addTile(_mousePosGrid);
-			}
-			else if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
-			{
-					editor_->deleteTile(_mousePosGrid);
-			}
+				editor_->addTile(_mousePosGrid);
 		}
+		else if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+		{
+				editor_->deleteTile(_mousePosGrid);
+		}
+		
 	}
 
 	void EditorState::handleInput(const float &dt)
@@ -51,10 +50,16 @@ namespace Illusion
 		{
 		case sf::Event::MouseButtonReleased:
 		{
-			/*if (e.mouseButton.button == sf::Mouse::Right)
+			/*if (e.mouseButton.button == sf::Mouse::)
 			{
 				editor_->deleteTile(_mousePosGrid);
 			}*/
+		}
+		break;
+
+		case sf::Event::KeyReleased:
+		{
+			
 		}
 		break;
 

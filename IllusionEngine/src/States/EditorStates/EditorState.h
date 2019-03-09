@@ -11,7 +11,7 @@ namespace Illusion
 	class EditorState : public State
 	{
 	public:
-		EditorState(Game &game, int mapWidth, int mapHeight, int tileDim);
+		EditorState(Game &game, sf::Texture &sheet, int mapWidth, int mapHeight, int tileDim);
 		~EditorState();
 
 	public:

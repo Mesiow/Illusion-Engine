@@ -14,20 +14,28 @@ namespace Illusion
 
 	public:
 		void moveView(const float x, const float y, const float &dt);
+		void zoomView(float z);
 		void addTile(const sf::Vector2u &position, const sf::IntRect &rect = sf::IntRect(0, 0, 32, 32));
 		void deleteTile(const sf::Vector2u &position);
 		void update(sf::RenderTarget &target, sf::Vector2u gridPosition=sf::Vector2u(0,0));
 		void updateSelectorRect(const sf::Vector2u &gridPosition);
 		void draw(sf::RenderTarget &target);
 
+
+		void initTextureSheetRect();
+
+
 	public:
 		bool isInLevelBounds(const sf::Vector2u &position);
+		bool isInTextureSheetBounds(const sf::Vector2u &position);
 
 		int getGridDimension()const { return map_->getTileDimension(); }
 		sf::View &getView() { return view; }
 
 	private:
 		sf::RectangleShape sheetRect_; //shows all the tiles in the texture we can use
+		sf::RectangleShape sheetBorderRect_;
+
 		sf::Texture &textureSheet_; //actual texture sheet
 		TileMap *map_;
 

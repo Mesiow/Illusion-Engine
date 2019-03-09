@@ -71,7 +71,7 @@ namespace Illusion
 		);
 
 
-		const std::vector<std::string> sheets{ "Dungeon_Tileset.png" };
+		const std::vector<std::string> sheets{ "dungeon" };
 		options_["Texture_Sheets"] = new gui::DropDownList
 		(
 			sf::Vector2f(Game::getWindow().getSize().x / 1.5f + gui::getButtonSize(gui::Size::Small).x, 200),
@@ -100,8 +100,10 @@ namespace Illusion
 			std::string tileDimstr = options_["Grid_Dimensions"]->getActiveButton()->getString();
 			int tileDim = std::stoi(tileDimstr);
 
+			std::string textureSheet = options_["Texture_Sheets"]->getActiveButton()->getString();
+
 			//create editor state based on input
-			_game->changeState<EditorState>(*_game, width, height, tileDim);
+			_game->changeState<EditorState>(*_game, ResourceManager::getTexture(textureSheet), width, height, tileDim);
 		});
 
 		buttons_.push_back(*createButton_);
