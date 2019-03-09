@@ -24,7 +24,7 @@ namespace Illusion
 		{
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-					editor_->addTile(_mousePosGrid, sf::IntRect(32 * 6, 32 * 8, 32, 32));
+					editor_->addTile(_mousePosGrid);
 			}
 			else if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 			{
@@ -36,13 +36,13 @@ namespace Illusion
 	void EditorState::handleInput(const float &dt)
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-				editor_->moveView(0.0f, -200.0f, dt);
+				editor_->moveView(0.0f, -400.0f, dt);
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-				editor_->moveView(-200.0f, 0.0f, dt);
+				editor_->moveView(-400.0f, 0.0f, dt);
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-				editor_->moveView(0.0f, 200.0f, dt);
+				editor_->moveView(0.0f, 400.0f, dt);
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-				editor_->moveView(200.0f, 0.0f, dt);
+				editor_->moveView(400.0f, 0.0f, dt);
 	}
 
 	void EditorState::handleEvents(sf::Event &e)
@@ -80,7 +80,7 @@ namespace Illusion
 
 	void EditorState::draw(sf::RenderTarget &target)
 	{
-		editor_->drawMap(target);
+		editor_->draw(target);
 
 		showMouseCoordinates();
 	}

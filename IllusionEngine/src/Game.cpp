@@ -23,7 +23,7 @@ namespace Illusion
 
 	void Game::initWindow()
 	{
-		std::fstream windowFile("res/Window/window_setup.ini");
+		std::fstream windowFile("res/Config/window_setup.ini");
 
 		if (!windowFile.is_open())
 			throw("ERROR: window_setup.ini failed to open");

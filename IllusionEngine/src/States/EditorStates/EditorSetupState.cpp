@@ -60,13 +60,13 @@ namespace Illusion
 	void EditorSetupState::initGui()
 	{
 		const std::vector<std::string> mapSizes{ "64 x 64", "48 x 48", "32 x 32" };
-		options_["Map_Sizes"] = new gui::DropDownList(sf::Vector2f(150, 200), mapSizes, gui::Size::Small, 0);
+		options_["Map_Sizes"] = new gui::DropDownList(sf::Vector2f(Game::getWindow().getSize().x / 6.0f, 200), mapSizes, gui::Size::Small, 0);
 
 
 		const std::vector<std::string> gridDimensions{ "32", "16" };
 		options_["Grid_Dimensions"] = new gui::DropDownList
 		(
-			sf::Vector2f(245 + gui::getButtonSize(gui::Size::Small).x, 200),
+			sf::Vector2f(Game::getWindow().getSize().x / 2.7f + gui::getButtonSize(gui::Size::Small).x, 200),
 			gridDimensions, gui::Size::Small, 0
 		);
 
@@ -74,7 +74,7 @@ namespace Illusion
 		const std::vector<std::string> sheets{ "Dungeon_Tileset.png" };
 		options_["Texture_Sheets"] = new gui::DropDownList
 		(
-			sf::Vector2f(490 + gui::getButtonSize(gui::Size::Small).x, 200),
+			sf::Vector2f(Game::getWindow().getSize().x / 1.5f + gui::getButtonSize(gui::Size::Small).x, 200),
 			sheets, gui::Size::Small, 0
 		);
 

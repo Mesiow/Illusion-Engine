@@ -3,7 +3,6 @@
 
 int main()
 {
-
 	Illusion::Game game;
 	game.run();
 

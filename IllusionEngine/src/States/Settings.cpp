@@ -31,22 +31,24 @@ namespace Illusion
 			);
 		}
 
-		ResolutionList_ = new gui::DropDownList(sf::Vector2f(400, 100), videoModeStrings, gui::Size::Small, 0);
+		ResolutionList_ = new gui::DropDownList(sf::Vector2f(Game::getWindow().getSize().x/2.0f, Game::getWindow().getSize().y / 10.0f),
+			videoModeStrings, gui::Size::Small, 0);
 
-		back_ = new gui::Button(sf::Vector2f(90, 540), gui::Size::Small);
+		back_ = new gui::Button(sf::Vector2f(50, Game::getWindow().getSize().y - 50),
+			gui::Size::Small);
 		back_->setText("Back", ResourceManager::getFont("rubik"), 20,
 			sf::Color(85, 85, 85, 200), sf::Color(120, 120, 120, 220), sf::Color(150, 150, 150, 250));
 		back_->setFunction([&]() {
 			_game->changeState<MenuState>(*_game);
 		});
 
-		apply_ = new gui::Button(sf::Vector2f(700, 540), gui::Size::Small);
+		apply_ = new gui::Button(sf::Vector2f(Game::getWindow().getSize().x - 50, Game::getWindow().getSize().y - 50),
+			gui::Size::Small);
 		apply_->setText("Apply", ResourceManager::getFont("rubik"), 20,
 			sf::Color(85, 85, 85, 200), sf::Color(120, 120, 120, 220), sf::Color(150, 150, 150, 250));
 		apply_->setFunction([=]() {
 
 			std::string string = ResolutionList_->getActiveButton()->getString();
-
 
 			std::string widthStr = util::string::getSubStr(string, "x", 0, //retrieve width string before x delimiter
 				util::string::getDelimiterPos(string, "x"));
@@ -61,11 +63,13 @@ namespace Illusion
 			_game->getWindow().create(sf::VideoMode(resWidth, resHeight), _game->getWindowTitle(), sf::Style::Default); //re-create the window
 			_game->getWindow().setFramerateLimit(FPS_LIMIT);
 
+			_game->changeState<MenuState>(*_game);
 		});
 
 
 
-		slider_ = new gui::Slider(sf::Vector2f(300, 500), sf::Vector2f(15, 30),
+		slider_ = new gui::Slider(sf::Vector2f(Game::getWindow().getSize().x /9.0f, Game::getWindow().getSize().y / 10.0f),
+			sf::Vector2f(15, 30),
 			sf::Color(85, 85, 85, 200), sf::Color(120, 120, 120, 220), sf::Color(150, 150, 150, 250));
 	}
 

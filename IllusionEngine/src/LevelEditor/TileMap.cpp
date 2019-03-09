@@ -52,9 +52,14 @@ namespace Illusion
 		{
 			int index = getTileIndex(position.x, position.y);
 
-			tiles_[index] = new Tile(sf::Vector2f(position.x * tileWorldDim_, position.y * tileWorldDim_),
-				sf::Vector2f(tileWorldDim_, tileWorldDim_),
-				sf::Color::White); //add a tile at the specified index according to the grid position passed in
+			if (tiles_[index] == nullptr) //if there is space to add a tile
+			{
+				std::cout << "Adding tile" << std::endl;
+				sf::IntRect rect(32 * 6, 32 * 8, 32, 32);
+				tiles_[index] = new Tile(sf::Vector2f(position.x * tileWorldDim_, position.y * tileWorldDim_),
+					sf::Vector2f(tileWorldDim_, tileWorldDim_), sheet_,
+					rect, sf::Color::White); //add a tile at the specified index according to the grid position passed in
+			}
 		}
 	}
 
@@ -65,10 +70,12 @@ namespace Illusion
 			//if we are trying to place a tile within map space
 			if (isInGrid(position))
 			{
+				//index of tile to delete
 				int index = getTileIndex(position.x, position.y);
 
 				if (tiles_[index] != nullptr)
 				{
+					std::cout << "Deleting tile" << std::endl;
 					delete tiles_[index]; //free tile
 					tiles_[index] = nullptr; //set tile at index to null
 				}
