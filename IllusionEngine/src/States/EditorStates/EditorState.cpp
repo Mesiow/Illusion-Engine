@@ -9,8 +9,11 @@ namespace Illusion
 		int mapWidth, int mapHeight, int tileDim)
 		:State(game)
 	{
-	    initKeyBinds();
+		initKeyBinds();
+
 		editor_ = new LevelEditor(sheet, mapWidth, mapHeight, tileDim);
+
+		textureRect_ = sf::IntRect(0, 0, editor_->getMapTileDimension(), editor_->getMapTileDimension());
 	}
 
 	EditorState::~EditorState()
@@ -20,10 +23,31 @@ namespace Illusion
 
 	void EditorState::handleInput()
 	{
-		
+		//TEST
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
+		{
+			textureRect_ = sf::IntRect(0, 0, 32, 32);
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
+		{
+			textureRect_ = sf::IntRect(32, 0, 32, 32);
+		}
+		//
+
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
-				editor_->addTile(_mousePosGrid);
+			if (editor_->isInTextureSheetBounds(_mousePosGrid)) //change tile based on what we click
+			{
+				std::cout << "in texture sheet" << std::endl;
+				textureRect_ = sf::IntRect(_mousePosGrid.x / editor_->getMapTileDimension(),
+					_mousePosGrid.y / editor_->getMapTileDimension(),
+					editor_->getMapTileDimension(), editor_->getMapTileDimension());
+			}
+		}
+
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		{
+				editor_->addTile(_mousePosGrid, textureRect_);
 		}
 		else if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 		{
@@ -80,7 +104,7 @@ namespace Illusion
 
 		updateMousePositions();
 
-		updateMouseGridPosition(editor_->getGridDimension());
+		updateMouseGridPosition(editor_->getMapTileDimension());
 	}
 
 	void EditorState::draw(sf::RenderTarget &target)

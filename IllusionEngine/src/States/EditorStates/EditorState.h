@@ -25,5 +25,6 @@ namespace Illusion
 
 	private:
 		LevelEditor *editor_;
+		sf::IntRect textureRect_;
 	};
 }

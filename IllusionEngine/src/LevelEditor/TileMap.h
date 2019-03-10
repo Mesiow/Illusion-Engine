@@ -13,8 +13,8 @@ namespace Illusion
 			void draw(sf::RenderTarget &target);
 
 			void initTiles(int width, int height);
-			void addTile(sf::Vector2u position);
-			void removeTile(sf::Vector2u position);
+			void addTile(const sf::Vector2u &position, const sf::IntRect &rect);
+			void removeTile(const sf::Vector2u &position);
 
     	public:
 			bool loadMap(const std::string &path);

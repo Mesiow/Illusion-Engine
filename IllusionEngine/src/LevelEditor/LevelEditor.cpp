@@ -41,7 +41,7 @@ namespace Illusion
 
 	void LevelEditor::addTile(const sf::Vector2u &position, const sf::IntRect &rect)
 	{
-		map_->addTile(position);
+		map_->addTile(position, rect);
 	}
 
 	void LevelEditor::deleteTile(const sf::Vector2u &position)
@@ -111,10 +111,10 @@ namespace Illusion
 
 	bool LevelEditor::isInTextureSheetBounds(const sf::Vector2u & position)
 	{
-		return (position.x > sheetBorderRect_.getPosition().x / map_->getTileDimension() - map_->getTileDimension()
-			&& position.x < sheetBorderRect_.getPosition().x / map_->getTileDimension() + sheetBorderRect_.getGlobalBounds().width / map_->getTileDimension()//check X axis
+		return (position.x >= sheetBorderRect_.getPosition().x / map_->getTileDimension()
+			&& position.x <= sheetBorderRect_.getPosition().x / map_->getTileDimension() + sheetBorderRect_.getGlobalBounds().width / map_->getTileDimension()//check X axis
 			&& position.y >= sheetBorderRect_.getPosition().y / map_->getTileDimension() //check Y axis
-			&& position.y < sheetBorderRect_.getPosition().y / map_->getTileDimension() + sheetBorderRect_.getGlobalBounds().height / map_->getTileDimension());
+			&& position.y <= sheetBorderRect_.getPosition().y / map_->getTileDimension() + sheetBorderRect_.getGlobalBounds().height / map_->getTileDimension());
 	}
 
 }

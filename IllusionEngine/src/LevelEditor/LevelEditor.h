@@ -29,7 +29,7 @@ namespace Illusion
 		bool isInLevelBounds(const sf::Vector2u &position);
 		bool isInTextureSheetBounds(const sf::Vector2u &position);
 
-		int getGridDimension()const { return map_->getTileDimension(); }
+		int getMapTileDimension()const { return map_->getTileDimension(); }
 		sf::View &getView() { return view; }
 
 	private:

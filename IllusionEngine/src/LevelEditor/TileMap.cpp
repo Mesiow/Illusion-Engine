@@ -46,7 +46,7 @@ namespace Illusion
 		tiles_.resize(width * height, nullptr); //resize grid with nullptrs
 	}
 
-	void TileMap::addTile(sf::Vector2u position)
+	void TileMap::addTile(const sf::Vector2u &position, const sf::IntRect &rect)
 	{
 		if (isInGrid(position))
 		{
@@ -55,30 +55,25 @@ namespace Illusion
 			if (tiles_[index] == nullptr) //if there is space to add a tile
 			{
 				std::cout << "Adding tile" << std::endl;
-				sf::IntRect rect(32 * 6, 32 * 8, 32, 32);
 				tiles_[index] = new Tile(sf::Vector2f(position.x * tileWorldDim_, position.y * tileWorldDim_),
-					sf::Vector2f(tileWorldDim_, tileWorldDim_), sheet_,
-					rect, sf::Color::White); //add a tile at the specified index according to the grid position passed in
+					sf::Vector2f(tileWorldDim_, tileWorldDim_), sheet_, rect, sf::Color::White); //add a tile at the specified index according to the grid position passed in
 			}
 		}
 	}
 
-	void TileMap::removeTile(sf::Vector2u position)
-	{
-		if (tiles_.size() > 0)
+	void TileMap::removeTile(const sf::Vector2u &position)
+	{	
+		//if we are trying to place a tile within map space
+		if (isInGrid(position))
 		{
-			//if we are trying to place a tile within map space
-			if (isInGrid(position))
-			{
-				//index of tile to delete
-				int index = getTileIndex(position.x, position.y);
+			//index of tile to delete
+			int index = getTileIndex(position.x, position.y);
 
-				if (tiles_[index] != nullptr)
-				{
-					std::cout << "Deleting tile" << std::endl;
-					delete tiles_[index]; //free tile
-					tiles_[index] = nullptr; //set tile at index to null
-				}
+			if (tiles_[index] != nullptr)
+			{
+				std::cout << "Deleting tile" << std::endl;
+				delete tiles_[index]; //free tile
+				tiles_[index] = nullptr; //set tile at index to null
 			}
 		}
 	}
@@ -108,31 +103,4 @@ namespace Illusion
 		return (position.x >= 0 && position.x < width_
 			&& position.y >= 0 && position.y < height_);
 	}
-
-
-
-
-	//void TileMap::addTileVertices(Tile &tile, sf::Vector2f pos)
-	//{
-	//	//first parameter is the position of the vertex and the second is the texture coordinates
-
-	//	//first vertex at 0,0 , top left
-	//	//vertex added to position to give us an offset
-	//	//vertex multiplied by tileWorldDim determines how big the tile will draw on screen
-
-	//	array_->append(sf::Vertex((sf::Vector2f(0.0f, 0.0f) + pos) * tileWorldDim_,
-	//		sf::Vector2f(tileTextureDim_ * tile.position.x, tileTextureDim_ * tile.position.y))); //32 times position which is 0 so the top left, 32 times 1 for the y
-
-	//	//second vertex at top right 1,0
-	//	array_->append(sf::Vertex((sf::Vector2f(1.0f, 0.0f) + pos) * tileWorldDim_,
-	//		sf::Vector2f(tileTextureDim_ * tile.position.x + tileTextureDim_, tileTextureDim_ * tile.position.y)));
-
-	//	//third vertex at bottom right, 1,1
-	//	array_->append(sf::Vertex((sf::Vector2f(1.0f, 1.0f) + pos) * tileWorldDim_, 
-	//		sf::Vector2f(tileTextureDim_ * tile.position.x + tileTextureDim_, tileTextureDim_ * tile.position.y + tileTextureDim_)));
-
-	//	//fourth vertex at bottom left, 0,1
-	//	array_->append(sf::Vertex((sf::Vector2f(0.0f, 1.0f) + pos) * tileWorldDim_,
-	//		sf::Vector2f(tileTextureDim_ * tile.position.x, tileTextureDim_ * tile.position.y + tileTextureDim_)));
-	//}
 }

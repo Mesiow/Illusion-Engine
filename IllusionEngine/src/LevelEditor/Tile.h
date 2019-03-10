@@ -7,7 +7,7 @@ namespace Illusion
 	{
 	public:
 		Tile(sf::Vector2f position, sf::Vector2f size,
-			sf::Texture &texture, sf::IntRect &textureRect, sf::Color color)
+			const sf::Texture &texture, const sf::IntRect &textureRect, sf::Color color)
 		{
 			this->tile_.setTexture(&texture);
 			this->tile_.setTextureRect(textureRect);

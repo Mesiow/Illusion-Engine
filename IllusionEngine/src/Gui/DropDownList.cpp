@@ -87,6 +87,7 @@ namespace Illusion
 			{
 				buttonsList_[itemList[i]]->setFunction([=]() {
 					activeButton_->setStr(itemList[i]);
+					show = false; //after selecting option, close the list
 				});
 			}
 
