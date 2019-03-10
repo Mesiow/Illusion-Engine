@@ -19,9 +19,8 @@ namespace Illusion
 		selector_.setOutlineThickness(1.0f);
 		selector_.setOutlineColor(sf::Color::Green);
 
+		initText(gridWidth, gridHeight, tileWorldDim);
 		initTextureSheetRect();
-
-		std::cout << "Texture size: " << textureSheet.getSize().x << ", " << textureSheet.getSize().y << std::endl;
 	}
 
 	LevelEditor::~LevelEditor()
@@ -52,6 +51,8 @@ namespace Illusion
 	void LevelEditor::update(sf::RenderTarget &target, sf::Vector2u gridPosition)
 	{
 		target.setView(view);
+
+		updateText();
 		
 		updateSelectorRect(gridPosition);
 	}
@@ -73,6 +74,15 @@ namespace Illusion
 		}
 	}
 
+	void LevelEditor::updateText()
+	{
+		mapSizeText_.setPosition(view.getCenter().x - view.getSize().x / 2 + mapSizeText_.getGlobalBounds().width - mapSizeText_.getGlobalBounds().width + mapSizeText_.getCharacterSize(),
+			view.getCenter().y + view.getSize().y / 2 - mapSizeText_.getGlobalBounds().height - mapSizeText_.getCharacterSize());
+
+		tileDimText_.setPosition(view.getCenter().x + view.getSize().x / 2 - tileDimText_.getGlobalBounds().width - tileDimText_.getCharacterSize(),
+			view.getCenter().y + view.getSize().y/2 - tileDimText_.getGlobalBounds().height - tileDimText_.getCharacterSize() - tileDimText_.getCharacterSize()/3);
+	}
+
 
 	void LevelEditor::draw(sf::RenderTarget &target)
 	{
@@ -82,6 +92,9 @@ namespace Illusion
 		map_->draw(target);
 
 		target.draw(selector_);
+
+		target.draw(mapSizeText_);
+		target.draw(tileDimText_);
 	}
 
 	void LevelEditor::initTextureSheetRect()
@@ -101,6 +114,19 @@ namespace Illusion
 		sheetRect_.setOrigin(sf::Vector2f(sheetRect_.getGlobalBounds().width / 2.0f, sheetRect_.getGlobalBounds().height / 2.0f));
 		sheetRect_.setPosition(sf::Vector2f(sheetBorderRect_.getPosition().x + sheetBorderRect_.getGlobalBounds().width/2.0f,
 			sheetBorderRect_.getPosition().y + sheetBorderRect_.getGlobalBounds().height/2.0f));
+	}
+
+	void LevelEditor::initText(const int gridWidth, const int gridHeight, const int tileWorldDim)
+	{
+		mapSizeText_.setFont(ResourceManager::getFont("rubik"));
+		mapSizeText_.setCharacterSize(15);
+		mapSizeText_.setString(std::string("TileMap Size: ") + std::to_string(gridWidth) + " x " + std::to_string(gridHeight));
+		mapSizeText_.setPosition(50.0f, (float)Game::getWindow().getSize().y - 15);
+
+		tileDimText_.setFont(ResourceManager::getFont("rubik"));
+		tileDimText_.setCharacterSize(15);
+		tileDimText_.setString(std::string("Tile Dimensions: ") + std::to_string(tileWorldDim) + " x " + std::to_string(tileWorldDim));
+		tileDimText_.setPosition(Game::getWindow().getSize().x - tileDimText_.getGlobalBounds().width, Game::getWindow().getSize().y);
 	}
 
 	bool LevelEditor::isInLevelBounds(const sf::Vector2u & position)

@@ -5,8 +5,7 @@
 
 namespace Illusion
 {
-	EditorState::EditorState(Game &game, sf::Texture &sheet,
-		int mapWidth, int mapHeight, int tileDim)
+	EditorState::EditorState(Game &game, sf::Texture &sheet, int mapWidth, int mapHeight, int tileDim)
 		:State(game)
 	{
 		initKeyBinds();
@@ -116,26 +115,25 @@ namespace Illusion
 
 	void EditorState::initKeyBinds()
 	{
-			std::fstream file("res/Input/editor_state_key_binds.ini");
+		std::fstream file("res/Input/editor_state_key_binds.ini");
 
-			if (!file.is_open())
-				throw("File failed to open key binds");
+		if (!file.is_open())
+			throw("File failed to open key binds");
 
-			keyMapBinds map;
+		keyMapBinds map;
 
-			std::string action;
-			std::string key;
+		std::string action;
+		std::string key;
 
-			while (!file.eof())
-			{
-				file >> action >> key;
-				map[action] = Keyboard::getSupportedKeys().at(key); //map action to supported key at location key in supported key map
-			}
+		while (!file.eof())
+		{
+			file >> action >> key;
+			map[action] = Keyboard::getSupportedKeys().at(key); //map action to supported key at location key in supported key map
+		}
 
-			file.close();
+		file.close();
 
-			Keyboard::addKeyBinds(map);
-			Keyboard::printBoundKeys();
+		Keyboard::addKeyBinds(map);
+		Keyboard::printBoundKeys();
 	}
-
 }

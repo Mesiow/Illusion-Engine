@@ -8,8 +8,7 @@ namespace Illusion
 	public:
 		FPS()
 		{
-			font_ = &ResourceManager::getFont("rubik");
-			text_.setFont(*font_);
+			text_.setFont(ResourceManager::getFont("rubik"));
 			text_.setCharacterSize(15);
 			text_.setFillColor(sf::Color::White);
 			text_.setPosition(0, 0);
@@ -45,6 +44,5 @@ namespace Illusion
 		int fpsCount_ = 0;
 
 		sf::Text text_;
-		sf::Font *font_;
 	};
 }

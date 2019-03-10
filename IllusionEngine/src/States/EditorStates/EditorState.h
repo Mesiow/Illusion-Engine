@@ -2,8 +2,7 @@
 #include "../State.h"
 #include "../../LevelEditor/LevelEditor.h"
 
-//TODO: add drop down list to choose TileMap width and height and grid dimensions
-//add ability to load texture sheet for tilemap at runtime 
+//Add gui elements giving us info about tilemap size and tile dimension
 
 namespace Illusion
 {
@@ -25,6 +24,6 @@ namespace Illusion
 
 	private:
 		LevelEditor *editor_;
-		sf::IntRect textureRect_;
+		sf::IntRect textureRect_; //texture rect we have currently selected
 	};
 }

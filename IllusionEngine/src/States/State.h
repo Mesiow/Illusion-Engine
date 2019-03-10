@@ -29,6 +29,7 @@ namespace Illusion
 	protected:
 		void updateMousePositions();
 		void updateMouseGridPosition(int gridDimension);
+		void updateMouseTextureBoundsPosition(int x, int y); //pass in how many texture rects in the x and y position
 		void showMouseCoordinates();
 
 	private:
@@ -41,5 +42,6 @@ namespace Illusion
 		sf::Vector2f _mousePosView;
 		sf::Vector2i _mousePosWindow;
 		sf::Vector2u _mousePosGrid;
+		sf::Vector2u _mousePosTextureBounds;
 	};
 }

@@ -19,10 +19,12 @@ namespace Illusion
 		void deleteTile(const sf::Vector2u &position);
 		void update(sf::RenderTarget &target, sf::Vector2u gridPosition=sf::Vector2u(0,0));
 		void updateSelectorRect(const sf::Vector2u &gridPosition);
+		void updateText();
 		void draw(sf::RenderTarget &target);
 
 
 		void initTextureSheetRect();
+		void initText(const int gridWidth, const int gridHeight, const int tileWorldDim);
 
 
 	public:
@@ -35,13 +37,18 @@ namespace Illusion
 	private:
 		sf::RectangleShape sheetRect_; //shows all the tiles in the texture we can use
 		sf::RectangleShape sheetBorderRect_;
+		gui::PopUpContainer *tileSelectionContainer_;
+		sf::RectangleShape selector_;
+
 
 		sf::Texture &textureSheet_; //actual texture sheet
 		TileMap *map_;
 
-		gui::PopUpContainer *tileSelectionContainer_;
-		sf::RectangleShape selector_;
-
 		sf::View view;
+
+		sf::Text mapSizeText_;
+		sf::Text tileDimText_;
+
+
 	};
 }
