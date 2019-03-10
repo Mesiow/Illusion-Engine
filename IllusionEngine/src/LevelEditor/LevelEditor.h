@@ -27,6 +27,8 @@ namespace Illusion
 		void initText(const int gridWidth, const int gridHeight, const int tileWorldDim);
 
 
+		void setSelectorTexture(const sf::IntRect &rect);
+
 	public:
 		bool isInLevelBounds(const sf::Vector2u &position);
 		bool isInTextureSheetBounds(const sf::Vector2u &position);

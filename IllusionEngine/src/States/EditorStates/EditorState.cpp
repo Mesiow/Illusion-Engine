@@ -13,6 +13,7 @@ namespace Illusion
 		editor_ = new LevelEditor(sheet, mapWidth, mapHeight, tileDim);
 
 		textureRect_ = sf::IntRect(0, 0, editor_->getMapTileDimension(), editor_->getMapTileDimension());
+		editor_->setSelectorTexture(textureRect_);
 	}
 
 	EditorState::~EditorState()
@@ -26,10 +27,12 @@ namespace Illusion
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
 		{
 			textureRect_ = sf::IntRect(0, 0, 32, 32);
+			editor_->setSelectorTexture(textureRect_);
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
 		{
 			textureRect_ = sf::IntRect(32, 0, 32, 32);
+			editor_->setSelectorTexture(textureRect_);
 		}
 		//
 

@@ -15,7 +15,8 @@ namespace Illusion
 		map_ = new TileMap(textureSheet, gridWidth, gridHeight, tileWorldDim);
 
 		selector_.setSize(sf::Vector2f((float)map_->getTileDimension(), (float)map_->getTileDimension()));
-		selector_.setFillColor(sf::Color::Transparent);
+		selector_.setFillColor(sf::Color(100, 100, 100, 220));
+		selector_.setTexture(&textureSheet);
 		selector_.setOutlineThickness(1.0f);
 		selector_.setOutlineColor(sf::Color::Green);
 
@@ -127,6 +128,11 @@ namespace Illusion
 		tileDimText_.setCharacterSize(15);
 		tileDimText_.setString(std::string("Tile Dimensions: ") + std::to_string(tileWorldDim) + " x " + std::to_string(tileWorldDim));
 		tileDimText_.setPosition(Game::getWindow().getSize().x - tileDimText_.getGlobalBounds().width, Game::getWindow().getSize().y);
+	}
+
+	void LevelEditor::setSelectorTexture(const sf::IntRect &rect)
+	{
+		selector_.setTextureRect(rect);
 	}
 
 	bool LevelEditor::isInLevelBounds(const sf::Vector2u & position)
