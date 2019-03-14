@@ -77,7 +77,7 @@ namespace Illusion
 
 	void EditorState::update(sf::RenderTarget &target)
 	{
-		editor_->update(target, _mousePosGrid, _mousePosWindow);
+		editor_->update(target, _mousePosGrid, _mousePosView);
 
 		updateMousePositions();
 

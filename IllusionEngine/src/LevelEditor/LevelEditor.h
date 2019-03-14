@@ -19,7 +19,7 @@ namespace Illusion
 		void deleteTile(const sf::Vector2u &position);
 
 		void update(sf::RenderTarget &target, const sf::Vector2u &gridPosition=sf::Vector2u(0,0),
-			const sf::Vector2i &windowPos=sf::Vector2i(0,0));
+			const sf::Vector2f &viewPos=sf::Vector2f(0,0));
 
 		void updateSelectorRect(const sf::Vector2u &gridPosition);
 		void updateText();
@@ -39,7 +39,6 @@ namespace Illusion
 	private:
 		TextureSelector *textureSelector_;
 		sf::RectangleShape selector_;
-
 
 		sf::Texture &textureSheet_; //actual texture sheet
 		TileMap *map_;

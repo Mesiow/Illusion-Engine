@@ -21,6 +21,7 @@ namespace Illusion
 		selector_.setOutlineColor(sf::Color::Green);
 
 		initText(gridWidth, gridHeight, tileWorldDim);
+		initTextureSelector();
 	}
 
 	LevelEditor::~LevelEditor()
@@ -49,7 +50,7 @@ namespace Illusion
 		map_->removeTile(position);
 	}
 
-	void LevelEditor::update(sf::RenderTarget &target, const sf::Vector2u &gridPosition, const sf::Vector2i &windowPos)
+	void LevelEditor::update(sf::RenderTarget &target, const sf::Vector2u &gridPosition, const sf::Vector2f &viewPos)
 	{
 		target.setView(view);
 
@@ -57,7 +58,7 @@ namespace Illusion
 		
 		updateSelectorRect(gridPosition);
 
-		textureSelector_->update(windowPos);
+		textureSelector_->update(viewPos);
 	}
 
 	void LevelEditor::updateSelectorRect(const sf::Vector2u &gridPosition)
@@ -108,7 +109,7 @@ namespace Illusion
 
 	void LevelEditor::initTextureSelector()
 	{
-		textureSelector_ = new TextureSelector(textureSheet_, sf::Vector2f(map_->getBorderPosition().x + 40, map_->getBorderPosition().y),
+		textureSelector_ = new TextureSelector(textureSheet_, sf::Vector2f(map_->getBorderPosition().x - map_->getBorderBounds().width / 1.5, map_->getBorderPosition().y),
 			map_->getTileDimension());
 	}
 

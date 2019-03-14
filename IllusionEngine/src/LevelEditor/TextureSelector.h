@@ -9,7 +9,7 @@ namespace Illusion
 		~TextureSelector();
 
 
-		void update(const sf::Vector2i &windowPos);
+		void update(const sf::Vector2f &viewPos);
 		void draw(sf::RenderTarget &target);
 
 	public:

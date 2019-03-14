@@ -12,6 +12,9 @@ namespace Illusion
 		sheet_.setPosition(sheetPos);
 
 		textureBounds_.setSize(sf::Vector2f((float)sheet.getSize().x, (float)sheet.getSize().y));
+		textureBounds_.setFillColor(sf::Color::Transparent);
+		textureBounds_.setOutlineThickness(1.0f);
+		textureBounds_.setOutlineColor(sf::Color::Green);
 		textureBounds_.setPosition(sheet_.getPosition());
 
 		selector_.setSize(sf::Vector2f((float)textureGridSize, (float)textureGridSize));
@@ -25,11 +28,11 @@ namespace Illusion
 
 	}
 
-	void TextureSelector::update(const sf::Vector2i &windowPos)
+	void TextureSelector::update(const sf::Vector2f &viewPos)
 	{
-		if (textureBounds_.getGlobalBounds().contains((sf::Vector2f)windowPos)) //if the mouse is in the bounds of the texture sheet
+		if (textureBounds_.getGlobalBounds().contains(static_cast<sf::Vector2f>(viewPos))) //if the mouse is in the bounds of the texture sheet
 		{
-			selector_.setPosition(sf::Vector2f(float(windowPos.x * textureGridSize_), float(windowPos.y * textureGridSize_)));
+			selector_.setPosition(sf::Vector2f(float(viewPos.x * textureGridSize_), float(viewPos.y * textureGridSize_)));
 			active_ = true;
 		}
 		active_ = false;
@@ -37,8 +40,8 @@ namespace Illusion
 
 	void TextureSelector::draw(sf::RenderTarget &target)
 	{
-		target.draw(sheet_);
 		target.draw(textureBounds_);
 		target.draw(selector_);
+		target.draw(sheet_);
 	}
 }

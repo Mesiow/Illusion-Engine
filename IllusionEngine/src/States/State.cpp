@@ -38,7 +38,10 @@ namespace Illusion
 			text.setPosition(_mousePosView.x, _mousePosView.y - 50);
 
 			std::stringstream ss;
-			ss << _mousePosGrid.x << ", " << _mousePosGrid.y;
+			ss << "Window Position: " << _mousePosWindow.x << ", " << _mousePosWindow.y << "\n"
+				<< "View Position: " << _mousePosView.x << ", " << _mousePosView.y << "\n"
+				<< "Grid Position: " << _mousePosGrid.x << ", " << _mousePosGrid.y << "\n";
+
 			text.setString(ss.str());
 
 			_game->getWindow().draw(text);
