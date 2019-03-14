@@ -78,7 +78,8 @@ namespace Illusion
 			sheets, gui::Size::Small, 0
 		);
 
-		createButton_ = new gui::Button(sf::Vector2f(Game::getWindow().getSize().x - 50, Game::getWindow().getSize().y - 50), gui::Size::Small);
+		createButton_ = new gui::Button(sf::Vector2f((float)Game::getWindow().getSize().x - 50,
+			(float)Game::getWindow().getSize().y - 50), gui::Size::Small);
 		createButton_->setText(std::string("Create"), ResourceManager::getFont("rubik"), 20,
 			sf::Color(70, 70, 70, 200), sf::Color(100, 100, 100, 230), sf::Color(150, 150, 150, 255));
 		createButton_->setFunction([&]() {
@@ -108,7 +109,7 @@ namespace Illusion
 
 		buttons_.push_back(*createButton_);
 
-		backButton_ = new gui::Button(sf::Vector2f(50, Game::getWindow().getSize().y - 50),
+		backButton_ = new gui::Button(sf::Vector2f(50.0f, (float)Game::getWindow().getSize().y - 50),
 			gui::Size::Small);
 		backButton_->setText(std::string("Back"), ResourceManager::getFont("rubik"), 20,
 			sf::Color(70, 70, 70, 200), sf::Color(100, 100, 100, 230), sf::Color(150, 150, 150, 255));

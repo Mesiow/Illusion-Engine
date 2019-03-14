@@ -21,14 +21,14 @@ namespace Illusion
 	{
 		transitionColor_ = sf::Color::Transparent;
 		transition_.setFillColor(transitionColor_);
-		transition_.setPosition(0, 0);
-		transition_.setSize(sf::Vector2f(Game::getWindow().getSize().x,
-			Game::getWindow().getSize().y));
+		transition_.setPosition(0.0f, 0.0f);
+		transition_.setSize(sf::Vector2f((float)Game::getWindow().getSize().x,
+			(float)Game::getWindow().getSize().y));
 
 
 		splashScreen_.setPosition(0, 0);
-		splashScreen_.setSize(sf::Vector2f(Game::getWindow().getSize().x,
-			Game::getWindow().getSize().y));
+		splashScreen_.setSize(sf::Vector2f((float)Game::getWindow().getSize().x,
+			(float)Game::getWindow().getSize().y));
 		splashScreen_.setTexture(&ResourceManager::getTexture("logo"));
 	}
 

@@ -4,14 +4,14 @@ namespace Illusion
 {
 
 
-	TileMap::TileMap(sf::Texture &sheet, int width, int height, int tileWorldDim)
+	TileMap::TileMap(sf::Texture &sheet, unsigned int width, unsigned int height, int tileWorldDim)
 		:sheet_(sheet)
 	{
 		this->tileWorldDim_ = tileWorldDim;
 		this->width_ = width;
 		this->height_ = height;
 		initTiles(width, height);
-		border_.setSize(sf::Vector2f(width * tileWorldDim, height * tileWorldDim)); //calculate size of entire map/level
+		border_.setSize(sf::Vector2f(float(width * tileWorldDim), float(height * tileWorldDim))); //calculate size of entire map/level
 		border_.setPosition(0, 0);
 		border_.setFillColor(sf::Color::Transparent);
 		border_.setOutlineThickness(1.0f);
@@ -41,7 +41,7 @@ namespace Illusion
 		}
 	}
 
-	void TileMap::initTiles(int width, int height)
+	void TileMap::initTiles(unsigned int width, unsigned int height)
 	{
 		tiles_.resize(width * height, nullptr); //resize grid with nullptrs
 	}
@@ -55,8 +55,8 @@ namespace Illusion
 			if (tiles_[index] == nullptr) //if there is space to add a tile
 			{
 				std::cout << "Adding tile" << std::endl;
-				tiles_[index] = new Tile(sf::Vector2f(position.x * tileWorldDim_, position.y * tileWorldDim_),
-					sf::Vector2f(tileWorldDim_, tileWorldDim_), sheet_, rect, sf::Color::White); //add a tile at the specified index according to the grid position passed in
+				tiles_[index] = new Tile(sf::Vector2f(float(position.x * tileWorldDim_), float(position.y * tileWorldDim_)),
+					sf::Vector2f((float)tileWorldDim_, (float)tileWorldDim_), sheet_, rect, sf::Color::White); //add a tile at the specified index according to the grid position passed in
 			}
 		}
 	}
@@ -78,7 +78,7 @@ namespace Illusion
 		}
 	}
 
-	bool TileMap::loadMap(const std::string & path)
+	bool TileMap::loadMap(const std::string &path)
 	{
 		return false;
 	}

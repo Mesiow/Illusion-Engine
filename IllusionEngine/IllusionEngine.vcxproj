@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Gui\PopUpContainer.h" />
+    <ClInclude Include="src\LevelEditor\TextureSelector.h" />
     <ClInclude Include="src\LevelEditor\TileMap.h" />
     <ClInclude Include="src\pcHeaders.h" />
     <ClInclude Include="src\Components\AnimationComponent.h" />
@@ -52,7 +52,7 @@
     <ClInclude Include="src\Utils\UtilityFunctions.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Gui\PopUpContainer.cpp" />
+    <ClCompile Include="src\LevelEditor\TextureSelector.cpp" />
     <ClCompile Include="src\LevelEditor\TileMap.cpp" />
     <ClCompile Include="src\pcHeaders.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -23,30 +23,6 @@ namespace Illusion
 
 	void EditorState::handleInput()
 	{
-		//TEST
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
-		{
-			textureRect_ = sf::IntRect(0, 0, 32, 32);
-			editor_->setSelectorTexture(textureRect_);
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
-		{
-			textureRect_ = sf::IntRect(32, 0, 32, 32);
-			editor_->setSelectorTexture(textureRect_);
-		}
-		//
-
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-		{
-			if (editor_->isInTextureSheetBounds(_mousePosGrid)) //change tile based on what we click
-			{
-				std::cout << "in texture sheet" << std::endl;
-				textureRect_ = sf::IntRect(_mousePosGrid.x / editor_->getMapTileDimension(),
-					_mousePosGrid.y / editor_->getMapTileDimension(),
-					editor_->getMapTileDimension(), editor_->getMapTileDimension());
-			}
-		}
-
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
 				editor_->addTile(_mousePosGrid, textureRect_);
@@ -55,7 +31,6 @@ namespace Illusion
 		{
 				editor_->deleteTile(_mousePosGrid);
 		}
-		
 	}
 
 	void EditorState::handleInput(const float &dt)
@@ -102,7 +77,7 @@ namespace Illusion
 
 	void EditorState::update(sf::RenderTarget &target)
 	{
-		editor_->update(target, _mousePosGrid);
+		editor_->update(target, _mousePosGrid, _mousePosWindow);
 
 		updateMousePositions();
 

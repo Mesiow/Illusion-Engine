@@ -6,13 +6,13 @@ namespace Illusion
 	class TileMap
 	{
 		public:
-			TileMap(sf::Texture &sheet, int width, int height, int tileWorldDim);
+			TileMap(sf::Texture &sheet, unsigned int width, unsigned int height, int tileWorldDim);
 			~TileMap();
 
 		public:
 			void draw(sf::RenderTarget &target);
 
-			void initTiles(int width, int height);
+			void initTiles(unsigned int width, unsigned int height);
 			void addTile(const sf::Vector2u &position, const sf::IntRect &rect);
 			void removeTile(const sf::Vector2u &position);
 
@@ -27,8 +27,9 @@ namespace Illusion
 			bool isInGrid(const sf::Vector2u &position);
 
     	public:
-			int getWidth()const { return width_; }
-			int getHeight()const { return height_; }
+			unsigned int getWidth()const { return width_; }
+			unsigned int getHeight()const { return height_; }
+
 		    sf::Vector2f getBorderPosition()const { return border_.getPosition(); }
 			sf::FloatRect getBorderBounds()const { return border_.getGlobalBounds(); }
 
@@ -38,9 +39,9 @@ namespace Illusion
 
 			sf::Texture &sheet_;
 
-			int mapSize_;
-			int width_;
-			int height_;
+			unsigned int mapSize_;
+			unsigned int width_;
+			unsigned int height_;
 
 			int tileWorldDim_;
 			int tileTextureDim_;

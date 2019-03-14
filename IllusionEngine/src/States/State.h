@@ -29,7 +29,6 @@ namespace Illusion
 	protected:
 		void updateMousePositions();
 		void updateMouseGridPosition(int gridDimension);
-		void updateMouseTextureBoundsPosition(int x, int y); //pass in how many texture rects in the x and y position
 		void showMouseCoordinates();
 
 	private:

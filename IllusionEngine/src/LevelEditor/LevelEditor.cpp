@@ -21,11 +21,11 @@ namespace Illusion
 		selector_.setOutlineColor(sf::Color::Green);
 
 		initText(gridWidth, gridHeight, tileWorldDim);
-		initTextureSheetRect();
 	}
 
 	LevelEditor::~LevelEditor()
 	{
+		delete textureSelector_;
 		delete map_;
 	}
 
@@ -49,29 +49,24 @@ namespace Illusion
 		map_->removeTile(position);
 	}
 
-	void LevelEditor::update(sf::RenderTarget &target, sf::Vector2u gridPosition)
+	void LevelEditor::update(sf::RenderTarget &target, const sf::Vector2u &gridPosition, const sf::Vector2i &windowPos)
 	{
 		target.setView(view);
 
 		updateText();
 		
 		updateSelectorRect(gridPosition);
+
+		textureSelector_->update(windowPos);
 	}
 
 	void LevelEditor::updateSelectorRect(const sf::Vector2u &gridPosition)
 	{
 		//if we are in tilemap editing bounds
-		if(isInLevelBounds(gridPosition))
+		if (isInLevelBounds(gridPosition))
 		{
-			selector_.setPosition(sf::Vector2f(gridPosition.x * map_->getTileDimension(),
-				gridPosition.y * map_->getTileDimension()));
-		}
-
-
-		if (isInTextureSheetBounds(gridPosition)) //if mouse over texture sheet
-		{
-			selector_.setPosition(sf::Vector2f(gridPosition.x * map_->getTileDimension(),
-				gridPosition.y * map_->getTileDimension()));
+			selector_.setPosition(sf::Vector2f((float)gridPosition.x * map_->getTileDimension(),
+				(float)gridPosition.y * map_->getTileDimension()));
 		}
 	}
 
@@ -87,8 +82,6 @@ namespace Illusion
 
 	void LevelEditor::draw(sf::RenderTarget &target)
 	{
-		target.draw(sheetBorderRect_);
-		target.draw(sheetRect_);
 
 		map_->draw(target);
 
@@ -96,25 +89,8 @@ namespace Illusion
 
 		target.draw(mapSizeText_);
 		target.draw(tileDimText_);
-	}
 
-	void LevelEditor::initTextureSheetRect()
-	{
-		sheetBorderRect_.setSize(sf::Vector2f((float)textureSheet_.getSize().x /*+ map_->getTileDimension()*/,
-			(float)textureSheet_.getSize().y/* + map_->getTileDimension()*/));
-		//sheetBorderRect_.setOrigin(sf::Vector2f(sheetBorderRect_.getGlobalBounds().width / 2.0f, sheetBorderRect_.getGlobalBounds().height / 2.0f));
-
-		sheetBorderRect_.setPosition(sf::Vector2f(map_->getBorderPosition().x + map_->getBorderBounds().width + map_->getTileDimension() * 2, 
-			map_->getBorderPosition().y));
-		sheetBorderRect_.setFillColor(sf::Color::Transparent);
-		sheetBorderRect_.setOutlineThickness(1.0f);
-		sheetBorderRect_.setOutlineColor(sf::Color::Green);
-
-		sheetRect_.setSize(sf::Vector2f((float)textureSheet_.getSize().x, (float)textureSheet_.getSize().y));
-		sheetRect_.setTexture(&textureSheet_);
-		sheetRect_.setOrigin(sf::Vector2f(sheetRect_.getGlobalBounds().width / 2.0f, sheetRect_.getGlobalBounds().height / 2.0f));
-		sheetRect_.setPosition(sf::Vector2f(sheetBorderRect_.getPosition().x + sheetBorderRect_.getGlobalBounds().width/2.0f,
-			sheetBorderRect_.getPosition().y + sheetBorderRect_.getGlobalBounds().height/2.0f));
+		textureSelector_->draw(target);
 	}
 
 	void LevelEditor::initText(const int gridWidth, const int gridHeight, const int tileWorldDim)
@@ -127,7 +103,13 @@ namespace Illusion
 		tileDimText_.setFont(ResourceManager::getFont("rubik"));
 		tileDimText_.setCharacterSize(15);
 		tileDimText_.setString(std::string("Tile Dimensions: ") + std::to_string(tileWorldDim) + " x " + std::to_string(tileWorldDim));
-		tileDimText_.setPosition(Game::getWindow().getSize().x - tileDimText_.getGlobalBounds().width, Game::getWindow().getSize().y);
+		tileDimText_.setPosition(float(Game::getWindow().getSize().x - tileDimText_.getGlobalBounds().width), (float)Game::getWindow().getSize().y);
+	}
+
+	void LevelEditor::initTextureSelector()
+	{
+		textureSelector_ = new TextureSelector(textureSheet_, sf::Vector2f(map_->getBorderPosition().x + 40, map_->getBorderPosition().y),
+			map_->getTileDimension());
 	}
 
 	void LevelEditor::setSelectorTexture(const sf::IntRect &rect)
@@ -140,13 +122,4 @@ namespace Illusion
 		return (position.x >= 0 && position.x < map_->getWidth()
 			&& position.y >= 0 && position.y < map_->getHeight());
 	}
-
-	bool LevelEditor::isInTextureSheetBounds(const sf::Vector2u & position)
-	{
-		return (position.x >= sheetBorderRect_.getPosition().x / map_->getTileDimension()
-			&& position.x <= sheetBorderRect_.getPosition().x / map_->getTileDimension() + sheetBorderRect_.getGlobalBounds().width / map_->getTileDimension()//check X axis
-			&& position.y >= sheetBorderRect_.getPosition().y / map_->getTileDimension() //check Y axis
-			&& position.y <= sheetBorderRect_.getPosition().y / map_->getTileDimension() + sheetBorderRect_.getGlobalBounds().height / map_->getTileDimension());
-	}
-
 }

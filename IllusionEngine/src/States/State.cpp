@@ -17,11 +17,6 @@ namespace Illusion
 		this->_mousePosGrid.y = (int)this->_mousePosView.y / gridDimension;
 	}
 
-	void State::updateMouseTextureBoundsPosition(int x, int y)
-	{
-
-	}
-
 	void State::showMouseCoordinates()
 	{
 
