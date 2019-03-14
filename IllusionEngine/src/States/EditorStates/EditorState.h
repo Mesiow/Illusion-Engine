@@ -24,6 +24,5 @@ namespace Illusion
 
 	private:
 		LevelEditor *editor_;
-		sf::IntRect textureRect_; //texture rect we have currently selected
 	};
 }

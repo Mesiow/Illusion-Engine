@@ -1,5 +1,6 @@
 #include "../pcHeaders.h"
 #include "TextureSelector.h"
+#include "../ResourceManagement/ResourceManager.h"
 
 namespace Illusion
 {
@@ -21,6 +22,11 @@ namespace Illusion
 		selector_.setFillColor(sf::Color::Transparent);
 		selector_.setOutlineThickness(1.0f);
 		selector_.setOutlineColor(sf::Color::Red);
+
+		textureRectPos_.setFont(ResourceManager::getFont("rubik"));
+		textureRectPos_.setCharacterSize(15);
+		textureRectPos_.setFillColor(sf::Color::White);
+
 	}
 
 	TextureSelector::~TextureSelector()
@@ -28,20 +34,37 @@ namespace Illusion
 
 	}
 
+	void TextureSelector::handleInput()
+	{
+		if (active_) //if texture selector is active
+		{
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			{
+				std::cout << "Selected texture" << std::endl;
+				selectedTexture_ = sf::IntRect(mousePosTextureGrid_.x * textureGridSize_, mousePosTextureGrid_.y * textureGridSize_,
+					textureGridSize_, textureGridSize_); //choose texture we clicked
+			}
+
+		}
+	}
+
 	void TextureSelector::update(const sf::Vector2f &mouseViewPos)
 	{
-		if (textureBounds_.getGlobalBounds().contains(static_cast<sf::Vector2f>(mouseViewPos)))
-			active_ = true;
-		else
-			active_ = false;
-
-		if (active_) //if the mouse is in the bounds of the texture sheet
+		//if the mouse position is within the texture bounds set true else false
+		isInTextureBounds(mouseViewPos) ? active_ = true : active_ = false;
+		
+		if (active_) //if the selector is active
 		{
 			mousePosTextureGrid_.x = (mouseViewPos.x - textureBounds_.getPosition().x) / textureGridSize_;
 			mousePosTextureGrid_.y = (mouseViewPos.y - textureBounds_.getPosition().y) / textureGridSize_;
 
 			selector_.setPosition(sf::Vector2f(textureBounds_.getPosition().x + mousePosTextureGrid_.x * textureGridSize_,
 				textureBounds_.getPosition().y + mousePosTextureGrid_.y * textureGridSize_));
+
+			std::stringstream ss;
+			ss << "Texture Rect Position: " << mousePosTextureGrid_.x * textureGridSize_ << ", " << mousePosTextureGrid_.y * textureGridSize_;
+			textureRectPos_.setString(ss.str());
+			textureRectPos_.setPosition(mouseViewPos.x + 20, mouseViewPos.y + 50);
 		}
 	}
 
@@ -52,5 +75,18 @@ namespace Illusion
 
 		if(active_)
 			target.draw(selector_);
+
+		if(active_)
+			target.draw(textureRectPos_);
+	}
+
+	bool TextureSelector::isInTextureBounds(const sf::Vector2f &mouseViewPos)
+	{
+		return (textureBounds_.getGlobalBounds().contains(mouseViewPos));
+	}
+
+	const sf::IntRect &TextureSelector::getSelectedRect() const
+	{
+		return this->selectedTexture_;
 	}
 }

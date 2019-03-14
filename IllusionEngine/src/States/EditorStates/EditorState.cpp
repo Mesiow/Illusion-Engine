@@ -11,9 +11,6 @@ namespace Illusion
 		initKeyBinds();
 
 		editor_ = new LevelEditor(sheet, mapWidth, mapHeight, tileDim);
-
-		textureRect_ = sf::IntRect(0, 0, editor_->getMapTileDimension(), editor_->getMapTileDimension());
-		editor_->setSelectorTexture(textureRect_);
 	}
 
 	EditorState::~EditorState()
@@ -23,9 +20,10 @@ namespace Illusion
 
 	void EditorState::handleInput()
 	{
+		editor_->handleInput();
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
-				editor_->addTile(_mousePosGrid, textureRect_);
+				editor_->addTile(_mousePosGrid, editor_->getCurrentSelectedTexture());
 		}
 		else if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 		{

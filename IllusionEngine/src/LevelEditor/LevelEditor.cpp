@@ -50,6 +50,11 @@ namespace Illusion
 		map_->removeTile(position);
 	}
 
+	void LevelEditor::handleInput()
+	{
+		textureSelector_->handleInput();
+	}
+
 	void LevelEditor::update(sf::RenderTarget &target, const sf::Vector2u &gridPosition, const sf::Vector2f &mouseViewPos)
 	{
 		target.setView(view);
@@ -64,6 +69,7 @@ namespace Illusion
 	void LevelEditor::updateSelectorRect(const sf::Vector2u &gridPosition)
 	{
 		//if we are in tilemap editing bounds
+		setSelectorTexture();
 		if (isInLevelBounds(gridPosition))
 		{
 			selector_.setPosition(sf::Vector2f((float)gridPosition.x * map_->getTileDimension(),
@@ -113,9 +119,14 @@ namespace Illusion
 			map_->getTileDimension());
 	}
 
-	void LevelEditor::setSelectorTexture(const sf::IntRect &rect)
+	void LevelEditor::setSelectorTexture()
 	{
-		selector_.setTextureRect(rect);
+		selector_.setTextureRect(textureSelector_->getSelectedRect());
+	}
+
+	const sf::IntRect &LevelEditor::getCurrentSelectedTexture()const
+	{
+		return selector_.getTextureRect();
 	}
 
 	bool LevelEditor::isInLevelBounds(const sf::Vector2u & position)

@@ -18,21 +18,22 @@ namespace Illusion
 		void addTile(const sf::Vector2u &position, const sf::IntRect &rect = sf::IntRect(0, 0, 32, 32));
 		void deleteTile(const sf::Vector2u &position);
 
+		void handleInput();
 		void update(sf::RenderTarget &target, const sf::Vector2u &gridPosition=sf::Vector2u(0,0),
 			const sf::Vector2f &mouseViewPos=sf::Vector2f(0,0));
-
-		void updateSelectorRect(const sf::Vector2u &gridPosition);
-		void updateText();
 		void draw(sf::RenderTarget &target);
 
+	private:
 		void initText(const int gridWidth, const int gridHeight, const int tileWorldDim);
 		void initTextureSelector();
+		void updateSelectorRect(const sf::Vector2u &gridPosition);
+		void updateText();
+		void setSelectorTexture();
 
-		void setSelectorTexture(const sf::IntRect &rect);
 
 	public:
+		const sf::IntRect &getCurrentSelectedTexture()const;
 		bool isInLevelBounds(const sf::Vector2u &position);
-
 		int getMapTileDimension()const { return map_->getTileDimension(); }
 		sf::View &getView() { return view; }
 
