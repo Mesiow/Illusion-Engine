@@ -8,7 +8,7 @@ namespace Illusion
 		this->textureGridSize_ = textureGridSize;
 		this->active_ = false;
 
-		sheet_.setTexture(&sheet);
+		sheet_.setTexture(sheet);
 		sheet_.setPosition(sheetPos);
 
 		textureBounds_.setSize(sf::Vector2f((float)sheet.getSize().x, (float)sheet.getSize().y));
@@ -28,20 +28,29 @@ namespace Illusion
 
 	}
 
-	void TextureSelector::update(const sf::Vector2f &viewPos)
+	void TextureSelector::update(const sf::Vector2f &mouseViewPos)
 	{
-		if (textureBounds_.getGlobalBounds().contains(static_cast<sf::Vector2f>(viewPos))) //if the mouse is in the bounds of the texture sheet
-		{
-			selector_.setPosition(sf::Vector2f(float(viewPos.x * textureGridSize_), float(viewPos.y * textureGridSize_)));
+		if (textureBounds_.getGlobalBounds().contains(static_cast<sf::Vector2f>(mouseViewPos)))
 			active_ = true;
+		else
+			active_ = false;
+
+		if (active_) //if the mouse is in the bounds of the texture sheet
+		{
+			mousePosTextureGrid_.x = (mouseViewPos.x - textureBounds_.getPosition().x) / textureGridSize_;
+			mousePosTextureGrid_.y = (mouseViewPos.y - textureBounds_.getPosition().y) / textureGridSize_;
+
+			selector_.setPosition(sf::Vector2f(textureBounds_.getPosition().x + mousePosTextureGrid_.x * textureGridSize_,
+				textureBounds_.getPosition().y + mousePosTextureGrid_.y * textureGridSize_));
 		}
-		active_ = false;
 	}
 
 	void TextureSelector::draw(sf::RenderTarget &target)
 	{
-		target.draw(textureBounds_);
-		target.draw(selector_);
 		target.draw(sheet_);
+		target.draw(textureBounds_);
+
+		if(active_)
+			target.draw(selector_);
 	}
 }

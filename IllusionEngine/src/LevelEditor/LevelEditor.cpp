@@ -50,7 +50,7 @@ namespace Illusion
 		map_->removeTile(position);
 	}
 
-	void LevelEditor::update(sf::RenderTarget &target, const sf::Vector2u &gridPosition, const sf::Vector2f &viewPos)
+	void LevelEditor::update(sf::RenderTarget &target, const sf::Vector2u &gridPosition, const sf::Vector2f &mouseViewPos)
 	{
 		target.setView(view);
 
@@ -58,7 +58,7 @@ namespace Illusion
 		
 		updateSelectorRect(gridPosition);
 
-		textureSelector_->update(viewPos);
+		textureSelector_->update(mouseViewPos);
 	}
 
 	void LevelEditor::updateSelectorRect(const sf::Vector2u &gridPosition)

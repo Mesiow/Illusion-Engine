@@ -19,7 +19,7 @@ namespace Illusion
 		void deleteTile(const sf::Vector2u &position);
 
 		void update(sf::RenderTarget &target, const sf::Vector2u &gridPosition=sf::Vector2u(0,0),
-			const sf::Vector2f &viewPos=sf::Vector2f(0,0));
+			const sf::Vector2f &mouseViewPos=sf::Vector2f(0,0));
 
 		void updateSelectorRect(const sf::Vector2u &gridPosition);
 		void updateText();
