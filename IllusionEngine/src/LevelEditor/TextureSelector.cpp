@@ -4,7 +4,7 @@
 
 namespace Illusion
 {
-	TextureSelector::TextureSelector(const sf::Texture &sheet, sf::Vector2f sheetPos, int textureGridSize)
+	TextureSelector::TextureSelector(const sf::Texture &sheet, const sf::Vector2f &sheetPos, int textureGridSize)
 	{
 		this->textureGridSize_ = textureGridSize;
 		this->active_ = false;
@@ -27,6 +27,8 @@ namespace Illusion
 		textureRectPos_.setCharacterSize(15);
 		textureRectPos_.setFillColor(sf::Color::White);
 
+		selectedTexture_ = sf::IntRect(0, 0, 0, 0); //no rect selected
+
 	}
 
 	TextureSelector::~TextureSelector()
@@ -40,9 +42,9 @@ namespace Illusion
 		{
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				std::cout << "Selected texture" << std::endl;
-				selectedTexture_ = sf::IntRect(mousePosTextureGrid_.x * textureGridSize_, mousePosTextureGrid_.y * textureGridSize_,
-					textureGridSize_, textureGridSize_); //choose texture we clicked
+				selectedTexture_ = sf::IntRect(mousePosTextureGrid_.x * textureGridSize_, 
+					mousePosTextureGrid_.y * textureGridSize_,
+					textureGridSize_, textureGridSize_); //choose the texture we clicked
 			}
 
 		}

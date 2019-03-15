@@ -5,7 +5,7 @@ namespace Illusion
 	class TextureSelector
 	{
 	public:
-		TextureSelector(const sf::Texture &sheet, sf::Vector2f sheetPos, int textureGridSize);
+		TextureSelector(const sf::Texture &sheet, const sf::Vector2f &sheetPos, int textureGridSize);
 		~TextureSelector();
 
 
@@ -24,13 +24,13 @@ namespace Illusion
 		sf::Sprite sheet_;
 		sf::RectangleShape textureBounds_;
 		sf::RectangleShape selector_;
-		sf::Vector2u mousePosTextureGrid_;
 
+		sf::Vector2u mousePosTextureGrid_;
 		sf::IntRect selectedTexture_;
+
+		sf::Text textureRectPos_;
 
 		int textureGridSize_;
 		bool active_;
-
-		sf::Text textureRectPos_;
 	};
 }

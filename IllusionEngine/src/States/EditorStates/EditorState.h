@@ -14,7 +14,6 @@ namespace Illusion
 		~EditorState();
 
 	public:
-		 void handleInput()override;
 	     void handleInput(const float &dt)override;
 	     void handleEvents(sf::Event &e)override;
 	     void update(sf::RenderTarget &target)override;

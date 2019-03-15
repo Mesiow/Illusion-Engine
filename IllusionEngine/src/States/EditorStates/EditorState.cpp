@@ -18,50 +18,15 @@ namespace Illusion
 		delete this->editor_;
 	}
 
-	void EditorState::handleInput()
-	{
-		editor_->handleInput();
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-		{
-				editor_->addTile(_mousePosGrid, editor_->getCurrentSelectedTexture());
-		}
-		else if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
-		{
-				editor_->deleteTile(_mousePosGrid);
-		}
-	}
-
 	void EditorState::handleInput(const float &dt)
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-				editor_->moveView(0.0f, -400.0f, dt);
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-				editor_->moveView(-400.0f, 0.0f, dt);
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-				editor_->moveView(0.0f, 400.0f, dt);
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-				editor_->moveView(400.0f, 0.0f, dt);
+		editor_->handleInput(_mousePosGrid, dt);
 	}
 
 	void EditorState::handleEvents(sf::Event &e)
 	{
 		switch (e.type)
 		{
-		case sf::Event::MouseButtonReleased:
-		{
-			/*if (e.mouseButton.button == sf::Mouse::)
-			{
-				editor_->deleteTile(_mousePosGrid);
-			}*/
-		}
-		break;
-
-		case sf::Event::KeyReleased:
-		{
-			
-		}
-		break;
-
 		case sf::Event::KeyPressed:
 		{
 		 if (e.key.code == Keyboard::getCurrentKeyBinds().at("BACK"))

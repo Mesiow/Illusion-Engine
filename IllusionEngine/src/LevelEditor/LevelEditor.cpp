@@ -17,11 +17,14 @@ namespace Illusion
 		selector_.setSize(sf::Vector2f((float)map_->getTileDimension(), (float)map_->getTileDimension()));
 		selector_.setFillColor(sf::Color(100, 100, 100, 220));
 		selector_.setTexture(&textureSheet);
+		selector_.setTextureRect(sf::IntRect(0, 0, 0, 0)); //empty rect when we start
 		selector_.setOutlineThickness(1.0f);
 		selector_.setOutlineColor(sf::Color::Green);
 
 		initText(gridWidth, gridHeight, tileWorldDim);
 		initTextureSelector();
+
+		loadClock_.restart();
 	}
 
 	LevelEditor::~LevelEditor()
@@ -50,9 +53,35 @@ namespace Illusion
 		map_->removeTile(position);
 	}
 
-	void LevelEditor::handleInput()
+	void LevelEditor::handleInput(const sf::Vector2u &mousePosGrid, const float &dt)
 	{
-		textureSelector_->handleInput();
+		if (loadClock_.getElapsedTime().asSeconds() >= loadTime_)
+			begin_ = true;
+
+		if (begin_)
+		{
+			textureSelector_->handleInput(); //handle texture selector input
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) //handle view input
+				moveView(0.0f, -400.0f, dt);
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+				moveView(-400.0f, 0.0f, dt);
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+				moveView(0.0f, 400.0f, dt);
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+				moveView(400.0f, 0.0f, dt);
+
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) //handle adding and deleting tiles
+			{
+				if (getCurrentSelectedTexture() == sf::IntRect(0, 0, 0 ,0)) //check if current selected rect is empty, if it is we cannot add tiles
+					return;
+
+				addTile(mousePosGrid, getCurrentSelectedTexture());
+			}
+			else if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+				deleteTile(mousePosGrid);
+		}
+		
 	}
 
 	void LevelEditor::update(sf::RenderTarget &target, const sf::Vector2u &gridPosition, const sf::Vector2f &mouseViewPos)
@@ -93,11 +122,10 @@ namespace Illusion
 		map_->draw(target);
 
 		target.draw(selector_);
+		textureSelector_->draw(target);
 
 		target.draw(mapSizeText_);
 		target.draw(tileDimText_);
-
-		textureSelector_->draw(target);
 	}
 
 	void LevelEditor::initText(const int gridWidth, const int gridHeight, const int tileWorldDim)

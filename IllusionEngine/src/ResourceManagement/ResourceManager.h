@@ -11,9 +11,6 @@ namespace Illusion
 	class ResourceManager
 	{
 	public:
-		ResourceManager(){}
-		~ResourceManager(){}
-
 		static void loadTexture(const std::string &name, const std::string &path)
 		{
 			sf::Texture tex;

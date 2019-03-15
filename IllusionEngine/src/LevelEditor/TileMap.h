@@ -20,7 +20,7 @@ namespace Illusion
 			bool loadMap(const std::string &path);
 			bool saveMap();
 
-	    public:
+	    public://getters
 			Tile &getTileAtIndex(int index);
 			int getTileIndex(int x, int y);
 			int getTileDimension()const { return tileWorldDim_; }
@@ -32,6 +32,7 @@ namespace Illusion
 
 		    sf::Vector2f getBorderPosition()const { return border_.getPosition(); }
 			sf::FloatRect getBorderBounds()const { return border_.getGlobalBounds(); }
+			//
 
 		private:
 			std::vector<Tile*> tiles_;
