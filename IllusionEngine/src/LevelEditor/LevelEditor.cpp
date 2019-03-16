@@ -21,6 +21,7 @@ namespace Illusion
 		selector_.setOutlineThickness(1.0f);
 		selector_.setOutlineColor(sf::Color::Green);
 
+		initGui();
 		initText(gridWidth, gridHeight, tileWorldDim);
 		initTextureSelector();
 
@@ -45,12 +46,18 @@ namespace Illusion
 
 	void LevelEditor::addTile(const sf::Vector2u &position, const sf::IntRect &rect)
 	{
-		map_->addTile(position, rect);
+		map_->addTile(position, rect, 0); //add tile to layer 0
 	}
 
 	void LevelEditor::deleteTile(const sf::Vector2u &position)
 	{
 		map_->removeTile(position);
+	}
+
+	void LevelEditor::handleEvents(sf::Event &e)
+	{
+		for (auto &b : editorButtons_)
+			b.handleEvents(e);
 	}
 
 	void LevelEditor::handleInput(const sf::Vector2u &mousePosGrid, const float &dt)
@@ -73,10 +80,8 @@ namespace Illusion
 
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) //handle adding and deleting tiles
 			{
-				if (getCurrentSelectedTexture() == sf::IntRect(0, 0, 0 ,0)) //check if current selected rect is empty, if it is we cannot add tiles
-					return;
-
-				addTile(mousePosGrid, getCurrentSelectedTexture());
+				if (getCurrentSelectedTexture() != sf::IntRect(0, 0, 0 ,0)) //check if current selected rect is empty, if it is we cannot add tiles
+					addTile(mousePosGrid, getCurrentSelectedTexture());
 			}
 			else if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 				deleteTile(mousePosGrid);
@@ -87,6 +92,8 @@ namespace Illusion
 	void LevelEditor::update(sf::RenderTarget &target, const sf::Vector2u &gridPosition, const sf::Vector2f &mouseViewPos)
 	{
 		target.setView(view);
+
+		updateGui();
 
 		updateText();
 		
@@ -126,6 +133,46 @@ namespace Illusion
 
 		target.draw(mapSizeText_);
 		target.draw(tileDimText_);
+
+		drawGui(target);
+	}
+
+	void LevelEditor::updateGui()
+	{
+		for (auto &b : editorButtons_)
+			b.update();
+	}
+
+	void LevelEditor::drawGui(sf::RenderTarget &target)
+	{
+		for (auto &b : editorButtons_)
+			b.draw(target);
+	}
+
+	void LevelEditor::initGui()
+	{
+		gui::Button addLayerButton(sf::Vector2f(map_->getBorderPosition().x + 100, map_->getBorderPosition().y - 100), gui::Size::Small);
+
+		addLayerButton.setText(std::string("Add Layer"), ResourceManager::getFont("rubik"), 20,
+			sf::Color(90, 90, 90, 150), sf::Color(140, 140, 140, 220), sf::Color(190, 190, 190, 255));
+
+		addLayerButton.setFunction([&]() {
+			//map_->setCurrentLayer()
+		});
+
+		editorButtons_.push_back(addLayerButton);
+
+		gui::Button removeLayerButton(sf::Vector2f(map_->getBorderPosition().x + map_->getBorderBounds().width/4, map_->getBorderPosition().y - 100),
+			gui::Size::Small);
+
+		removeLayerButton.setText(std::string("Remove Layer"), ResourceManager::getFont("rubik"), 20,
+			sf::Color(90, 90, 90, 150), sf::Color(140, 140, 140, 220), sf::Color(190, 190, 190, 255));
+
+		removeLayerButton.setFunction([&]() {
+			//map_->setCurrentLayer()
+		});
+
+		editorButtons_.push_back(removeLayerButton);
 	}
 
 	void LevelEditor::initText(const int gridWidth, const int gridHeight, const int tileWorldDim)

@@ -10,6 +10,8 @@ namespace Illusion
 		this->tileWorldDim_ = tileWorldDim;
 		this->width_ = width;
 		this->height_ = height;
+		this->layerIndex_ = 0; //begin at layer 0
+		addLayer(layerIndex_);
 
 		initTiles(width, height);
 		border_.setSize(sf::Vector2f(float(width * tileWorldDim), float(height * tileWorldDim))); //calculate size of entire map/level
@@ -47,7 +49,7 @@ namespace Illusion
 		tiles_.resize(width * height, nullptr); //resize grid with nullptrs
 	}
 
-	void TileMap::addTile(const sf::Vector2u &position, const sf::IntRect &rect)
+	void TileMap::addTile(const sf::Vector2u &position, const sf::IntRect &rect, unsigned int layer)
 	{
 		if (isInGrid(position))
 		{
@@ -55,9 +57,13 @@ namespace Illusion
 
 			if (tiles_[index] == nullptr) //if there is space to add a tile
 			{
-				std::cout << "Adding tile" << std::endl;
-				tiles_[index] = new Tile(sf::Vector2f(float(position.x * tileWorldDim_), float(position.y * tileWorldDim_)),
-					sf::Vector2f((float)tileWorldDim_, (float)tileWorldDim_), sheet_, rect, sf::Color::White); //add a tile at the specified index according to the grid position passed in
+				if (doesLayerExist(layer))
+				{
+					std::cout << "Adding tile" << std::endl; //add a tile at the specified index according to the grid position passed in
+					tiles_[index] = new Tile(sf::Vector2f(float(position.x * tileWorldDim_), float(position.y * tileWorldDim_)),
+						sf::Vector2f((float)tileWorldDim_, (float)tileWorldDim_),
+						sheet_, rect, sf::Color::White, layer);
+				}
 			}
 		}
 	}
@@ -79,6 +85,18 @@ namespace Illusion
 		}
 	}
 
+	void TileMap::addLayer(unsigned int layer)
+	{
+		if (layerBitMask_[layer] == 0)
+			layerBitMask_.set(layer, 1); //turn layer on
+	}
+
+	void TileMap::removeLayer(unsigned int layer)
+	{
+		if (layerBitMask_[layer] != 0) //if there is an active layer
+			layerBitMask_.set(layer, 0); //turn it off
+	}
+
 	bool TileMap::loadMap(const std::string &path)
 	{
 		return false;
@@ -87,6 +105,11 @@ namespace Illusion
 	bool TileMap::saveMap()
 	{
 		return false;
+	}
+
+	void TileMap::setCurrentLayer(unsigned int layer)
+	{
+		layerIndex_ = layer;
 	}
 
 	Tile &TileMap::getTileAtIndex(int index)
@@ -103,5 +126,10 @@ namespace Illusion
 	{
 		return (position.x >= 0 && position.x < width_
 			&& position.y >= 0 && position.y < height_);
+	}
+
+	bool TileMap::doesLayerExist(unsigned int layer)
+	{
+		return layerBitMask_[layer] == 0 ? false : true; //if layer is 0 it does not exist else it does
 	}
 }

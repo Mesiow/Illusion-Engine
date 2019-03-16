@@ -25,6 +25,7 @@ namespace Illusion
 
 	void EditorState::handleEvents(sf::Event &e)
 	{
+		editor_->handleEvents(e);
 		switch (e.type)
 		{
 		case sf::Event::KeyPressed:

@@ -6,7 +6,7 @@ namespace Illusion
 {
 	namespace gui
 	{
-		bool Gui::containsMouse(const sf::FloatRect & rect)
+		bool Gui::containsMouse(const sf::FloatRect &rect)
 		{
 			auto mousePos = getMousePositionView();
 			if (rect.contains((float)mousePos.x, (float)mousePos.y))

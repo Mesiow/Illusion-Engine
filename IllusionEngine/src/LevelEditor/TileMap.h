@@ -15,18 +15,28 @@ namespace Illusion
 			void draw(sf::RenderTarget &target);
 
 			void initTiles(unsigned int width, unsigned int height);
-			void addTile(const sf::Vector2u &position, const sf::IntRect &rect);
+			void addTile(const sf::Vector2u &position, const sf::IntRect &rect, unsigned int layer);
 			void removeTile(const sf::Vector2u &position);
+
+			void addLayer(unsigned int layer);
+			void removeLayer(unsigned int layer);
 
     	public:
 			bool loadMap(const std::string &path);
 			bool saveMap();
 
+
+	    public: //setters
+			void setCurrentLayer(unsigned int layer);
+
 	    public://getters
 			Tile &getTileAtIndex(int index);
 			int getTileIndex(int x, int y);
 			int getTileDimension()const { return tileWorldDim_; }
+
 			bool isInGrid(const sf::Vector2u &position);
+			bool doesLayerExist(unsigned int layer);
+
 
     	public:
 			unsigned int getWidth()const { return width_; }
@@ -42,10 +52,12 @@ namespace Illusion
 			sf::Texture &sheet_;
 
 
-			std::bitset<MAX_LAYERS> layerBitMask;
+			std::bitset<MAX_LAYERS> layerBitMask_;
+
 			unsigned int mapSize_;
 			unsigned int width_;
 			unsigned int height_;
+			unsigned int layerIndex_;
 
 			int tileWorldDim_;
 			int tileTextureDim_;
