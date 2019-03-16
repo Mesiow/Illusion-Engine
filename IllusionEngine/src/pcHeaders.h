@@ -12,6 +12,7 @@
 #include <sstream>
 #include <memory>
 #include <fstream>
+#include <bitset>
 #include <assert.h>
 
 

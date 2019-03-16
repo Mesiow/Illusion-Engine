@@ -1,6 +1,8 @@
 #pragma once
 #include "Tile.h"
 
+#define MAX_LAYERS 32
+
 namespace Illusion
 {
 	class TileMap
@@ -32,14 +34,15 @@ namespace Illusion
 
 		    sf::Vector2f getBorderPosition()const { return border_.getPosition(); }
 			sf::FloatRect getBorderBounds()const { return border_.getGlobalBounds(); }
-			//
+			//////////////
 
 		private:
 			std::vector<Tile*> tiles_;
 			sf::RectangleShape border_;
-
 			sf::Texture &sheet_;
 
+
+			std::bitset<MAX_LAYERS> layerBitMask;
 			unsigned int mapSize_;
 			unsigned int width_;
 			unsigned int height_;
