@@ -46,7 +46,7 @@ namespace Illusion
 
 	void LevelEditor::addTile(const sf::Vector2u &position, const sf::IntRect &rect)
 	{
-		map_->addTile(position, rect, 0); //add tile to layer 0
+		map_->addTile(position, rect, 0); //add tile to layer 1 at index 0
 	}
 
 	void LevelEditor::deleteTile(const sf::Vector2u &position)
@@ -58,6 +58,8 @@ namespace Illusion
 	{
 		addLayerButton_->handleEvents(e);
 		removeLayerButton_->handleEvents(e);
+
+		listOfLayers_->handleEvents(e);
 	}
 
 	void LevelEditor::handleInput(const sf::Vector2u &mousePosGrid, const float &dt)
@@ -151,12 +153,16 @@ namespace Illusion
 
 		addLayerButton_->update();
 		removeLayerButton_->update();
+
+		listOfLayers_->update();
 	}
 
 	void LevelEditor::drawGui(sf::RenderTarget &target)
 	{
 		addLayerButton_->draw(target);
 		removeLayerButton_->draw(target);
+
+		listOfLayers_->draw(target);
 	}
 
 	void LevelEditor::initText(const int gridWidth, const int gridHeight, const int tileWorldDim)
@@ -187,6 +193,7 @@ namespace Illusion
 
 		addLayerButton_->setFunction([&]() {
 			map_->addLayer();
+			listOfLayers_->addToList(std::string("Layer ") + std::to_string(map_->getLayerCount()));
 			layerCountText_.setString(std::string("Layers: ") + std::to_string(map_->getLayerCount())); //update layer count text when we add a layer
 		});
 
@@ -198,8 +205,13 @@ namespace Illusion
 
 		removeLayerButton_->setFunction([&]() {
 			map_->removeLayer();
+			listOfLayers_->removeFromList(std::string("Layer ") + std::to_string(map_->getLayerCount())); //removes latest layer
 			layerCountText_.setString(std::string("Layers: ") + std::to_string(map_->getLayerCount()));
 		});
+
+
+		std::vector<std::string> list{ "Layer 1" };
+		listOfLayers_ = new gui::DropDownList(sf::Vector2f(view.getCenter().x + view.getSize().x / 2 - 100, view.getCenter().y), list, gui::Size::Small, 0);
 	}
 
 	void LevelEditor::initTextureSelector()

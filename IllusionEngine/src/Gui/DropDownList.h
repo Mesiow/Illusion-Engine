@@ -9,7 +9,7 @@ namespace Illusion
 		class DropDownList : public Gui
 		{
 		public:
-			DropDownList(const sf::Vector2f position, const std::vector<std::string> list,
+			DropDownList(const sf::Vector2f position, std::vector<std::string> &list,
 				Size buttonsSize, uint activeIndex);
 			~DropDownList();
 
@@ -18,6 +18,8 @@ namespace Illusion
 			void draw(sf::RenderTarget &target)override;
 
 		public:
+			void addToList(const std::string &item);
+			void removeFromList(const std::string &item);
 			void setButtonFunction(const std::string &id, std::function<void(void)> func);
 
 		public:
@@ -33,6 +35,8 @@ namespace Illusion
 			std::vector<std::string> itemList;
 
 			sf::Vector2f position_;
+			sf::Vector2f size_;
+			gui::Size buttonSize_;
 			bool show;
 		};
 	}

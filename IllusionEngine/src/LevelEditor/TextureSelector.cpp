@@ -13,9 +13,9 @@ namespace Illusion
 		sheet_.setPosition(sheetPos);
 
 		textureBounds_.setSize(sf::Vector2f((float)sheet.getSize().x, (float)sheet.getSize().y));
-		textureBounds_.setFillColor(sf::Color::Transparent);
+		textureBounds_.setFillColor(sf::Color(90, 90, 90, 40));
 		textureBounds_.setOutlineThickness(1.0f);
-		textureBounds_.setOutlineColor(sf::Color::Green);
+		textureBounds_.setOutlineColor(sf::Color(80, 80, 80, 255));
 		textureBounds_.setPosition(sheet_.getPosition());
 
 		selector_.setSize(sf::Vector2f((float)textureGridSize, (float)textureGridSize));

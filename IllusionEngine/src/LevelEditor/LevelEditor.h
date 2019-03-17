@@ -3,6 +3,7 @@
 #include "TileMap.h"
 #include "TextureSelector.h"
 #include "../Gui/Button.h"
+#include "../Gui/DropDownList.h"
 
 namespace Illusion
 {
@@ -49,6 +50,7 @@ namespace Illusion
 
 	private:
 		//Gui
+		gui::DropDownList *listOfLayers_;
 		gui::Button *addLayerButton_;
 		gui::Button *removeLayerButton_;
 		////
