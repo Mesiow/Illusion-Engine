@@ -37,10 +37,11 @@ namespace Illusion
 	protected:
 		Game *_game;
 
-		sf::Vector2i _mousePosScreen;
-		sf::Vector2f _mousePosView;
-		sf::Vector2i _mousePosWindow;
-		sf::Vector2u _mousePosGrid;
-		sf::Vector2u _mousePosTextureBounds;
+	public:
+		static sf::Vector2i _mousePosScreen;
+		static sf::Vector2f _mousePosView;
+		static sf::Vector2i _mousePosWindow;
+		static sf::Vector2u _mousePosGrid;
+		static sf::Vector2u _mousePosTextureBounds;
 	};
 }

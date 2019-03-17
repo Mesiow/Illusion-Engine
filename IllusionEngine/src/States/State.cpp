@@ -4,6 +4,13 @@
 
 namespace Illusion
 {
+
+	sf::Vector2i State::_mousePosScreen;
+	sf::Vector2f State::_mousePosView;
+	sf::Vector2i State::_mousePosWindow;
+	sf::Vector2u State::_mousePosGrid;
+	sf::Vector2u State::_mousePosTextureBounds;
+
 	void State::updateMousePositions()
 	{
 		this->_mousePosScreen = sf::Mouse::getPosition();

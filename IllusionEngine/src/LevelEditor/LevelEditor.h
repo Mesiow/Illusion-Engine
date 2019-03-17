@@ -38,15 +38,20 @@ namespace Illusion
 	private:
 		void initGui();
 		void initText(const int gridWidth, const int gridHeight, const int tileWorldDim);
+		void updateText();
+		void drawText(sf::RenderTarget &target);
+
 		void initTextureSelector();
 		void updateSelectorRect(const sf::Vector2u &gridPosition);
-		void updateText();
 		void setSelectorTexture();
 
 
 
 	private:
-		std::vector<gui::Button> editorButtons_;
+		//Gui
+		gui::Button *addLayerButton_;
+		gui::Button *removeLayerButton_;
+		////
 		
 		TextureSelector *textureSelector_;
 		sf::RectangleShape selector_;
@@ -55,13 +60,11 @@ namespace Illusion
 		sf::Texture &textureSheet_; //actual texture sheet
 		sf::View view;
 
+		//Text
 		sf::Text mapSizeText_;
 		sf::Text tileDimText_;
-
-
-
-
-
+		sf::Text layerCountText_;
+		////
 
 
 		sf::Clock loadClock_;

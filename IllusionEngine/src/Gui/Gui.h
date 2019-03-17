@@ -26,7 +26,6 @@ namespace Illusion
 
 		protected:
 			bool containsMouse(const sf::FloatRect &rect);
-			sf::Vector2f getMousePositionView();
 		};
 	}
 }

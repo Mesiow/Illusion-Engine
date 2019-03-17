@@ -28,11 +28,13 @@ namespace Illusion
 
 	    public: //setters
 			void setCurrentLayer(unsigned int layer);
+			void setLayerCount(unsigned int count);
 
 	    public://getters
 			Tile &getTileAtIndex(int index);
 			int getTileIndex(int x, int y);
 			int getTileDimension()const { return tileWorldDim_; }
+			unsigned int getLayerCount()const { return layerCount_; }
 
 			bool isInGrid(const sf::Vector2u &position);
 			bool doesLayerExist(unsigned int layer);
@@ -58,6 +60,7 @@ namespace Illusion
 			unsigned int width_;
 			unsigned int height_;
 			unsigned int layerIndex_;
+			unsigned int layerCount_;
 
 			int tileWorldDim_;
 			int tileTextureDim_;

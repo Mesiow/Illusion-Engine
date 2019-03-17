@@ -56,8 +56,8 @@ namespace Illusion
 
 	void LevelEditor::handleEvents(sf::Event &e)
 	{
-		for (auto &b : editorButtons_)
-			b.handleEvents(e);
+		addLayerButton_->handleEvents(e);
+		removeLayerButton_->handleEvents(e);
 	}
 
 	void LevelEditor::handleInput(const sf::Vector2u &mousePosGrid, const float &dt)
@@ -120,59 +120,43 @@ namespace Illusion
 
 		tileDimText_.setPosition(view.getCenter().x + view.getSize().x / 2 - tileDimText_.getGlobalBounds().width - tileDimText_.getCharacterSize(),
 			view.getCenter().y + view.getSize().y/2 - tileDimText_.getGlobalBounds().height - tileDimText_.getCharacterSize() - tileDimText_.getCharacterSize()/3);
+
+		layerCountText_.setPosition(view.getCenter().x - view.getSize().x / 2 + layerCountText_.getGlobalBounds().width - layerCountText_.getGlobalBounds().width + layerCountText_.getCharacterSize(),
+			view.getCenter().y + view.getSize().y / 2 - layerCountText_.getGlobalBounds().height - layerCountText_.getCharacterSize() * 2);
+	}
+
+	void LevelEditor::drawText(sf::RenderTarget &target)
+	{
+		target.draw(mapSizeText_);
+		target.draw(tileDimText_);
+		target.draw(layerCountText_);
 	}
 
 
 	void LevelEditor::draw(sf::RenderTarget &target)
 	{
-
 		map_->draw(target);
 
 		target.draw(selector_);
 		textureSelector_->draw(target);
 
-		target.draw(mapSizeText_);
-		target.draw(tileDimText_);
-
+		drawText(target);
 		drawGui(target);
 	}
 
 	void LevelEditor::updateGui()
 	{
-		for (auto &b : editorButtons_)
-			b.update();
+		addLayerButton_->setPosition(sf::Vector2f(view.getCenter().x + view.getSize().x / 2 - addLayerButton_->getBounds().width, view.getCenter().y - 350));
+		removeLayerButton_->setPosition(sf::Vector2f(view.getCenter().x + view.getSize().x / 2 - removeLayerButton_->getBounds().width, view.getCenter().y - 320));
+
+		addLayerButton_->update();
+		removeLayerButton_->update();
 	}
 
 	void LevelEditor::drawGui(sf::RenderTarget &target)
 	{
-		for (auto &b : editorButtons_)
-			b.draw(target);
-	}
-
-	void LevelEditor::initGui()
-	{
-		gui::Button addLayerButton(sf::Vector2f(map_->getBorderPosition().x + 100, map_->getBorderPosition().y - 100), gui::Size::Small);
-
-		addLayerButton.setText(std::string("Add Layer"), ResourceManager::getFont("rubik"), 20,
-			sf::Color(90, 90, 90, 150), sf::Color(140, 140, 140, 220), sf::Color(190, 190, 190, 255));
-
-		addLayerButton.setFunction([&]() {
-			//map_->setCurrentLayer()
-		});
-
-		editorButtons_.push_back(addLayerButton);
-
-		gui::Button removeLayerButton(sf::Vector2f(map_->getBorderPosition().x + map_->getBorderBounds().width/4, map_->getBorderPosition().y - 100),
-			gui::Size::Small);
-
-		removeLayerButton.setText(std::string("Remove Layer"), ResourceManager::getFont("rubik"), 20,
-			sf::Color(90, 90, 90, 150), sf::Color(140, 140, 140, 220), sf::Color(190, 190, 190, 255));
-
-		removeLayerButton.setFunction([&]() {
-			//map_->setCurrentLayer()
-		});
-
-		editorButtons_.push_back(removeLayerButton);
+		addLayerButton_->draw(target);
+		removeLayerButton_->draw(target);
 	}
 
 	void LevelEditor::initText(const int gridWidth, const int gridHeight, const int tileWorldDim)
@@ -186,6 +170,37 @@ namespace Illusion
 		tileDimText_.setCharacterSize(15);
 		tileDimText_.setString(std::string("Tile Dimensions: ") + std::to_string(tileWorldDim) + " x " + std::to_string(tileWorldDim));
 		tileDimText_.setPosition(float(Game::getWindow().getSize().x - tileDimText_.getGlobalBounds().width), (float)Game::getWindow().getSize().y);
+
+		layerCountText_.setFont(ResourceManager::getFont("rubik"));
+		layerCountText_.setCharacterSize(15);
+		layerCountText_.setString(std::string("Layers: ") + std::to_string(map_->getLayerCount()));
+		layerCountText_.setPosition(50.0f, (float)Game::getWindow().getSize().y - 30);
+	}
+
+
+	void LevelEditor::initGui()
+	{
+		addLayerButton_ = new gui::Button(sf::Vector2f(map_->getBorderPosition().x + 100, map_->getBorderPosition().y - 100), gui::Size::Small);
+
+		addLayerButton_->setText(std::string("Add Layer"), ResourceManager::getFont("rubik"), 20,
+			sf::Color(90, 90, 90, 150), sf::Color(140, 140, 140, 220), sf::Color(190, 190, 190, 255));
+
+		addLayerButton_->setFunction([&]() {
+			std::cout << "Adding layer" << std::endl;
+			map_->setLayerCount(map_->getLayerCount() + 1);
+			layerCountText_.setString(std::string("Layers: ") + std::to_string(map_->getLayerCount())); //update layer count text when we add a layer
+		});
+
+		removeLayerButton_ = new gui::Button(sf::Vector2f(map_->getBorderPosition().x + map_->getBorderBounds().width / 4, map_->getBorderPosition().y - 100),
+			gui::Size::Small);
+
+		removeLayerButton_->setText(std::string("Remove Layer"), ResourceManager::getFont("rubik"), 20,
+			sf::Color(90, 90, 90, 150), sf::Color(140, 140, 140, 220), sf::Color(190, 190, 190, 255));
+
+		removeLayerButton_->setFunction([&]() {
+			map_->setLayerCount(map_->getLayerCount() - 1);
+			layerCountText_.setString(std::string("Layers: ") + std::to_string(map_->getLayerCount()));
+		});
 	}
 
 	void LevelEditor::initTextureSelector()

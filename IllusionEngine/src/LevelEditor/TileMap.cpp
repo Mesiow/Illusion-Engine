@@ -11,6 +11,8 @@ namespace Illusion
 		this->width_ = width;
 		this->height_ = height;
 		this->layerIndex_ = 0; //begin at layer 0
+		this->layerCount_ = 0;
+
 		addLayer(layerIndex_);
 
 		initTiles(width, height);
@@ -88,13 +90,19 @@ namespace Illusion
 	void TileMap::addLayer(unsigned int layer)
 	{
 		if (layerBitMask_[layer] == 0)
+		{
 			layerBitMask_.set(layer, 1); //turn layer on
+			layerCount_++;
+		}
 	}
 
 	void TileMap::removeLayer(unsigned int layer)
 	{
 		if (layerBitMask_[layer] != 0) //if there is an active layer
+		{
 			layerBitMask_.set(layer, 0); //turn it off
+			layerCount_--;
+		}
 	}
 
 	bool TileMap::loadMap(const std::string &path)
@@ -110,6 +118,14 @@ namespace Illusion
 	void TileMap::setCurrentLayer(unsigned int layer)
 	{
 		layerIndex_ = layer;
+	}
+
+	void TileMap::setLayerCount(unsigned int count)
+	{
+		if (count < 0 || count > MAX_LAYERS)
+			return;
+
+		layerCount_ = count;
 	}
 
 	Tile &TileMap::getTileAtIndex(int index)

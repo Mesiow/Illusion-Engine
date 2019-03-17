@@ -1,6 +1,6 @@
 #include "../pcHeaders.h"
 #include "Gui.h"
-#include "../Game.h"
+#include "../States/State.h"
 
 namespace Illusion
 {
@@ -8,18 +8,11 @@ namespace Illusion
 	{
 		bool Gui::containsMouse(const sf::FloatRect &rect)
 		{
-			auto mousePos = getMousePositionView();
-			if (rect.contains((float)mousePos.x, (float)mousePos.y))
+			//std::cout << "mouse pos view gui class: " << mousePos.x << ", " << mousePos.y << std::endl;
+			if (rect.contains((float)State::_mousePosView.x, (float)State::_mousePosView.y))
 				return true;
 
 			return false;
-		}
-
-		sf::Vector2f Gui::getMousePositionView()
-		{
-			auto windowpos = sf::Mouse::getPosition(Game::getWindow());
-			auto mouseposView = Game::getWindow().mapPixelToCoords(windowpos);
-			return mouseposView;
 		}
 	}
 }
