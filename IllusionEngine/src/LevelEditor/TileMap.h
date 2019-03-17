@@ -18,8 +18,8 @@ namespace Illusion
 			void addTile(const sf::Vector2u &position, const sf::IntRect &rect, unsigned int layer);
 			void removeTile(const sf::Vector2u &position);
 
-			void addLayer(unsigned int layer);
-			void removeLayer(unsigned int layer);
+			void addLayer();
+			void removeLayer();
 
     	public:
 			bool loadMap(const std::string &path);

@@ -13,7 +13,7 @@ namespace Illusion
 		this->layerIndex_ = 0; //begin at layer 0
 		this->layerCount_ = 0;
 
-		addLayer(layerIndex_);
+		addLayer();
 
 		initTiles(width, height);
 		border_.setSize(sf::Vector2f(float(width * tileWorldDim), float(height * tileWorldDim))); //calculate size of entire map/level
@@ -87,22 +87,31 @@ namespace Illusion
 		}
 	}
 
-	void TileMap::addLayer(unsigned int layer)
+	void TileMap::addLayer()
 	{
-		if (layerBitMask_[layer] == 0)
+		if (layerBitMask_[layerIndex_] == 0)
 		{
-			layerBitMask_.set(layer, 1); //turn layer on
-			layerCount_++;
+			layerBitMask_.set(layerIndex_, 1); //turn layer on
 		}
+
+		if (layerCount_ >= MAX_LAYERS)
+			return;
+
+		layerCount_++;
 	}
 
-	void TileMap::removeLayer(unsigned int layer)
+	void TileMap::removeLayer()
 	{
-		if (layerBitMask_[layer] != 0) //if there is an active layer
+		if (layerBitMask_[layerIndex_] != 0) //if there is an active layer
 		{
-			layerBitMask_.set(layer, 0); //turn it off
-			layerCount_--;
+			layerBitMask_.set(layerIndex_, 0); //turn it off
 		}
+
+		if (layerCount_ <= 1) 
+			return;
+
+		layerCount_--;
+		
 	}
 
 	bool TileMap::loadMap(const std::string &path)
@@ -122,10 +131,8 @@ namespace Illusion
 
 	void TileMap::setLayerCount(unsigned int count)
 	{
-		if (count < 0 || count > MAX_LAYERS)
-			return;
-
-		layerCount_ = count;
+		//if(isInLayerRange(count))
+			layerCount_ = count;
 	}
 
 	Tile &TileMap::getTileAtIndex(int index)

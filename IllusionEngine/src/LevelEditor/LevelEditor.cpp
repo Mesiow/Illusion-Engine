@@ -186,8 +186,7 @@ namespace Illusion
 			sf::Color(90, 90, 90, 150), sf::Color(140, 140, 140, 220), sf::Color(190, 190, 190, 255));
 
 		addLayerButton_->setFunction([&]() {
-			std::cout << "Adding layer" << std::endl;
-			map_->setLayerCount(map_->getLayerCount() + 1);
+			map_->addLayer();
 			layerCountText_.setString(std::string("Layers: ") + std::to_string(map_->getLayerCount())); //update layer count text when we add a layer
 		});
 
@@ -198,7 +197,7 @@ namespace Illusion
 			sf::Color(90, 90, 90, 150), sf::Color(140, 140, 140, 220), sf::Color(190, 190, 190, 255));
 
 		removeLayerButton_->setFunction([&]() {
-			map_->setLayerCount(map_->getLayerCount() - 1);
+			map_->removeLayer();
 			layerCountText_.setString(std::string("Layers: ") + std::to_string(map_->getLayerCount()));
 		});
 	}
