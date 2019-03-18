@@ -150,6 +150,7 @@ namespace Illusion
 	{
 		addLayerButton_->setPosition(sf::Vector2f(view.getCenter().x + view.getSize().x / 2 - addLayerButton_->getBounds().width, view.getCenter().y - 350));
 		removeLayerButton_->setPosition(sf::Vector2f(view.getCenter().x + view.getSize().x / 2 - removeLayerButton_->getBounds().width, view.getCenter().y - 320));
+		listOfLayers_->setListPosition(sf::Vector2f(view.getCenter().x + view.getSize().x / 2 - listOfLayers_->getActiveButton()->getBounds().width - 20, view.getCenter().y - 200));
 
 		addLayerButton_->update();
 		removeLayerButton_->update();

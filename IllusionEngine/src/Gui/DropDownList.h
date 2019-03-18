@@ -20,13 +20,14 @@ namespace Illusion
 		public:
 			void addToList(const std::string &item);
 			bool removeFromList(const std::string &item);
-			void setButtonListFunctions();
 			void setButtonFunction(const std::string &id, std::function<void(void)> func);
 
 		public:
 			gui::Button *getActiveButton() { return this->activeButton_; }
+			void setListPosition(const sf::Vector2f &position);
 
 		private:
+			void setButtonListFunctions();
 			void initialize(const sf::Vector2f &position,
 				const Size buttonsSize, const uint activeIndex);
 

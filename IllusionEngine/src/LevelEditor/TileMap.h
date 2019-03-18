@@ -1,7 +1,7 @@
 #pragma once
 #include "Tile.h"
 
-#define MAX_LAYERS 32
+#define MAX_LAYERS 10
 
 namespace Illusion
 {

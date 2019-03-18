@@ -121,6 +121,15 @@ namespace Illusion
 			return true;
 		}
 
+		void DropDownList::setListPosition(const sf::Vector2f &position)
+		{
+			activeButton_->setPosition(position);
+			for (std::size_t i = 0; i < itemList.size(); ++i)
+			{
+				buttonsList_[itemList[i]]->setPosition(sf::Vector2f(position.x, (size_.y * i + position.y + size_.y)));
+			}
+		}
+
 		void DropDownList::setButtonListFunctions()
 		{
 			for (int i = 0; i < itemList.size(); ++i) //make sure active button becomes the button clicked
