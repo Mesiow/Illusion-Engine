@@ -92,6 +92,7 @@ namespace Illusion
 		if (layerBitMask_[layerIndex_] == 0)
 		{
 			layerBitMask_.set(layerIndex_, 1); //turn layer on
+			layerIndex_++;
 		}
 
 		if (layerCount_ >= MAX_LAYERS)
@@ -105,6 +106,7 @@ namespace Illusion
 		if (layerBitMask_[layerIndex_] != 0) //if there is an active layer
 		{
 			layerBitMask_.set(layerIndex_, 0); //turn it off
+			layerIndex_--;
 		}
 
 		if (layerCount_ <= 1) 
@@ -153,6 +155,6 @@ namespace Illusion
 
 	bool TileMap::doesLayerExist(unsigned int layer)
 	{
-		return layerBitMask_[layer] == 0 ? false : true; //if layer is 0 it does not exist else it does
+		return layerBitMask_[layer] == 1 ? true : false; //if layer is 0 it does not exist else it does
 	}
 }

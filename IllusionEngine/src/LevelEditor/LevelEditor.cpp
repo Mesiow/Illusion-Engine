@@ -46,7 +46,8 @@ namespace Illusion
 
 	void LevelEditor::addTile(const sf::Vector2u &position, const sf::IntRect &rect)
 	{
-		map_->addTile(position, rect, 0); //add tile to layer 1 at index 0
+		//if(map_->isInGrid(position))
+			map_->addTile(position, rect, std::atoi(listOfLayers_->getActiveButton()->getString().c_str())); //convert the active layer we selected to an int and add to that layer
 	}
 
 	void LevelEditor::deleteTile(const sf::Vector2u &position)
