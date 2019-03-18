@@ -186,14 +186,17 @@ namespace Illusion
 
 	void LevelEditor::initGui()
 	{
+		std::vector<std::string> list{ "Layer 1" };
+		listOfLayers_ = new gui::DropDownList(sf::Vector2f(view.getCenter().x + view.getSize().x / 2 - 100, view.getCenter().y), list, gui::Size::Small, 0);
+
 		addLayerButton_ = new gui::Button(sf::Vector2f(map_->getBorderPosition().x + 100, map_->getBorderPosition().y - 100), gui::Size::Small);
 
 		addLayerButton_->setText(std::string("Add Layer"), ResourceManager::getFont("rubik"), 20,
 			sf::Color(90, 90, 90, 150), sf::Color(140, 140, 140, 220), sf::Color(190, 190, 190, 255));
 
 		addLayerButton_->setFunction([&]() {
-			map_->addLayer();
-			listOfLayers_->addToList(std::string("Layer ") + std::to_string(map_->getLayerCount()));
+			map_->addLayer(); //add layer to tilemap
+			listOfLayers_->addToList(std::string("Layer ") + std::to_string(map_->getLayerCount())); //then add it to the list
 			layerCountText_.setString(std::string("Layers: ") + std::to_string(map_->getLayerCount())); //update layer count text when we add a layer
 		});
 
@@ -204,14 +207,12 @@ namespace Illusion
 			sf::Color(90, 90, 90, 150), sf::Color(140, 140, 140, 220), sf::Color(190, 190, 190, 255));
 
 		removeLayerButton_->setFunction([&]() {
-			map_->removeLayer();
-			listOfLayers_->removeFromList(std::string("Layer ") + std::to_string(map_->getLayerCount())); //removes latest layer
+			
+			if(listOfLayers_->removeFromList(std::string("Layer ") + std::to_string(map_->getLayerCount())) == true) //removes latest layer from the list first
+				map_->removeLayer(); //if we are trying to remove the active layer, prohibit that
+
 			layerCountText_.setString(std::string("Layers: ") + std::to_string(map_->getLayerCount()));
 		});
-
-
-		std::vector<std::string> list{ "Layer 1" };
-		listOfLayers_ = new gui::DropDownList(sf::Vector2f(view.getCenter().x + view.getSize().x / 2 - 100, view.getCenter().y), list, gui::Size::Small, 0);
 	}
 
 	void LevelEditor::initTextureSelector()

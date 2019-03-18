@@ -64,7 +64,7 @@ namespace Illusion
 			size_ = gui::getButtonSize(buttonsSize);
 
 
-			for (int i = 0; i < itemList.size(); i++)
+			for (int i = 0; i < itemList.size(); ++i)
 			{
 				buttonsList_.insert(std::make_pair(
 					itemList[i], new gui::Button(sf::Vector2f(position.x, (size_.y * i + position.y)), buttonsSize,
@@ -85,14 +85,7 @@ namespace Illusion
 				show == true ? show = false : show = true; //show all buttons when clicked
 			});
 
-			for (int i = 0; i < itemList.size(); i++) //make sure active button becomes the button clicked
-			{
-				buttonsList_[itemList[i]]->setFunction([=]() {
-					activeButton_->setStr(itemList[i]);
-					show = false; //after selecting option, close the list
-				});
-			}
-
+			setButtonListFunctions();
 		}
 
 		void DropDownList::addToList(const std::string & item)
@@ -108,10 +101,15 @@ namespace Illusion
 				sf::Color(70, 70, 70, 200), sf::Color(95, 95, 95, 200), sf::Color(130, 130, 130, 255));
 
 			itemList.push_back(item); //push the new item in
+
+			setButtonListFunctions(); //update the function of the new added button to be able to be selected
 		}
 
-		void DropDownList::removeFromList(const std::string &item)
+		bool DropDownList::removeFromList(const std::string &item)
 		{
+			if (activeButton_->getString() == item) //check if we try to delete the active button, make sure we cant
+				return false;
+
 			if (buttonsList_.find(item) != buttonsList_.end()) //if the item was found in the list delete it
 			{
 				buttonsList_.erase(item);
@@ -119,6 +117,19 @@ namespace Illusion
 			}
 			else
 				throw("Item to remove not found (gui::DropDownList)");
+
+			return true;
+		}
+
+		void DropDownList::setButtonListFunctions()
+		{
+			for (int i = 0; i < itemList.size(); ++i) //make sure active button becomes the button clicked
+			{
+				buttonsList_[itemList[i]]->setFunction([=]() {
+					activeButton_->setStr(itemList[i]);
+					show = false; //after selecting option, close the list
+				});
+			}
 		}
 
 		void DropDownList::setButtonFunction(const std::string &id, std::function<void(void)> func)
