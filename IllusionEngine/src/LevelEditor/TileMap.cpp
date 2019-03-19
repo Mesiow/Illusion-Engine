@@ -10,7 +10,7 @@ namespace Illusion
 		this->tileWorldDim_ = tileWorldDim;
 		this->width_ = width;
 		this->height_ = height;
-		this->layerIndex_ = 0; //begin at layer 0
+		this->layerIndex_ = 0;
 		this->layerCount_ = 0;
 
 		addLayer();
@@ -61,7 +61,7 @@ namespace Illusion
 			{
 				if (doesLayerExist(layer))
 				{
-					std::cout << "Adding tile" << std::endl; //add a tile at the specified index according to the grid position passed in
+					std::cout << "Adding tile to layer: "<<layer<< std::endl; //add a tile at the specified index according to the grid position passed in
 					tiles_[index] = new Tile(sf::Vector2f(float(position.x * tileWorldDim_), float(position.y * tileWorldDim_)),
 						sf::Vector2f((float)tileWorldDim_, (float)tileWorldDim_),
 						sheet_, rect, sf::Color::White, layer);
@@ -72,7 +72,7 @@ namespace Illusion
 
 	void TileMap::removeTile(const sf::Vector2u &position)
 	{	
-		//if we are trying to place a tile within map space
+		//if we are trying to remove a tile within map space
 		if (isInGrid(position))
 		{
 			//index of tile to delete
@@ -80,7 +80,7 @@ namespace Illusion
 
 			if (tiles_[index] != nullptr)
 			{
-				std::cout << "Deleting tile" << std::endl;
+				std::cout << "Deleting tile from layer "<<layerCount_<< std::endl;
 				delete tiles_[index]; //free tile
 				tiles_[index] = nullptr; //set tile at index to null
 			}
@@ -89,10 +89,12 @@ namespace Illusion
 
 	void TileMap::addLayer()
 	{
+		//if(layerIndex_ == 0)
 		if (layerBitMask_[layerIndex_] == 0)
 		{
 			layerBitMask_.set(layerIndex_, 1); //turn layer on
 			layerIndex_++;
+			std::cout << "Layer index: " << layerIndex_ << std::endl;
 		}
 
 		if (layerCount_ >= MAX_LAYERS)
@@ -103,10 +105,16 @@ namespace Illusion
 
 	void TileMap::removeLayer()
 	{
-		if (layerBitMask_[layerIndex_] != 0) //if there is an active layer
+		//layerIndex - 1 because we will never remove layer 1 and the index is one less than the size
+		if (layerBitMask_[layerIndex_ - 1] == 1) //if there is an active layer
 		{
-			layerBitMask_.set(layerIndex_, 0); //turn it off
+			layerBitMask_.set(layerIndex_ - 1, 0); //turn it off
+			std::cout << "Layer index: " << layerIndex_ - 1 << std::endl;
 			layerIndex_--;
+		}
+		else
+		{
+			std::cout << "Remove layer error, index: " << layerIndex_ - 1 << std::endl;
 		}
 
 		if (layerCount_ <= 1) 
@@ -155,6 +163,7 @@ namespace Illusion
 
 	bool TileMap::doesLayerExist(unsigned int layer)
 	{
-		return layerBitMask_[layer] == 1 ? true : false; //if layer is 0 it does not exist else it does
+		//minus 1 for index
+		return layerBitMask_[layer - 1] == 1 ? true : false; //if layer is 0 it does not exist else it does
 	}
 }

@@ -4,6 +4,7 @@
 #include "TextureSelector.h"
 #include "../Gui/Button.h"
 #include "../Gui/DropDownList.h"
+#include "../Utils/UtilityFunctions.h"
 
 namespace Illusion
 {

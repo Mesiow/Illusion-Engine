@@ -46,8 +46,12 @@ namespace Illusion
 
 	void LevelEditor::addTile(const sf::Vector2u &position, const sf::IntRect &rect)
 	{
-		//if(map_->isInGrid(position))
-			map_->addTile(position, rect, std::atoi(listOfLayers_->getActiveButton()->getString().c_str())); //convert the active layer we selected to an int and add to that layer
+		//extract layer number out of layer string
+		std::size_t delPos = util::string::getDelimiterPos(listOfLayers_->getActiveButton()->getString(), " ");
+		std::string subStr = util::string::getSubStr(listOfLayers_->getActiveButton()->getString(), " ", delPos + 1, listOfLayers_->getActiveButton()->getString().size());
+
+		//add tile
+		map_->addTile(position, rect, std::stoi(subStr)); //convert the active layer we selected to an int and add to that layer
 	}
 
 	void LevelEditor::deleteTile(const sf::Vector2u &position)
@@ -150,7 +154,7 @@ namespace Illusion
 	void LevelEditor::updateGui()
 	{
 		addLayerButton_->setPosition(sf::Vector2f(view.getCenter().x + view.getSize().x / 2 - addLayerButton_->getBounds().width, view.getCenter().y - 350));
-		removeLayerButton_->setPosition(sf::Vector2f(view.getCenter().x + view.getSize().x / 2 - removeLayerButton_->getBounds().width, view.getCenter().y - 320));
+		removeLayerButton_->setPosition(sf::Vector2f(view.getCenter().x + view.getSize().x / 2 - removeLayerButton_->getBounds().width, view.getCenter().y - 300));
 		listOfLayers_->setListPosition(sf::Vector2f(view.getCenter().x + view.getSize().x / 2 - listOfLayers_->getActiveButton()->getBounds().width - 20, view.getCenter().y - 200));
 
 		addLayerButton_->update();
@@ -202,7 +206,7 @@ namespace Illusion
 			layerCountText_.setString(std::string("Layers: ") + std::to_string(map_->getLayerCount())); //update layer count text when we add a layer
 		});
 
-		removeLayerButton_ = new gui::Button(sf::Vector2f(map_->getBorderPosition().x + map_->getBorderBounds().width / 4, map_->getBorderPosition().y - 100),
+		removeLayerButton_ = new gui::Button(sf::Vector2f(map_->getBorderPosition().x + map_->getBorderBounds().width / 4, map_->getBorderPosition().y - 50.0f),
 			gui::Size::Small);
 
 		removeLayerButton_->setText(std::string("Remove Layer"), ResourceManager::getFont("rubik"), 20,
