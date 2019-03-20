@@ -51,7 +51,7 @@ namespace Illusion
 		tiles_.resize(width * height, nullptr); //resize grid with nullptrs
 	}
 
-	void TileMap::addTile(const sf::Vector2u &position, const sf::IntRect &rect, unsigned int layer)
+	void TileMap::addTile(const sf::Vector2u &position, const sf::IntRect &rect, unsigned short layer)
 	{
 		if (isInGrid(position))
 		{
@@ -80,7 +80,9 @@ namespace Illusion
 
 			if (tiles_[index] != nullptr)
 			{
-				std::cout << "Deleting tile from layer "<<layerCount_<< std::endl;
+				auto tilelayerNum = tiles_[index]->getLayerNumber();
+
+				std::cout << "Deleting tile from layer "<<tilelayerNum<< std::endl;
 				delete tiles_[index]; //free tile
 				tiles_[index] = nullptr; //set tile at index to null
 			}
@@ -89,7 +91,6 @@ namespace Illusion
 
 	void TileMap::addLayer()
 	{
-		//if(layerIndex_ == 0)
 		if (layerBitMask_[layerIndex_] == 0)
 		{
 			layerBitMask_.set(layerIndex_, 1); //turn layer on
@@ -129,7 +130,7 @@ namespace Illusion
 		return false;
 	}
 
-	bool TileMap::saveMap()
+	bool TileMap::saveMap(const std::string &name)
 	{
 		return false;
 	}

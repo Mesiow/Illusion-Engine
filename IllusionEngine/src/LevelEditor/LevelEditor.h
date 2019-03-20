@@ -36,6 +36,9 @@ namespace Illusion
 		bool isInLevelBounds(const sf::Vector2u &position);
 		int getMapTileDimension()const { return map_->getTileDimension(); }
 		sf::View &getView() { return view; }
+		
+	private:
+		unsigned short getActiveLayer();
 
 	private:
 		void initGui();

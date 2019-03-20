@@ -15,7 +15,7 @@ namespace Illusion
 			void draw(sf::RenderTarget &target);
 
 			void initTiles(unsigned int width, unsigned int height);
-			void addTile(const sf::Vector2u &position, const sf::IntRect &rect, unsigned int layer);
+			void addTile(const sf::Vector2u &position, const sf::IntRect &rect, unsigned short layer);
 			void removeTile(const sf::Vector2u &position);
 
 			void addLayer();
@@ -23,7 +23,7 @@ namespace Illusion
 
     	public:
 			bool loadMap(const std::string &path);
-			bool saveMap();
+			bool saveMap(const std::string &name);
 
 
 	    public: //setters
@@ -46,7 +46,7 @@ namespace Illusion
 
 		    sf::Vector2f getBorderPosition()const { return border_.getPosition(); }
 			sf::FloatRect getBorderBounds()const { return border_.getGlobalBounds(); }
-			//////////////
+			////////////// 
 
 		private:
 			std::vector<Tile*> tiles_;
@@ -59,8 +59,8 @@ namespace Illusion
 			unsigned int mapSize_;
 			unsigned int width_;
 			unsigned int height_;
-			unsigned int layerIndex_;
-			unsigned int layerCount_;
+			unsigned short layerIndex_;
+			unsigned short layerCount_;
 
 			int tileWorldDim_;
 			int tileTextureDim_;

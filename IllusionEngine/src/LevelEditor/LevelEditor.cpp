@@ -46,17 +46,13 @@ namespace Illusion
 
 	void LevelEditor::addTile(const sf::Vector2u &position, const sf::IntRect &rect)
 	{
-		//extract layer number out of layer string
-		std::size_t delPos = util::string::getDelimiterPos(listOfLayers_->getActiveButton()->getString(), " ");
-		std::string subStr = util::string::getSubStr(listOfLayers_->getActiveButton()->getString(), " ", delPos + 1, listOfLayers_->getActiveButton()->getString().size());
-
 		//add tile
-		map_->addTile(position, rect, std::stoi(subStr)); //convert the active layer we selected to an int and add to that layer
+		map_->addTile(position, rect, this->getActiveLayer());
 	}
 
 	void LevelEditor::deleteTile(const sf::Vector2u &position)
 	{
-		map_->removeTile(position);
+		map_->removeTile(position); //remove tile at the active layer selected
 	}
 
 	void LevelEditor::handleEvents(sf::Event &e)
@@ -230,6 +226,15 @@ namespace Illusion
 	void LevelEditor::setSelectorTexture()
 	{
 		selector_.setTextureRect(textureSelector_->getSelectedRect());
+	}
+
+	unsigned short LevelEditor::getActiveLayer()
+	{
+		// extract layer number out of layer string
+		std::size_t delPos = util::string::getDelimiterPos(listOfLayers_->getActiveButton()->getString(), " ");
+		std::string subStr = util::string::getSubStr(listOfLayers_->getActiveButton()->getString(), " ", delPos + 1, listOfLayers_->getActiveButton()->getString().size());
+
+		return std::stoi(subStr);
 	}
 
 	const sf::IntRect &LevelEditor::getCurrentSelectedTexture()const
