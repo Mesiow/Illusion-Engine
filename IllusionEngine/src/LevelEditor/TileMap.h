@@ -50,11 +50,15 @@ namespace Illusion
 
 		private:
 			std::vector<Tile*> tiles_;
+			std::vector<Tile*> switchtiles_;
 			sf::RectangleShape border_;
 			sf::Texture &sheet_;
 
 
-			std::bitset<MAX_LAYERS> layerBitMask_;
+			//std::bitset<MAX_LAYERS> layerBitMask_;
+			std::vector<std::bitset<MAX_LAYERS>> layerBitMask_; //00000000  layer 1
+			                                                    //00000000  layer 2
+			                                                    //00000000  layer 3
 
 			unsigned int mapSize_;
 			unsigned int width_;

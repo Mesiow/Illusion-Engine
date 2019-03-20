@@ -40,8 +40,14 @@ namespace Illusion
 		{
 			for (std::size_t i = 0; i < tiles_.size(); ++i)
 			{
-				if (tiles_[i] != nullptr) //draw if there is a tile
-					tiles_[i]->draw(target);
+				//if (tiles_[i] != nullptr) //draw if there is a tile
+				//	tiles_[i]->draw(target);
+
+				//if(tiles_[i]->getLayerNumber() < 
+				if (tiles_[i] != nullptr)
+				{
+					
+				}
 			}
 		}
 	}
@@ -57,7 +63,7 @@ namespace Illusion
 		{
 			int index = getTileIndex(position.x, position.y);
 
-			if (tiles_[index] == nullptr) //if there is space to add a tile
+			if (tiles_[index] == nullptr || tiles_[index]->getLayerNumber()!=layer) //if there is space to add a tile
 			{
 				if (doesLayerExist(layer))
 				{
