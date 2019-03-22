@@ -1,7 +1,7 @@
 #pragma once
 #include "../State.h"
 #include "../../LevelEditor/LevelEditor.h"
-
+#include "../../Gui/StackMenu.h"
 //Add gui elements giving us info about tilemap size and tile dimension
 
 namespace Illusion
@@ -19,9 +19,17 @@ namespace Illusion
 	     void update(sf::RenderTarget &target)override;
 	     void draw(sf::RenderTarget &target)override;
 
+		 void drawGui(sf::RenderTarget &target);
+		 void updateGui();
+
 		 void initKeyBinds();
+		 void initGui();
 
 	private:
 		LevelEditor *editor_;
+
+		sf::RectangleShape pauseMenuContainer_;
+		gui::StackMenu *pauseMenu_;
+		bool paused_;
 	};
 }

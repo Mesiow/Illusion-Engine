@@ -9,8 +9,10 @@ namespace Illusion
 		:State(game)
 	{
 		initKeyBinds();
+		initGui();
 
 		editor_ = new LevelEditor(sheet, mapWidth, mapHeight, tileDim);
+		this->paused_ = false;
 	}
 
 	EditorState::~EditorState()
@@ -20,28 +22,44 @@ namespace Illusion
 
 	void EditorState::handleInput(const float &dt)
 	{
-		editor_->handleInput(_mousePosGrid, dt);
+		if(!paused_)
+			editor_->handleInput(_mousePosGrid, dt);
 	}
 
 	void EditorState::handleEvents(sf::Event &e)
 	{
-		editor_->handleEvents(e);
+		if(!paused_)
+			editor_->handleEvents(e);
+
 		switch (e.type)
 		{
 		case sf::Event::KeyPressed:
 		{
-		 if (e.key.code == Keyboard::getCurrentKeyBinds().at("BACK"))
+			if (e.key.code == Keyboard::getCurrentKeyBinds().at("BACK"))
 			{
 				_game->changeState<MenuState>(*_game);
 			}
+			else if (e.key.code == sf::Keyboard::Escape)
+			{
+				if (paused_)
+					paused_ = false;
+				else
+					paused_ = true;
+			}
 		}
 		break;
+
 		}
 	}
 
 	void EditorState::update(sf::RenderTarget &target)
 	{
-		editor_->update(target, _mousePosGrid, _mousePosView);
+		if(!paused_)
+			editor_->update(target, _mousePosGrid, _mousePosView);
+		else
+		{
+			updateGui();
+		}
 
 		updateMousePositions();
 
@@ -50,9 +68,22 @@ namespace Illusion
 
 	void EditorState::draw(sf::RenderTarget &target)
 	{
-		editor_->draw(target);
+		if (!paused_)
+			editor_->draw(target);
+		else
+			drawGui(target);
 
 		showMouseCoordinates();
+	}
+
+	void EditorState::drawGui(sf::RenderTarget &target)
+	{
+		target.draw(pauseMenuContainer_);
+	}
+
+	void EditorState::updateGui()
+	{
+		//pauseMenu_->update();
 	}
 
 	void EditorState::initKeyBinds()
@@ -77,5 +108,14 @@ namespace Illusion
 
 		Keyboard::addKeyBinds(map);
 		Keyboard::printBoundKeys();
+	}
+
+	void EditorState::initGui()
+	{
+		pauseMenuContainer_.setFillColor(sf::Color(70, 70, 70, 80));
+		pauseMenuContainer_.setSize(sf::Vector2f(Game::getWindow().getSize().x / 3, Game::getWindow().getSize().y / 1.2));
+		pauseMenuContainer_.setOrigin(sf::Vector2f(pauseMenuContainer_.getGlobalBounds().left + pauseMenuContainer_.getGlobalBounds().width / 2.0f,
+			pauseMenuContainer_.getGlobalBounds().top + pauseMenuContainer_.getGlobalBounds().height / 2.0f));
+		pauseMenuContainer_.setPosition(Game::getWindow().getSize().x / 2.0f, Game::getWindow().getSize().y / 2.0f);
 	}
 }

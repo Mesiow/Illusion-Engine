@@ -1,5 +1,5 @@
 #pragma once
-#include "Tile.h"
+#include "Layer.h"
 
 #define MAX_LAYERS 10
 
@@ -7,7 +7,7 @@ namespace Illusion
 {
 	class TileMap
 	{
-		public:
+	public:
 			TileMap(sf::Texture &sheet, unsigned int width, unsigned int height, int tileWorldDim);
 			~TileMap();
 
@@ -15,6 +15,8 @@ namespace Illusion
 			void draw(sf::RenderTarget &target);
 
 			void initTiles(unsigned int width, unsigned int height);
+			void initTilesAndLayers(unsigned int width, unsigned int height);
+
 			void addTile(const sf::Vector2u &position, const sf::IntRect &rect, unsigned short layer);
 			void removeTile(const sf::Vector2u &position);
 
@@ -26,12 +28,8 @@ namespace Illusion
 			bool saveMap(const std::string &name);
 
 
-	    public: //setters
-			void setCurrentLayer(unsigned int layer);
-			void setLayerCount(unsigned int count);
-
 	    public://getters
-			Tile &getTileAtIndex(int index);
+			//Tile &getTileAtIndex(int index);
 			int getTileIndex(int x, int y);
 			int getTileDimension()const { return tileWorldDim_; }
 			unsigned int getLayerCount()const { return layerCount_; }
@@ -49,21 +47,15 @@ namespace Illusion
 			////////////// 
 
 		private:
-			std::vector<Tile*> tiles_;
-			std::vector<Tile*> switchtiles_;
+			std::vector<Layer*> layers_; //layers that hold tiles to render other tiles on top of other layers
+			//std::vector<Tile*> tiles_;
 			sf::RectangleShape border_;
 			sf::Texture &sheet_;
-
-
-			//std::bitset<MAX_LAYERS> layerBitMask_;
-			std::vector<std::bitset<MAX_LAYERS>> layerBitMask_; //00000000  layer 1
-			                                                    //00000000  layer 2
-			                                                    //00000000  layer 3
+			
 
 			unsigned int mapSize_;
 			unsigned int width_;
 			unsigned int height_;
-			unsigned short layerIndex_;
 			unsigned short layerCount_;
 
 			int tileWorldDim_;

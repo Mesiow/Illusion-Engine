@@ -103,6 +103,9 @@
     <ClInclude Include="src\LevelEditor\TextureSelector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\LevelEditor\Layer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\AnimationComponent.cpp">
@@ -172,6 +175,7 @@
     </ClCompile>
     <ClCompile Include="src\States\EditorStates\EditorSetupState.cpp" />
     <ClCompile Include="src\LevelEditor\TextureSelector.cpp" />
+    <ClCompile Include="src\LevelEditor\Layer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Input\editor_state_key_binds.ini">

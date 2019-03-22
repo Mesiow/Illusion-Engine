@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\LevelEditor\Layer.h" />
     <ClInclude Include="src\LevelEditor\TextureSelector.h" />
     <ClInclude Include="src\LevelEditor\TileMap.h" />
     <ClInclude Include="src\pcHeaders.h" />
@@ -52,6 +53,7 @@
     <ClInclude Include="src\Utils\UtilityFunctions.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\LevelEditor\Layer.cpp" />
     <ClCompile Include="src\LevelEditor\TextureSelector.cpp" />
     <ClCompile Include="src\LevelEditor\TileMap.cpp" />
     <ClCompile Include="src\pcHeaders.cpp">

@@ -55,6 +55,14 @@ namespace Illusion
 		map_->removeTile(position); //remove tile at the active layer selected
 	}
 
+	void LevelEditor::loadLevel(const std::string & path)
+	{
+	}
+
+	void LevelEditor::saveLevel(const std::string & name)
+	{
+	}
+
 	void LevelEditor::handleEvents(sf::Event &e)
 	{
 		addLayerButton_->handleEvents(e);
