@@ -52,7 +52,7 @@ namespace Illusion
 
 	void LevelEditor::deleteTile(const sf::Vector2u &position)
 	{
-		map_->removeTile(position); //remove tile at the active layer selected
+		map_->removeTile(position, this->getActiveLayer()); //remove tile at the active layer selected
 	}
 
 	void LevelEditor::loadLevel(const std::string & path)

@@ -63,14 +63,14 @@ namespace Illusion
 		if (isInGrid(position))
 		{
 			int index = getTileIndex(position.x, position.y);
+			int layerIndex = layer - 1;
 
-			if (doesLayerExist(layer - 1)) //-1 because it starts at one and we check the index
+			if (doesLayerExist(layerIndex)) //-1 because it starts at one and we check the index
 			{
-				std::cout << "layer exists" << std::endl;
-				//if (layers_[layer - 1]->getTiles()[index] != nullptr) //if at a certain layer the tile there is not null we can add
+				if (layers_[layerIndex]->getTiles()[index] == nullptr) //if at a certain layer the tile there is null we can add
 				{
 					std::cout << "Adding tile to layer: " << layer << std::endl; //add a tile at the specified index according to the grid position passed in
-					layers_[layer - 1]->getTiles()[index] = new Tile(sf::Vector2f(float(position.x * tileWorldDim_), float(position.y * tileWorldDim_)),
+					layers_[layerIndex]->getTiles()[index] = new Tile(sf::Vector2f(float(position.x * tileWorldDim_), float(position.y * tileWorldDim_)),
 						sf::Vector2f((float)tileWorldDim_, (float)tileWorldDim_),
 						sheet_, rect, sf::Color::White, layer);
 				}
@@ -79,30 +79,21 @@ namespace Illusion
 		}
 	}
 
-	void TileMap::removeTile(const sf::Vector2u &position)
+	void TileMap::removeTile(const sf::Vector2u &position, unsigned short currentLayer) //remove tile at the current layer we are on
 	{	
 		if (isInGrid(position))
 		{
-			//index of tile to delet
+			//index of tile to delete
 			int index = getTileIndex(position.x, position.y);
-
-			//if()
+			int layerIndex = currentLayer - 1; //index of layer
+			
+			if (layers_[layerIndex]->getTiles()[index] != nullptr)
+			{
+				std::cout << "removing tile" << std::endl;
+				delete layers_[layerIndex]->getTiles()[index];
+				layers_[layerIndex]->getTiles()[index] = nullptr;
+			}
 		}
-		////if we are trying to remove a tile within map space
-		//if (isInGrid(position))
-		//{
-		//	//index of tile to delete
-		//	int index = getTileIndex(position.x, position.y);
-
-		//	if (tiles_[index] != nullptr)
-		//	{
-		//		auto tilelayerNum = tiles_[index]->getLayerNumber();
-
-		//		std::cout << "Deleting tile from layer "<<tilelayerNum<< std::endl;
-		//		delete tiles_[index]; //free tile
-		//		tiles_[index] = nullptr; //set tile at index to null
-		//	}
-		//}
 	}
 
 	void TileMap::addLayer()
@@ -114,7 +105,8 @@ namespace Illusion
 
 	void TileMap::removeLayer()
 	{
-
+		delete layers_[layerCount_ - 1]; //free the layer
+		layerCount_--;
 	}
 
 	bool TileMap::loadMap(const std::string &path)

@@ -18,7 +18,7 @@ namespace Illusion
 			void initTilesAndLayers(unsigned int width, unsigned int height);
 
 			void addTile(const sf::Vector2u &position, const sf::IntRect &rect, unsigned short layer);
-			void removeTile(const sf::Vector2u &position);
+			void removeTile(const sf::Vector2u &position, unsigned short currentLayer);
 
 			void addLayer();
 			void removeLayer();
