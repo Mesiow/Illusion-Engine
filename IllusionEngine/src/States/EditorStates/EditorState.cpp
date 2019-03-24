@@ -28,8 +28,10 @@ namespace Illusion
 
 	void EditorState::handleEvents(sf::Event &e)
 	{
-		if(!paused_)
+		if (!paused_)
 			editor_->handleEvents(e);
+		else
+			pauseMenu_->handleEvents(e);
 
 		switch (e.type)
 		{
@@ -37,14 +39,11 @@ namespace Illusion
 		{
 			if (e.key.code == Keyboard::getCurrentKeyBinds().at("BACK"))
 			{
-				_game->changeState<MenuState>(*_game);
+				
 			}
 			else if (e.key.code == sf::Keyboard::Escape)
 			{
-				if (paused_)
-					paused_ = false;
-				else
-					paused_ = true;
+				paused_ == true ? paused_ = false : paused_ = true; //if paused is true unpause, else pause
 			}
 		}
 		break;
@@ -79,11 +78,13 @@ namespace Illusion
 	void EditorState::drawGui(sf::RenderTarget &target)
 	{
 		target.draw(pauseMenuContainer_);
+		pauseMenu_->draw(target);
 	}
 
 	void EditorState::updateGui()
 	{
-		//pauseMenu_->update();
+		if (paused_)
+			pauseMenu_->update();
 	}
 
 	void EditorState::initKeyBinds()
@@ -117,5 +118,21 @@ namespace Illusion
 		pauseMenuContainer_.setOrigin(sf::Vector2f(pauseMenuContainer_.getGlobalBounds().left + pauseMenuContainer_.getGlobalBounds().width / 2.0f,
 			pauseMenuContainer_.getGlobalBounds().top + pauseMenuContainer_.getGlobalBounds().height / 2.0f));
 		pauseMenuContainer_.setPosition(Game::getWindow().getSize().x / 2.0f, Game::getWindow().getSize().y / 2.0f);
+
+		std::string menuOptions[3] = { "Save Map", "Load Map", "Quit" };
+		pauseMenu_ = new gui::StackMenu(sf::Vector2f(pauseMenuContainer_.getPosition().x, pauseMenuContainer_.getPosition().y - gui::getButtonSize(gui::Size::medium).y - 60.0f),
+			menuOptions, gui::Size::medium, 3);
+
+		pauseMenu_->setButtonFunction(std::string("Save Map"), [&]() {
+			editor_->saveLevel(std::string("res/Maps/Test.txt"));
+		});
+
+		pauseMenu_->setButtonFunction(std::string("Load Map"), [&]() {
+			editor_->loadLevel(std::string("res/Maps/Test.txt"));
+		});
+
+		pauseMenu_->setButtonFunction(std::string("Quit"), [&]() {
+			_game->changeState<MenuState>(*_game);
+		});
 	}
 }

@@ -6,29 +6,24 @@ namespace Illusion
 	class Tile
 	{
 	public:
-		Tile(sf::Vector2f position, sf::Vector2f size,
+		Tile(const sf::Vector2f position, const sf::Vector2f size,
 			const sf::Texture &texture, const sf::IntRect &textureRect, sf::Color color,
-			unsigned short layerNumber)
-			:layerNumber_(layerNumber)
-		{
-			this->tile_.setTexture(&texture);
-			this->tile_.setTextureRect(textureRect);
-
-			this->tile_.setSize(size);
-			this->tile_.setPosition(position);
-			this->tile_.setFillColor(color);
-			this->position_ = position;
-			this->color_ = color;
-		}
-
-		void draw(sf::RenderTarget &target) { target.draw(tile_); }
+			unsigned short layerNumber);
+		~Tile();
 
 
+	public:
+		void draw(sf::RenderTarget &target);
+
+
+	public:
 		unsigned short getLayerNumber()const { return this->layerNumber_; }
-
+		const sf::IntRect &getTileRect()const { return this->tileRect_; }
 
 	private:
 		sf::RectangleShape tile_;
+		const sf::IntRect tileRect_;
+
 		sf::Vector2f position_;
 		sf::Color color_;
 

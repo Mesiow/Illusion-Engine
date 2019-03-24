@@ -1,10 +1,21 @@
 #pragma once
 #include "Layer.h"
+#include "../Utils/UtilityFunctions.h"
 
 #define MAX_LAYERS 10
 
 namespace Illusion
 {
+	struct DataFormat
+	{
+		std::string sheetPath;
+		unsigned int width;
+		unsigned int height;
+		unsigned int tileDim;
+		unsigned short layerCount;
+		sf::IntRect tileRect;
+	};
+
 	class TileMap
 	{
 	public:
@@ -14,22 +25,22 @@ namespace Illusion
 		public:
 			void draw(sf::RenderTarget &target);
 
-			void initTiles(unsigned int width, unsigned int height);
-			void initTilesAndLayers(unsigned int width, unsigned int height);
+			void initLayersAndTiles(unsigned int width, unsigned int height);
 
 			void addTile(const sf::Vector2u &position, const sf::IntRect &rect, unsigned short layer);
 			void removeTile(const sf::Vector2u &position, unsigned short currentLayer);
 
 			void addLayer();
 			void removeLayer();
+			void freeLayersAndTiles();
 
     	public:
+			void parseMap(std::ifstream &file, DataFormat &data);
 			bool loadMap(const std::string &path);
 			bool saveMap(const std::string &name);
 
 
 	    public://getters
-			//Tile &getTileAtIndex(int index);
 			int getTileIndex(int x, int y);
 			int getTileDimension()const { return tileWorldDim_; }
 			unsigned int getLayerCount()const { return layerCount_; }
@@ -48,7 +59,6 @@ namespace Illusion
 
 		private:
 			std::vector<Layer*> layers_; //layers that hold tiles to render other tiles on top of other layers
-			//std::vector<Tile*> tiles_;
 			sf::RectangleShape border_;
 			sf::Texture &sheet_;
 			
