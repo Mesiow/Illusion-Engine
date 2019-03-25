@@ -10,6 +10,7 @@ namespace Illusion
 		this->tileWorldDim_ = tileWorldDim;
 		this->width_ = width;
 		this->height_ = height;
+		this->tileCount_ = 0;
 		this->layerCount_ = 0;
 
 		initLayersAndTiles(width, height);
@@ -61,7 +62,9 @@ namespace Illusion
 					std::cout << "Adding tile to layer: " << layer << std::endl; //add a tile at the specified index according to the grid position passed in
 					layers_[layerIndex]->getTiles()[index] = new Tile(sf::Vector2f(float(position.x * tileWorldDim_), float(position.y * tileWorldDim_)),
 						sf::Vector2f((float)tileWorldDim_, (float)tileWorldDim_),
-						sheet_, rect, sf::Color::White, layer);
+						sheet_, rect, layer);
+
+					tileCount_++;
 				}
 			}
 
@@ -98,7 +101,7 @@ namespace Illusion
 		layerCount_--;
 	}
 
-	void TileMap::freeLayersAndTiles()
+	void TileMap::freeLayersAndTiles()const
 	{
 		for (std::size_t i = 0; i < layers_.size(); i++)
 		{
@@ -108,7 +111,7 @@ namespace Illusion
 	}
 
 	//pass in file to parse data from and store parsed data in DataFormat 
-	void TileMap::parseMap(std::ifstream &file, DataFormat &data)
+	void TileMap::parseMap(std::ifstream &file, MapFormat &data)
 	{
 		std::string line;
 
@@ -136,28 +139,74 @@ namespace Illusion
 			data.layerCount = layerCount;
 		};
 
+		auto loadTileNum = [&](std::string &value) {
+			int tileNum = std::stoi(value);
+			data.tilesInMap = tileNum;
+		};
+
 		int counter = 0;
+		int end = 6;
 		while (std::getline(file, line))
 		{
-			std::size_t pos = util::string::getDelimiterPos(line, ": ");
-			std::string value = util::string::getSubStr(line, ": ", pos + 2, line.size()); //retrieve value after : " in the file
-
-			if (counter == 0)
-				loadSheet(value);
-			else if (counter == 1)
-				loadWidth(value);
-			else if (counter == 2)
+			if (counter != end)
 			{
-				loadHeight(value);
+				std::size_t pos = util::string::getDelimiterPos(line, ": ");
+				std::string value = util::string::getSubStr(line, ": ", pos + 2, line.size()); //retrieve value after : " in the file
+
+				if (counter == 0)
+					loadSheet(value);
+				else if (counter == 1)
+					loadWidth(value);
+				else if (counter == 2)
+					loadHeight(value);
+				else if (counter == 3)
+					loadTileDim(value);
+				else if (counter == 4)
+					loadTileNum(value);
+				else if (counter == 5)
+					loadLayerCount(value);
+			}
+			else if (counter == end) //load in all tiles, its grid position, its rects and layer position
+			{
+				this->width_ = data.width;
+				this->height_ = data.height;
+				this->tileWorldDim_ = data.tileDim;
+				this->tileCount_ = data.tilesInMap;
+				this->layerCount_ = data.layerCount;
+
+				freeLayersAndTiles(); //make room to load
+				initLayersAndTiles(width_, height_); //init first layer and tiles
+
+				std::cout << "Layer count: " << data.layerCount << std::endl;
+				for (std::size_t i = 0; i < data.layerCount; ++i)
+				{
+					std::cout << "Layer: " << i << std::endl;
+					addLayer();
+				}
+
+				for (std::size_t layer = 0; layer < data.layerCount; ++layer) //begin at 1 because layer
+				{
+					for (std::size_t tile = 0; tile < layers_[layer]->getTiles().size(); ++tile)
+					{
+						while (file >> data.tileGridPosition.x >> data.tileGridPosition.y >> data.tileRect.left >> data.tileRect.top
+							>> data.tileRect.width >> data.tileRect.height >> data.tileLayerNumber)
+						{
+							addTile(sf::Vector2u(data.tileGridPosition.x, data.tileGridPosition.y), data.tileRect, data.tileLayerNumber); //load the tiles from the file
+						}
+					}
+				}
 				break;
 			}
-
+			
 			counter++;
 		}
 
 		std::cout << "Sheet: " << data.sheetPath << std::endl;
 		std::cout << "Width: " << data.width << std::endl;
 		std::cout << "Height: " << data.height << std::endl;
+		std::cout << "Tile Dim: " << data.tileDim << std::endl;
+		std::cout << "Tiles in Map: " << data.tilesInMap << std::endl;
+		std::cout << "Layers: " << data.layerCount << std::endl;
 	}
 
 	bool TileMap::loadMap(const std::string &path)
@@ -170,9 +219,8 @@ namespace Illusion
 			return false;
 		}
 
-		DataFormat data;
+		MapFormat data;
 		parseMap(inFile, data);
-
 
 		inFile.close();
 
@@ -184,21 +232,20 @@ namespace Illusion
 		/*
 		Saving Format:
 
+		//////
 		General Data:
 
-		texture sheet,
-		width, 
-		height,
-		tileDimension,
+		Texture sheet,
+		Width, 
+		Height,
+		Tile Dimension,
+		Number of of Tiles in Map
 		Layer Count
 
-		Tiles:
-		The Tiles' texture rectangle positions
+		//////
+		Tile Data:
 
-		Rect Left:
-		Rect Top:
-		Rect Width:
-		Rect Height:
+		Tile Position in grid X, Tile Position in grid Y, Rect Left, Rect Top, Rect Width, Rect Height, layer
 		
 		*/
 
@@ -210,17 +257,18 @@ namespace Illusion
 			return false;
 		}
 
-		DataFormat data;
+		MapFormat data;
 		data.sheetPath = "test.png";
 		data.width = this->width_;
 		data.height = this->height_;
 		data.tileDim = this->tileWorldDim_;
+		data.tilesInMap = this->tileCount_;
 		data.layerCount = this->layerCount_;
 
 		if (outFile)
 		{
 			outFile << "Texture: " << data.sheetPath << "\n" << "Map Width: " << data.width << "\n" << "Map Height: " << data.height << "\n"//write general data into file
-				<< "Tile Dimension: " << data.tileDim << "\n" << "Number of layers: " << data.layerCount << "\n\n";
+				<< "Tile Dimension: " << data.tileDim <<"\n"<< "Tiles in map: "<< data.tilesInMap << "\n" << "Number of layers: " << data.layerCount << "\n";
 
 			//write tiles into file
 			for (std::size_t i = 0; i < layerCount_; ++i) //loop over layer
@@ -229,10 +277,14 @@ namespace Illusion
 				{
 					if (layers_[i]->getTiles()[t] != nullptr)
 					{
+						data.tileGridPosition = layers_[i]->getTiles()[t]->getPosition();
+						data.tileGridPosition.x /= tileWorldDim_;
+						data.tileGridPosition.y /= tileWorldDim_;  //retrieve the grid position of the tile
+
 						const sf::IntRect &rect = layers_[i]->getTiles()[t]->getTileRect();
 
-						outFile << "Rect left: " << rect.left << "\n" << "Rect top: " << rect.top << "\n" << "Rect width: "
-							<< rect.width << "\n" << "Rect height: " << rect.height << "\n\n";
+						outFile << data.tileGridPosition.x << data.tileGridPosition.y << rect.left << rect.top << rect.width << rect.height<<
+							layers_[i]->getTiles()[t]->getLayerNumber();
 					}
 				}
 			}

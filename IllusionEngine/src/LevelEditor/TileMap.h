@@ -6,14 +6,17 @@
 
 namespace Illusion
 {
-	struct DataFormat
+	struct MapFormat
 	{
 		std::string sheetPath;
 		unsigned int width;
 		unsigned int height;
 		unsigned int tileDim;
+		unsigned int tilesInMap;
 		unsigned short layerCount;
+		sf::Vector2f tileGridPosition;
 		sf::IntRect tileRect;
+		unsigned short tileLayerNumber;
 	};
 
 	class TileMap
@@ -32,10 +35,10 @@ namespace Illusion
 
 			void addLayer();
 			void removeLayer();
-			void freeLayersAndTiles();
+			void freeLayersAndTiles()const;
 
     	public:
-			void parseMap(std::ifstream &file, DataFormat &data);
+			void parseMap(std::ifstream &file, MapFormat &data);
 			bool loadMap(const std::string &path);
 			bool saveMap(const std::string &name);
 
@@ -66,6 +69,7 @@ namespace Illusion
 			unsigned int mapSize_;
 			unsigned int width_;
 			unsigned int height_;
+			unsigned int tileCount_;
 			unsigned short layerCount_;
 
 			int tileWorldDim_;
