@@ -34,13 +34,17 @@ namespace Illusion
 			void removeTile(const sf::Vector2u &position, unsigned short currentLayer);
 
 			void addLayer();
+			void addLayer(int index);
 			void removeLayer();
 			void freeLayersAndTiles()const;
+			void clearMapVariables();
 
     	public:
-			void parseMap(std::ifstream &file, MapFormat &data);
 			bool loadMap(const std::string &path);
 			bool saveMap(const std::string &name);
+
+	   private:
+		   void parseMap(std::ifstream &file, MapFormat &data, const std::string &path);
 
 
 	    public://getters

@@ -11,7 +11,7 @@ namespace Illusion
 		this->width_ = width;
 		this->height_ = height;
 		this->tileCount_ = 0;
-		this->layerCount_ = 0;
+		this->layerCount_ = 1;
 
 		initLayersAndTiles(width, height);
 
@@ -45,7 +45,7 @@ namespace Illusion
 		//init tiles for the first layer
 		layers_[0] = new Layer();
 		layers_[0]->initTiles(width, height, 1); //pass in width and height to get the number of tiles for the entire map
-		layerCount_++;
+		//layerCount_++;
 	}
 
 	void TileMap::addTile(const sf::Vector2u &position, const sf::IntRect &rect, unsigned short layer)
@@ -91,8 +91,14 @@ namespace Illusion
 	void TileMap::addLayer()
 	{
 		layers_[layerCount_] = new Layer();
-		layers_[layerCount_]->initTiles(this->width_, this->height_, layerCount_);
+		layers_[layerCount_]->initTiles(this->width_, this->height_, this->layerCount_);
 		layerCount_++;
+	}
+
+	void TileMap::addLayer(int index)
+	{
+		layers_[index] = new Layer();
+		layers_[index]->initTiles(this->width_, this->height_, this->layerCount_);
 	}
 
 	void TileMap::removeLayer()
@@ -110,49 +116,60 @@ namespace Illusion
 		}
 	}
 
+	void TileMap::clearMapVariables()
+	{
+		this->width_ = 0;
+		this->height_ = 0;
+		this->tileWorldDim_ = 0;
+		this->tileCount_ = 0;
+		this->layerCount_ = 0;
+
+	}
+
 	//pass in file to parse data from and store parsed data in DataFormat 
-	void TileMap::parseMap(std::ifstream &file, MapFormat &data)
+	void TileMap::parseMap(std::ifstream &file, MapFormat &data, const std::string &path)
 	{
 		std::string line;
 
-		auto loadSheet = [&](std::string &value) {
+		auto loadSheet = [&](std::string value) {
 			data.sheetPath = value;
 		};
 
-		auto loadWidth = [&](std::string &value) {
+		auto loadWidth = [&](std::string value) {
 			int width = std::stoi(value);
 			data.width = width;
 		};
 
-		auto loadHeight = [&](std::string &value) {
+		auto loadHeight = [&](std::string value) {
 			int height = std::stoi(value);
 			data.height = height;
 		};
 
-		auto loadTileDim = [&](std::string &value) {
+		auto loadTileDim = [&](std::string value) {
 			int tileDim = std::stoi(value);
 			data.tileDim = tileDim;
 		};
 
-		auto loadLayerCount = [&](std::string &value) {
+		auto loadLayerCount = [&](std::string value) {
 			int layerCount = std::stoi(value);
 			data.layerCount = layerCount;
 		};
 
-		auto loadTileNum = [&](std::string &value) {
+		auto loadTileNum = [&](std::string value) {
 			int tileNum = std::stoi(value);
 			data.tilesInMap = tileNum;
 		};
 
 		int counter = 0;
 		int end = 6;
+		
 		while (std::getline(file, line))
 		{
+			std::size_t pos = util::string::getDelimiterPos(line, ": ");
+			std::string value = util::string::getSubStr(line, ": ", pos + 2, line.size()); //retrieve value after : " in the file
+
 			if (counter != end)
 			{
-				std::size_t pos = util::string::getDelimiterPos(line, ": ");
-				std::string value = util::string::getSubStr(line, ": ", pos + 2, line.size()); //retrieve value after : " in the file
-
 				if (counter == 0)
 					loadSheet(value);
 				else if (counter == 1)
@@ -164,49 +181,52 @@ namespace Illusion
 				else if (counter == 4)
 					loadTileNum(value);
 				else if (counter == 5)
+				{
 					loadLayerCount(value);
-			}
-			else if (counter == end) //load in all tiles, its grid position, its rects and layer position
-			{
-				this->width_ = data.width;
-				this->height_ = data.height;
-				this->tileWorldDim_ = data.tileDim;
-				this->tileCount_ = data.tilesInMap;
-				this->layerCount_ = data.layerCount;
-
-				freeLayersAndTiles(); //make room to load
-				initLayersAndTiles(width_, height_); //init first layer and tiles
-
-				std::cout << "Layer count: " << data.layerCount << std::endl;
-				for (std::size_t i = 0; i < data.layerCount; ++i)
-				{
-					std::cout << "Layer: " << i << std::endl;
-					addLayer();
+					file.close(); //close the file
+					break; //break out of the loop
 				}
-
-				for (std::size_t layer = 0; layer < data.layerCount; ++layer) //begin at 1 because layer
-				{
-					for (std::size_t tile = 0; tile < layers_[layer]->getTiles().size(); ++tile)
-					{
-						while (file >> data.tileGridPosition.x >> data.tileGridPosition.y >> data.tileRect.left >> data.tileRect.top
-							>> data.tileRect.width >> data.tileRect.height >> data.tileLayerNumber)
-						{
-							addTile(sf::Vector2u(data.tileGridPosition.x, data.tileGridPosition.y), data.tileRect, data.tileLayerNumber); //load the tiles from the file
-						}
-					}
-				}
-				break;
+				counter++;
 			}
-			
-			counter++;
 		}
 
-		std::cout << "Sheet: " << data.sheetPath << std::endl;
-		std::cout << "Width: " << data.width << std::endl;
-		std::cout << "Height: " << data.height << std::endl;
-		std::cout << "Tile Dim: " << data.tileDim << std::endl;
-		std::cout << "Tiles in Map: " << data.tilesInMap << std::endl;
-		std::cout << "Layers: " << data.layerCount << std::endl;
+		//reopen the file
+		file.open(path);
+		if (file.is_open())
+		{
+			//load in all tiles, its grid position, its rects and layer position
+			clearMapVariables();
+			this->width_ = data.width;
+			this->height_ = data.height;
+			this->tileWorldDim_ = data.tileDim;
+			this->tileCount_ = data.tilesInMap;
+			this->layerCount_ = data.layerCount;
+
+			freeLayersAndTiles(); //make room to load
+			initLayersAndTiles(this->width_, this->height_); //init first layer and tiles
+
+			std::cout << "Width: " << width_ << std::endl;
+			std::cout << "Height: " << height_ << std::endl;
+			std::cout << "Tile World Dim: " << tileWorldDim_ << std::endl;
+			std::cout << "Tile Count: " << tileCount_ << std::endl;
+			std::cout << "Layer Count: " << layerCount_ << std::endl;
+
+			if (this->layerCount_ > 1) //add the rest of the layers if there is more than 1 layer
+			{
+				for (std::size_t i = 1; i < this->layerCount_; ++i)
+					 addLayer(i);
+			}
+			util::file::gotoLine(file, 7); //line 7 has the tile info
+
+			while(file >> data.tileGridPosition.x >> data.tileGridPosition.y >> data.tileRect.left >> data.tileRect.top
+				>> data.tileRect.width >> data.tileRect.height >> data.tileLayerNumber)
+			{
+				//add tile at position
+				addTile(sf::Vector2u(data.tileGridPosition.x, data.tileGridPosition.y), data.tileRect, data.tileLayerNumber); //load the tiles from the file
+			}
+		
+		}
+		file.close();
 	}
 
 	bool TileMap::loadMap(const std::string &path)
@@ -219,10 +239,14 @@ namespace Illusion
 			return false;
 		}
 
+		if (util::file::isEmpty(inFile))
+		{
+			std::cout << "File empty" << std::endl;
+			return false;
+		}
+			
 		MapFormat data;
-		parseMap(inFile, data);
-
-		inFile.close();
+		parseMap(inFile, data, path);
 
 		return true;
 	}
@@ -245,7 +269,7 @@ namespace Illusion
 		//////
 		Tile Data:
 
-		Tile Position in grid X, Tile Position in grid Y, Rect Left, Rect Top, Rect Width, Rect Height, layer
+		Tile Position in grid X, Tile Position in grid Y, Rect Left, Rect Top, Rect Width, Rect Height, tile layer number
 		
 		*/
 
@@ -265,7 +289,7 @@ namespace Illusion
 		data.tilesInMap = this->tileCount_;
 		data.layerCount = this->layerCount_;
 
-		if (outFile)
+		if (outFile.is_open())
 		{
 			outFile << "Texture: " << data.sheetPath << "\n" << "Map Width: " << data.width << "\n" << "Map Height: " << data.height << "\n"//write general data into file
 				<< "Tile Dimension: " << data.tileDim <<"\n"<< "Tiles in map: "<< data.tilesInMap << "\n" << "Number of layers: " << data.layerCount << "\n";
@@ -283,8 +307,8 @@ namespace Illusion
 
 						const sf::IntRect &rect = layers_[i]->getTiles()[t]->getTileRect();
 
-						outFile << data.tileGridPosition.x << data.tileGridPosition.y << rect.left << rect.top << rect.width << rect.height<<
-							layers_[i]->getTiles()[t]->getLayerNumber();
+						outFile << data.tileGridPosition.x << " "<<data.tileGridPosition.y << " "<< layers_[i]->getTiles()[t]->getTextureRectAsString()<<" "<<
+							layers_[i]->getTiles()[t]->getLayerNumber()<<" ";
 					}
 				}
 			}

@@ -27,4 +27,13 @@ namespace Illusion
 	{
 		target.draw(tile_);
 	}
+
+	std::string Tile::getTextureRectAsString()
+	{
+		std::stringstream ss;
+		ss << tile_.getTextureRect().left << " " << tile_.getTextureRect().top << " "
+			<< tile_.getTextureRect().width << " " << tile_.getTextureRect().height;
+
+		return ss.str();
+	}
 }

@@ -15,7 +15,7 @@ namespace Illusion
 
 	Player::~Player()
 	{
-
+		
 	}
 
 	void Player::initComponents()

@@ -14,6 +14,7 @@
 #include <fstream>
 #include <bitset>
 #include <assert.h>
+#include <limits>
 
 
 //SFML Includes

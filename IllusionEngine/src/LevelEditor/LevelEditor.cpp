@@ -57,7 +57,15 @@ namespace Illusion
 
 	void LevelEditor::loadLevel(const std::string &path)
 	{
-		map_->loadMap(path);
+		if (map_->loadMap(path)) //if map was loaded
+		{
+			//start at layer 2 because one is already set
+			for (std::size_t i = 2; i <= map_->getLayerCount(); i++) //update the gui when loading in the map
+			{
+				listOfLayers_->addToList(std::string("Layer ") + std::to_string(i)); //load layer count to the list
+				layerCountText_.setString(std::string("Layers: ") + std::to_string(i)); //update layer count text when we add a layer
+			}
+		}
 	}
 
 	void LevelEditor::saveLevel(const std::string &name)

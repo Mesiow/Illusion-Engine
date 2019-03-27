@@ -20,6 +20,8 @@ namespace Illusion
 		unsigned short getLayerNumber()const { return this->layerNumber_; }
 		const sf::IntRect &getTileRect()const { return this->tileRect_; }
 
+		std::string getTextureRectAsString();
+
 	private:
 		sf::RectangleShape tile_;
 		const sf::IntRect tileRect_;
