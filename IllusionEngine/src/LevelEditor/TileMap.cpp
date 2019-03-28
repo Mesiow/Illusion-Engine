@@ -45,10 +45,9 @@ namespace Illusion
 		//init tiles for the first layer
 		layers_[0] = new Layer();
 		layers_[0]->initTiles(width, height, 1); //pass in width and height to get the number of tiles for the entire map
-		//layerCount_++;
 	}
 
-	void TileMap::addTile(const sf::Vector2u &position, const sf::IntRect &rect, unsigned short layer)
+	void TileMap::addTile(const sf::Vector2u &position, const sf::IntRect &rect, unsigned short layer, bool collider)
 	{
 		if (isInGrid(position))
 		{
@@ -62,7 +61,7 @@ namespace Illusion
 					std::cout << "Adding tile to layer: " << layer << std::endl; //add a tile at the specified index according to the grid position passed in
 					layers_[layerIndex]->getTiles()[index] = new Tile(sf::Vector2f(float(position.x * tileWorldDim_), float(position.y * tileWorldDim_)),
 						sf::Vector2f((float)tileWorldDim_, (float)tileWorldDim_),
-						sheet_, rect, layer);
+						sheet_, rect, layer, collider);
 
 					tileCount_++;
 				}
@@ -127,7 +126,7 @@ namespace Illusion
 	}
 
 	//pass in file to parse data from and store parsed data in DataFormat 
-	void TileMap::parseMap(std::ifstream &file, MapFormat &data, const std::string &path)
+	void TileMap::parseMap(std::ifstream &file, MapData &data, const std::string &path)
 	{
 		std::string line;
 
@@ -219,10 +218,10 @@ namespace Illusion
 			util::file::gotoLine(file, 7); //line 7 has the tile info
 
 			while(file >> data.tileGridPosition.x >> data.tileGridPosition.y >> data.tileRect.left >> data.tileRect.top
-				>> data.tileRect.width >> data.tileRect.height >> data.tileLayerNumber)
+				>> data.tileRect.width >> data.tileRect.height >> data.tileLayerNumber >> data.collider)
 			{
 				//add tile at position
-				addTile(sf::Vector2u(data.tileGridPosition.x, data.tileGridPosition.y), data.tileRect, data.tileLayerNumber); //load the tiles from the file
+				addTile(sf::Vector2u(data.tileGridPosition.x, data.tileGridPosition.y), data.tileRect, data.tileLayerNumber, data.collider); //load the tiles from the file
 			}
 		
 		}
@@ -245,7 +244,7 @@ namespace Illusion
 			return false;
 		}
 			
-		MapFormat data;
+		MapData data;
 		parseMap(inFile, data, path);
 
 		return true;
@@ -281,7 +280,7 @@ namespace Illusion
 			return false;
 		}
 
-		MapFormat data;
+		MapData data;
 		data.sheetPath = "test.png";
 		data.width = this->width_;
 		data.height = this->height_;
@@ -307,8 +306,8 @@ namespace Illusion
 
 						const sf::IntRect &rect = layers_[i]->getTiles()[t]->getTileRect();
 
-						outFile << data.tileGridPosition.x << " "<<data.tileGridPosition.y << " "<< layers_[i]->getTiles()[t]->getTextureRectAsString()<<" "<<
-							layers_[i]->getTiles()[t]->getLayerNumber()<<" ";
+						outFile << data.tileGridPosition.x << " " << data.tileGridPosition.y << " " << layers_[i]->getTiles()[t]->getTextureRectAsString() << " " <<
+							layers_[i]->getTiles()[t]->getLayerNumber() << " " << layers_[i]->getTiles()[t]->isCollider() << " ";
 					}
 				}
 			}

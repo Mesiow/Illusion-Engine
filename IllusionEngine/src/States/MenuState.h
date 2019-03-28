@@ -1,6 +1,7 @@
 #pragma once
 #include "State.h"
 #include "../Gui/StackMenu.h"
+#include "../Utils/UtilityFunctions.h"
 
 namespace Illusion
 {

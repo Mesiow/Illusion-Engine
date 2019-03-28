@@ -5,11 +5,9 @@
 namespace Illusion
 {
 	Tile::Tile(const sf::Vector2f position, const sf::Vector2f size,
-		const sf::Texture &texture, const sf::IntRect &textureRect, unsigned short layerNumber)
-		:tileRect_(textureRect), layerNumber_(layerNumber)
+		const sf::Texture &texture, const sf::IntRect &textureRect, unsigned short layerNumber, bool collider)
+		:position_(position), tileRect_(textureRect), layerNumber_(layerNumber), collider_(collider)
 	{
-		this->position_ = position;
-
 		this->tile_.setTexture(&texture);
 		this->tile_.setTextureRect(textureRect);
 

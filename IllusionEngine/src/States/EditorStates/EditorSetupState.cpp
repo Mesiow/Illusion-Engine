@@ -23,7 +23,7 @@ namespace Illusion
 
 	void EditorSetupState::update(float &dt)
 	{
-		updateMousePositions();
+		util::mouse::mousePositions::update();
 		updateGui();
 	}
 

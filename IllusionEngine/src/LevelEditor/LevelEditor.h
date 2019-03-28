@@ -38,7 +38,7 @@ namespace Illusion
 		const sf::IntRect &getCurrentSelectedTexture()const;
 		bool isInLevelBounds(const sf::Vector2u &position);
 		int getMapTileDimension()const { return map_->getTileDimension(); }
-		sf::View &getView() { return view; }
+		sf::View &getView() { return view_; }
 		
 	private:
 		unsigned short getActiveLayer();
@@ -67,7 +67,8 @@ namespace Illusion
 
 		TileMap *map_;
 		sf::Texture &textureSheet_; //actual texture sheet
-		sf::View view;
+		sf::View view_;
+		bool tileCollideFlag_;
 
 		//Text
 		sf::Text mapSizeText_;

@@ -6,17 +6,19 @@
 
 namespace Illusion
 {
-	struct MapFormat
+	struct MapData
 	{
 		std::string sheetPath;
+		sf::Vector2f tileGridPosition;
+		sf::IntRect tileRect;
+
 		unsigned int width;
 		unsigned int height;
 		unsigned int tileDim;
 		unsigned int tilesInMap;
 		unsigned short layerCount;
-		sf::Vector2f tileGridPosition;
-		sf::IntRect tileRect;
 		unsigned short tileLayerNumber;
+		bool collider;
 	};
 
 	class TileMap
@@ -30,7 +32,7 @@ namespace Illusion
 
 			void initLayersAndTiles(unsigned int width, unsigned int height);
 
-			void addTile(const sf::Vector2u &position, const sf::IntRect &rect, unsigned short layer);
+			void addTile(const sf::Vector2u &position, const sf::IntRect &rect, unsigned short layer, bool collider);
 			void removeTile(const sf::Vector2u &position, unsigned short currentLayer);
 
 			void addLayer();
@@ -44,7 +46,7 @@ namespace Illusion
 			bool saveMap(const std::string &name);
 
 	   private:
-		   void parseMap(std::ifstream &file, MapFormat &data, const std::string &path);
+		   void parseMap(std::ifstream &file, MapData &data, const std::string &path);
 
 
 	    public://getters

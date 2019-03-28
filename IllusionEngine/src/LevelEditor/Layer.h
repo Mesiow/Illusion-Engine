@@ -6,10 +6,7 @@ namespace Illusion
 	class Layer
 	{
 	public:
-		Layer() 
-		{
-
-		}
+		Layer(){}
 		~Layer()
 		{
 			for (std::size_t i = 0; i < tiles_.size(); i++)

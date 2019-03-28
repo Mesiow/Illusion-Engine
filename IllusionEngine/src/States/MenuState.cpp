@@ -27,13 +27,15 @@ namespace Illusion
 
 	void MenuState::update(float &dt)
 	{
-		updateMousePositions();
+		util::mouse::mousePositions::update();
+		//updateMousePositions();
 		updateGui();
 	}
 
 	void MenuState::draw(sf::RenderTarget &target)
 	{
-		showMouseCoordinates();
+		util::mouse::mousePositions::draw();
+		//showMouseCoordinates();
 
 		menu->draw(target);
 	}

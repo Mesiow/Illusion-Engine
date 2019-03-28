@@ -75,7 +75,7 @@ namespace Illusion
 
 	void Settings::update(float &dt)
 	{
-		updateMousePositions();
+		util::mouse::mousePositions::update();
 		updateGui(dt);
 	}
 
@@ -91,7 +91,7 @@ namespace Illusion
 
 	void Settings::draw(sf::RenderTarget &target)
 	{
-		showMouseCoordinates();
+		util::mouse::mousePositions::draw();
 		back_->draw(target);
 		apply_->draw(target);
 

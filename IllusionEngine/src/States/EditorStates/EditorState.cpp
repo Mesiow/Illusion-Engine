@@ -23,7 +23,7 @@ namespace Illusion
 	void EditorState::handleInput(const float &dt)
 	{
 		if(!paused_)
-			editor_->handleInput(_mousePosGrid, dt);
+			editor_->handleInput(util::mouse::mousePositions::mousePosGrid, dt);
 	}
 
 	void EditorState::handleEvents(sf::Event &e)
@@ -54,15 +54,17 @@ namespace Illusion
 	void EditorState::update(sf::RenderTarget &target)
 	{
 		if(!paused_)
-			editor_->update(target, _mousePosGrid, _mousePosView);
+			editor_->update(target, util::mouse::mousePositions::mousePosGrid, util::mouse::mousePositions::mousePosView);
 		else
 		{
 			updateGui();
 		}
 
-		updateMousePositions();
+		util::mouse::mousePositions::update();
+		//updateMousePositions();
 
-		updateMouseGridPosition(editor_->getMapTileDimension());
+		util::mouse::mousePositions::updateMouseGridPosition(editor_->getMapTileDimension());
+		//updateMouseGridPosition(editor_->getMapTileDimension());
 	}
 
 	void EditorState::draw(sf::RenderTarget &target)
@@ -72,7 +74,7 @@ namespace Illusion
 		else
 			drawGui(target);
 
-		showMouseCoordinates();
+		util::mouse::mousePositions::draw();
 	}
 
 	void EditorState::drawGui(sf::RenderTarget &target)

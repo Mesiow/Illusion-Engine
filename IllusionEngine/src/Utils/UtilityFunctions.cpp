@@ -1,5 +1,6 @@
 #include "../pcHeaders.h"
 #include "UtilityFunctions.h"
+#include "../Game.h"
 
 namespace Illusion
 {
@@ -26,6 +27,60 @@ namespace Illusion
 			{
 				std::size_t position = str.find(delimiter);
 				return position;
+			}
+		}
+
+		namespace mouse
+		{
+			sf::Vector2i mousePositions::mousePosScreen;
+			sf::Vector2f mousePositions::mousePosView;
+			sf::Vector2i mousePositions::mousePosWindow;
+			sf::Vector2u mousePositions::mousePosGrid;
+			sf::Vector2u mousePositions::mousePosTextureBounds;
+			bool mousePositions::enableMousePos = true;
+
+			void mousePositions::update()
+			{
+				mousePosScreen = sf::Mouse::getPosition();
+				mousePosWindow = sf::Mouse::getPosition(Game::getWindow());
+				mousePosView = Game::getWindow().mapPixelToCoords(mousePosWindow); //map pixel on the window to coordinates
+			}
+			
+			void mousePositions::updateMouseGridPosition(int gridDimension)
+			{
+				mousePosGrid.x = (int)mousePosView.x / gridDimension;
+				mousePosGrid.y = (int)mousePosView.y / gridDimension;
+			}
+
+
+			void mousePositions::draw()
+			{
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
+				{
+					if (enableMousePos)
+						enableMousePos = false;
+					else
+						enableMousePos = true;
+				}
+
+				if (enableMousePos)
+				{
+					//DELETE LATER
+					sf::Text text;
+					text.setFillColor(sf::Color::White);
+					text.setFont(ResourceManager::getFont("rubik"));
+					text.setCharacterSize(15);
+					text.setPosition(mousePosView.x, mousePosView.y - 50);
+
+					std::stringstream ss;
+					ss << "Window Position: " << mousePosWindow.x << ", " << mousePosWindow.y << "\n"
+						<< "View Position: " << mousePosView.x << ", " << mousePosView.y << "\n"
+						<< "Grid Position: " << mousePosGrid.x << ", " << mousePosGrid.y << "\n";
+
+					text.setString(ss.str());
+
+					Game::getWindow().draw(text);
+				}
 			}
 		}
 	}

@@ -2,6 +2,7 @@
 #include "../State.h"
 #include "../../LevelEditor/LevelEditor.h"
 #include "../../Gui/StackMenu.h"
+#include "../../Utils/UtilityFunctions.h"
 //Add gui elements giving us info about tilemap size and tile dimension
 
 namespace Illusion
