@@ -99,7 +99,7 @@ namespace Illusion
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 				moveView(400.0f, 0.0f, dt);
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
 				tileCollideFlag_ == true ? tileCollideFlag_ = false : tileCollideFlag_ = true; //change flag for tile collision
 				
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) //handle adding and deleting tiles
@@ -154,6 +154,9 @@ namespace Illusion
 		target.draw(mapSizeText_);
 		target.draw(tileDimText_);
 		target.draw(layerCountText_);
+
+		util::drawToScreen(std::string("Collider: ") + std::to_string(tileCollideFlag_),
+			sf::Vector2f(util::mouse::mousePositions::mousePosView.x + 30, util::mouse::mousePositions::mousePosView.y + 30));
 	}
 
 

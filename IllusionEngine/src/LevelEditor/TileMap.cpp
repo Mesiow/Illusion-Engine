@@ -2,10 +2,10 @@
 #include "TileMap.h"
 namespace Illusion
 {
-
+	//TODO: Find the texture sheet path to load when loading map in the playing state
 
 	TileMap::TileMap(sf::Texture &sheet, unsigned int width, unsigned int height, int tileWorldDim)
-		:sheet_(sheet)
+		:sheet_(&sheet)
 	{
 		this->tileWorldDim_ = tileWorldDim;
 		this->width_ = width;
@@ -61,7 +61,7 @@ namespace Illusion
 					std::cout << "Adding tile to layer: " << layer << std::endl; //add a tile at the specified index according to the grid position passed in
 					layers_[layerIndex]->getTiles()[index] = new Tile(sf::Vector2f(float(position.x * tileWorldDim_), float(position.y * tileWorldDim_)),
 						sf::Vector2f((float)tileWorldDim_, (float)tileWorldDim_),
-						sheet_, rect, layer, collider);
+						*sheet_, rect, layer, collider);
 
 					tileCount_++;
 				}

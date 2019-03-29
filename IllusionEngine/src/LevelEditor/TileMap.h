@@ -24,13 +24,12 @@ namespace Illusion
 	class TileMap
 	{
 	public:
-			TileMap(sf::Texture &sheet, unsigned int width, unsigned int height, int tileWorldDim);
-			~TileMap();
+		TileMap(){} //default constructor if client just wants to create a tilemap obj and load an already existing map
+		TileMap(sf::Texture &sheet, unsigned int width, unsigned int height, int tileWorldDim);
+		~TileMap();
 
 		public:
 			void draw(sf::RenderTarget &target);
-
-			void initLayersAndTiles(unsigned int width, unsigned int height);
 
 			void addTile(const sf::Vector2u &position, const sf::IntRect &rect, unsigned short layer, bool collider);
 			void removeTile(const sf::Vector2u &position, unsigned short currentLayer);
@@ -38,15 +37,16 @@ namespace Illusion
 			void addLayer();
 			void addLayer(int index);
 			void removeLayer();
-			void freeLayersAndTiles()const;
-			void clearMapVariables();
 
     	public:
 			bool loadMap(const std::string &path);
 			bool saveMap(const std::string &name);
 
 	   private:
+		   void initLayersAndTiles(unsigned int width, unsigned int height);
 		   void parseMap(std::ifstream &file, MapData &data, const std::string &path);
+		   void freeLayersAndTiles()const;
+		   void clearMapVariables();
 
 
 	    public://getters
@@ -69,7 +69,7 @@ namespace Illusion
 		private:
 			std::vector<Layer*> layers_; //layers that hold tiles to render other tiles on top of other layers
 			sf::RectangleShape border_;
-			sf::Texture &sheet_;
+			sf::Texture *sheet_;
 			
 
 			unsigned int mapSize_;

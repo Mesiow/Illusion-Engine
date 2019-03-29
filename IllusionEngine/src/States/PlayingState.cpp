@@ -9,18 +9,21 @@ namespace Illusion
 		:State(game)
 	{
 		//TEST
-		p1 = new Player(ResourceManager::getTexture("player"), sf::Vector2f(200, 200));
+		map_ = new TileMap();
+		map_->loadMap(std::string("res/Maps/Test.txt"));
+		p1_ = new Player(ResourceManager::getTexture("player"), sf::Vector2f(200, 200));
 		//
 	}
 
 	PlayingState::~PlayingState()
 	{
-		delete p1;
+		delete map_;
+		delete p1_;
 	}
 
 	void PlayingState::handleInput(const float &dt)
 	{
-		p1->handleInput(dt);
+		p1_->handleInput(dt);
 	}
 
 	void PlayingState::handleEvents(sf::Event &e)
@@ -38,12 +41,13 @@ namespace Illusion
 
 	void PlayingState::update(float &dt)
 	{
-		p1->update(dt);
+		p1_->update(dt);
 	}
 
 	void PlayingState::draw(sf::RenderTarget &target)
 	{
-		p1->draw(target);
+		map_->draw(target);
+		p1_->draw(target);
 	}
 
 	void PlayingState::updateGui()

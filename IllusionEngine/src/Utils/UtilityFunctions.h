@@ -39,6 +39,8 @@ namespace Illusion
 				static bool enableMousePos;
 			};
 		}
+
+		void drawToScreen(std::string str, const sf::Vector2f &position);
 		//other....
 	}
 }

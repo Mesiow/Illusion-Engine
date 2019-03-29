@@ -65,12 +65,8 @@ namespace Illusion
 
 				if (enableMousePos)
 				{
-					//DELETE LATER
-					sf::Text text;
-					text.setFillColor(sf::Color::White);
-					text.setFont(ResourceManager::getFont("rubik"));
-					text.setCharacterSize(15);
-					text.setPosition(mousePosView.x, mousePosView.y - 50);
+					sf::Text text(std::string(""), ResourceManager::getFont("rubik"), 15);
+					text.setPosition(mousePosView.x + 30, mousePosView.y - 50);
 
 					std::stringstream ss;
 					ss << "Window Position: " << mousePosWindow.x << ", " << mousePosWindow.y << "\n"
@@ -82,6 +78,18 @@ namespace Illusion
 					Game::getWindow().draw(text);
 				}
 			}
+		}
+		void drawToScreen(std::string str, const sf::Vector2f &position)
+		{
+			sf::Text text(str, ResourceManager::getFont("rubik"), 15);
+			text.setPosition(position.x, position.y);
+
+			std::stringstream ss;
+			ss << str;
+
+			text.setString(ss.str());
+
+			Game::getWindow().draw(text);
 		}
 	}
 }
