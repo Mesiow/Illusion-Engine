@@ -8,7 +8,7 @@ namespace Illusion
 	class Player : public Entity
 	{
 	public:
-		Player(sf::Texture &texSheet, sf::Vector2f pos);
+		Player(sf::Texture &texture, const sf::Vector2f &position);
 		~Player();
 
 	public:
@@ -17,14 +17,11 @@ namespace Illusion
 		void draw(sf::RenderTarget &target)override;
 
 	public:
-		void setPosition(const sf::Vector2f pos) { __setPosition(pos); }
-
-	public:
 		sf::Sprite &getSprite() { return this->_sprite; }
 		sf::FloatRect getBounds()const { return this->_sprite.getGlobalBounds(); }
 		sf::Vector2f &getVelocity() { return this->_movement->getVelocity(); }
 
-		const sf::Vector2f getPosition()const override { return _sprite.getPosition(); }
+		const sf::Vector2f getPosition()const override;
 
 	private:
 		void initComponents();

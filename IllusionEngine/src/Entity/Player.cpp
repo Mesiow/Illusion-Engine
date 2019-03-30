@@ -5,11 +5,13 @@
 
 namespace Illusion
 {
-	Player::Player(sf::Texture &texSheet, sf::Vector2f pos)
+	Player::Player(sf::Texture &texture, const sf::Vector2f &position)
 	{
-		__setTexture(texSheet);
-		__setPosition(pos);
-		__setScale(sf::Vector2f(2, 2));
+
+		_texture = &texture;
+		_sprite.setTexture(texture);
+		_sprite.setPosition(position);
+		_sprite.setScale(sf::Vector2f(2, 2));
 		this->initComponents();
 		this->initAnimation();
 	}
@@ -17,6 +19,12 @@ namespace Illusion
 	Player::~Player()
 	{
 		delete pcamera_;
+	}
+
+	const sf::Vector2f Player::getPosition() const
+	{
+		return sf::Vector2f(_sprite.getPosition().x + _sprite.getGlobalBounds().width / 2,
+			_sprite.getPosition().y + _sprite.getGlobalBounds().height / 2); //returns center of player
 	}
 
 	void Player::initComponents()
