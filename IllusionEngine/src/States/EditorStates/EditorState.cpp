@@ -126,7 +126,7 @@ namespace Illusion
 			menuOptions, gui::Size::medium, 3);
 
 		pauseMenu_->setButtonFunction(std::string("Save Map"), [&]() {
-			editor_->saveLevel(std::string("res/Maps/Test.txt"));
+			editor_->saveLevel(std::string("res/Maps/Test.txt"), ResourceManager::getTexturePath("dungeon"));
 		});
 
 		pauseMenu_->setButtonFunction(std::string("Load Map"), [&]() {

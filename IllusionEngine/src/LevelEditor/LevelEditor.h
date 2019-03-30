@@ -21,7 +21,7 @@ namespace Illusion
 		void deleteTile(const sf::Vector2u &position);
 
 		void loadLevel(const std::string &path);
-		void saveLevel(const std::string &name);
+		void saveLevel(const std::string &name, const std::string &texturePath);
 
 		void handleEvents(sf::Event &e);
 		void handleInput(const sf::Vector2u &mousePosGrid, const float &dt);

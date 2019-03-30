@@ -39,8 +39,9 @@ namespace Illusion
 			void removeLayer();
 
     	public:
-			bool loadMap(const std::string &path);
-			bool saveMap(const std::string &name);
+			//2nd parameter is used for if we are loading without passing the texture into the constructor that takes one such as in gamestate
+			bool loadMap(const std::string &mapPath, sf::Texture *mapTextureSheet = nullptr);
+			bool saveMap(const std::string &mapPath, const std::string &textureSheetPath);
 
 	   private:
 		   void initLayersAndTiles(unsigned int width, unsigned int height);

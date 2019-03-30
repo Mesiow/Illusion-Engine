@@ -17,6 +17,7 @@ namespace Illusion
 			if (!tex.loadFromFile(path))
 				throw("failed to load texture");
 
+			texturePaths[name] = path;
 			textures[name] = tex;
 		}
 
@@ -36,6 +37,12 @@ namespace Illusion
 				throw("failed to load sound buffer");
 
 			sounds[name] = buffer;
+		}
+
+	public:
+		static std::string &getTexturePath(const std::string &name)
+		{
+			return texturePaths[name];
 		}
 
 
@@ -85,9 +92,13 @@ namespace Illusion
 		}
 
 	private:
-		static std::unordered_map<std::string, sf::Texture> textures;
+		//desired name mapped to resource
+		static std::unordered_map<std::string, sf::Texture> textures; 
 		static std::unordered_map<std::string, sf::Font> fonts;
 		static std::unordered_map<std::string, sf::SoundBuffer> sounds;
+
+		//desired name mapped to path
+		static std::unordered_map<std::string, std::string> texturePaths;
 
 	};
 }

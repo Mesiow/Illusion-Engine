@@ -56,9 +56,9 @@ namespace Illusion
 		}
 	}
 
-	void LevelEditor::saveLevel(const std::string &name)
+	void LevelEditor::saveLevel(const std::string &name, const std::string &texturePath)
 	{
-		map_->saveMap(name);
+		map_->saveMap(name, texturePath);
 	}
 
 	void LevelEditor::handleEvents(sf::Event &e)

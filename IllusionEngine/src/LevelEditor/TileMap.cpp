@@ -228,7 +228,7 @@ namespace Illusion
 		file.close();
 	}
 
-	bool TileMap::loadMap(const std::string &path)
+	bool TileMap::loadMap(const std::string &path, sf::Texture *mapTextureSheet)
 	{
 		std::ifstream inFile(path);
 
@@ -240,17 +240,21 @@ namespace Illusion
 
 		if (util::file::isEmpty(inFile))
 		{
-			std::cout << "File empty" << std::endl;
+			std::cerr << "File is empty" << std::endl;
 			return false;
 		}
 			
 		MapData data;
+
+		if (mapTextureSheet) //if valid pointer to some memory
+			this->sheet_ = mapTextureSheet; //save the texture sheet
+
 		parseMap(inFile, data, path);
 
 		return true;
 	}
 
-	bool TileMap::saveMap(const std::string &name)
+	bool TileMap::saveMap(const std::string &name, const std::string &textureSheetPath)
 	{
 		/*
 		Saving Format:
@@ -281,7 +285,7 @@ namespace Illusion
 		}
 
 		MapData data;
-		data.sheetPath = "test.png";
+		data.sheetPath = textureSheetPath;
 		data.width = this->width_;
 		data.height = this->height_;
 		data.tileDim = this->tileWorldDim_;

@@ -10,7 +10,7 @@ namespace Illusion
 	{
 		//TEST
 		map_ = new TileMap();
-		map_->loadMap(std::string("res/Maps/Test.txt"));
+		map_->loadMap(std::string("res/Maps/Test.txt"), &ResourceManager::getTexture("dungeon")); //load map test.txt which uses the dungeon texture
 		p1_ = new Player(ResourceManager::getTexture("player"), sf::Vector2f(200, 200));
 		//
 	}
