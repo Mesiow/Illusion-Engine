@@ -46,6 +46,7 @@
     <ClInclude Include="src\States\Settings.h" />
     <ClInclude Include="src\States\SplashState.h" />
     <ClInclude Include="src\States\State.h" />
+    <ClInclude Include="src\Utils\Camera.h" />
     <ClInclude Include="src\Utils\Controller.h" />
     <ClInclude Include="src\Utils\FPS.h" />
     <ClInclude Include="src\Utils\Keyboard.h" />
@@ -113,6 +114,7 @@
     <ClCompile Include="src\States\Settings.cpp" />
     <ClCompile Include="src\States\SplashState.cpp" />
     <ClCompile Include="src\States\State.cpp" />
+    <ClCompile Include="src\Utils\Camera.cpp" />
     <ClCompile Include="src\Utils\Controller.cpp" />
     <ClCompile Include="src\Utils\FPS.cpp" />
     <ClCompile Include="src\Utils\Keyboard.cpp" />

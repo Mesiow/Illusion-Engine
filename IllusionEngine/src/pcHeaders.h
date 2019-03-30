@@ -15,6 +15,7 @@
 #include <bitset>
 #include <assert.h>
 #include <limits>
+#include <stack>
 
 
 //SFML Includes

@@ -7,10 +7,7 @@ namespace Illusion
 	LevelEditor::LevelEditor(sf::Texture &textureSheet, int gridWidth, int gridHeight, int tileWorldDim)
 		:textureSheet_(textureSheet)
 	{
-		view_.reset(sf::FloatRect(0.0f, 0.0f,
-			(float)Game::getWindow().getSize().x,
-			(float)Game::getWindow().getSize().y));
-		//view.setCenter(sf::Vector2f(Game::getWindow().getPosition().x, Game::getWindow().getPosition().y));
+		camera_ = new Camera(sf::FloatRect(0.0f, 0.0f, (float)Game::getWindow().getSize().x, (float)Game::getWindow().getSize().y));
 
 		map_ = new TileMap(textureSheet, gridWidth, gridHeight, tileWorldDim);
 
@@ -30,18 +27,9 @@ namespace Illusion
 
 	LevelEditor::~LevelEditor()
 	{
+		delete camera_;
 		delete textureSelector_;
 		delete map_;
-	}
-
-	void LevelEditor::moveView(const float x, const float y, const float &dt)
-	{
-		view_.move(x * dt, y * dt);
-	}
-
-	void LevelEditor::zoomView(float z)
-	{
-		view_.zoom(z);
 	}
 
 	void LevelEditor::addTile(const sf::Vector2u &position, const sf::IntRect &rect)
@@ -91,13 +79,13 @@ namespace Illusion
 			textureSelector_->handleInput(); //handle texture selector input
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) //handle view input
-				moveView(0.0f, -400.0f, dt);
+				camera_->move(0.0f, -400.0f, dt);
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-				moveView(-400.0f, 0.0f, dt);
+				camera_->move(-400.0f, 0.0f, dt);
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-				moveView(0.0f, 400.0f, dt);
+				camera_->move(0.0f, 400.0f, dt);
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-				moveView(400.0f, 0.0f, dt);
+				camera_->move(400.0f, 0.0f, dt);
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
 				tileCollideFlag_ == true ? tileCollideFlag_ = false : tileCollideFlag_ = true; //change flag for tile collision
@@ -115,7 +103,7 @@ namespace Illusion
 
 	void LevelEditor::update(sf::RenderTarget &target, const sf::Vector2u &gridPosition, const sf::Vector2f &mouseViewPos)
 	{
-		target.setView(view_);
+		camera_->update(target);
 
 		updateGui();
 
@@ -139,14 +127,14 @@ namespace Illusion
 
 	void LevelEditor::updateText()
 	{
-		mapSizeText_.setPosition(view_.getCenter().x - view_.getSize().x / 2 + mapSizeText_.getGlobalBounds().width - mapSizeText_.getGlobalBounds().width + mapSizeText_.getCharacterSize(),
-			view_.getCenter().y + view_.getSize().y / 2 - mapSizeText_.getGlobalBounds().height - mapSizeText_.getCharacterSize());
+		mapSizeText_.setPosition(camera_->getCenter().x - camera_->getSize().x / 2 + mapSizeText_.getGlobalBounds().width - mapSizeText_.getGlobalBounds().width + mapSizeText_.getCharacterSize(),
+			camera_->getCenter().y + camera_->getSize().y / 2 - mapSizeText_.getGlobalBounds().height - mapSizeText_.getCharacterSize());
 
-		tileDimText_.setPosition(view_.getCenter().x + view_.getSize().x / 2 - tileDimText_.getGlobalBounds().width - tileDimText_.getCharacterSize(),
-			view_.getCenter().y + view_.getSize().y/2 - tileDimText_.getGlobalBounds().height - tileDimText_.getCharacterSize() - tileDimText_.getCharacterSize()/3);
+		tileDimText_.setPosition(camera_->getCenter().x + camera_->getSize().x / 2 - tileDimText_.getGlobalBounds().width - tileDimText_.getCharacterSize(),
+			camera_->getCenter().y + camera_->getSize().y/2 - tileDimText_.getGlobalBounds().height - tileDimText_.getCharacterSize() - tileDimText_.getCharacterSize()/3);
 
-		layerCountText_.setPosition(view_.getCenter().x - view_.getSize().x / 2 + layerCountText_.getGlobalBounds().width - layerCountText_.getGlobalBounds().width + layerCountText_.getCharacterSize(),
-			view_.getCenter().y + view_.getSize().y / 2 - layerCountText_.getGlobalBounds().height - layerCountText_.getCharacterSize() * 2);
+		layerCountText_.setPosition(camera_->getCenter().x - camera_->getSize().x / 2 + layerCountText_.getGlobalBounds().width - layerCountText_.getGlobalBounds().width + layerCountText_.getCharacterSize(),
+			camera_->getCenter().y + camera_->getSize().y / 2 - layerCountText_.getGlobalBounds().height - layerCountText_.getCharacterSize() * 2);
 	}
 
 	void LevelEditor::drawText(sf::RenderTarget &target)
@@ -173,9 +161,9 @@ namespace Illusion
 
 	void LevelEditor::updateGui()
 	{
-		addLayerButton_->setPosition(sf::Vector2f(view_.getCenter().x + view_.getSize().x / 2 - addLayerButton_->getBounds().width, view_.getCenter().y - 350));
-		removeLayerButton_->setPosition(sf::Vector2f(view_.getCenter().x + view_.getSize().x / 2 - removeLayerButton_->getBounds().width, view_.getCenter().y - 300));
-		listOfLayers_->setListPosition(sf::Vector2f(view_.getCenter().x + view_.getSize().x / 2 - listOfLayers_->getActiveButton()->getBounds().width - 20, view_.getCenter().y - 200));
+		addLayerButton_->setPosition(sf::Vector2f(camera_->getCenter().x + camera_->getSize().x / 2 - addLayerButton_->getBounds().width, camera_->getCenter().y - 350));
+		removeLayerButton_->setPosition(sf::Vector2f(camera_->getCenter().x + camera_->getSize().x / 2 - removeLayerButton_->getBounds().width, camera_->getCenter().y - 300));
+		listOfLayers_->setListPosition(sf::Vector2f(camera_->getCenter().x + camera_->getSize().x / 2 - listOfLayers_->getActiveButton()->getBounds().width - 20, camera_->getCenter().y - 200));
 
 		addLayerButton_->update();
 		removeLayerButton_->update();
@@ -213,7 +201,7 @@ namespace Illusion
 	void LevelEditor::initGui()
 	{
 		std::vector<std::string> list{ "Layer 1" };
-		listOfLayers_ = new gui::DropDownList(sf::Vector2f(view_.getCenter().x + view_.getSize().x / 2 - 100, view_.getCenter().y), list, gui::Size::Small, 0);
+		listOfLayers_ = new gui::DropDownList(sf::Vector2f(camera_->getCenter().x + camera_->getSize().x / 2 - 100, camera_->getCenter().y), list, gui::Size::Small, 0);
 
 		addLayerButton_ = new gui::Button(sf::Vector2f(map_->getBorderPosition().x + 100, map_->getBorderPosition().y - 100), gui::Size::Small);
 

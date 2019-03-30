@@ -14,6 +14,9 @@ namespace Illusion
 		virtual void update(const float &dt){}
 		virtual void draw(sf::RenderTarget &target) = 0;
 
+	public:
+		virtual const sf::Vector2f getPosition()const { return sf::Vector2f(); }
+
 	protected:
 		void __setTexture(sf::Texture &tex);
 		void __setPosition(const sf::Vector2f pos);

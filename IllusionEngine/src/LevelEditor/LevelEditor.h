@@ -4,6 +4,7 @@
 #include "TextureSelector.h"
 #include "../Gui/Button.h"
 #include "../Gui/DropDownList.h"
+#include "../Utils/Camera.h"
 #include "../Utils/UtilityFunctions.h"
 
 namespace Illusion
@@ -16,8 +17,6 @@ namespace Illusion
 		~LevelEditor();
 
 	public:
-		void moveView(const float x, const float y, const float &dt);
-		void zoomView(float z);
 		void addTile(const sf::Vector2u &position, const sf::IntRect &rect = sf::IntRect(0, 0, 32, 32));
 		void deleteTile(const sf::Vector2u &position);
 
@@ -38,7 +37,7 @@ namespace Illusion
 		const sf::IntRect &getCurrentSelectedTexture()const;
 		bool isInLevelBounds(const sf::Vector2u &position);
 		int getMapTileDimension()const { return map_->getTileDimension(); }
-		sf::View &getView() { return view_; }
+		
 		
 	private:
 		unsigned short getActiveLayer();
@@ -62,12 +61,12 @@ namespace Illusion
 		gui::Button *removeLayerButton_;
 		////
 		
+		Camera *camera_;
 		TextureSelector *textureSelector_;
 		sf::RectangleShape selector_;
 
 		TileMap *map_;
-		sf::Texture &textureSheet_; //actual texture sheet
-		sf::View view_;
+		sf::Texture &textureSheet_; //actual texture sheeT
 		bool tileCollideFlag_;
 
 		//Text

@@ -1,5 +1,6 @@
 #include "../pcHeaders.h"
 #include "Player.h"
+#include "../Game.h"
 
 
 namespace Illusion
@@ -15,11 +16,12 @@ namespace Illusion
 
 	Player::~Player()
 	{
-		
+		delete pcamera_;
 	}
 
 	void Player::initComponents()
 	{
+		pcamera_ = new Camera(sf::FloatRect(sf::FloatRect(0.0f, 0.0f, (float)Game::getWindow().getSize().x, (float)Game::getWindow().getSize().y)));
 		createMovementComponent(300.0f, 50.0f, 15.0f);
 		createAnimationComponent(*_texture);
 		createHitBoxComponent(40.0f, 15.0f, 25.0f, 50.0f);
@@ -35,6 +37,9 @@ namespace Illusion
 
 	void Player::handleInput(const float &dt)
 	{
+		if (pcamera_)
+			pcamera_->follow(this);
+
 		if (sf::Keyboard::isKeyPressed((key)Keyboard::getCurrentKeyBinds().at("mUp")))
 			this->move(0.0f, -1.0f, dt);
 		else if (sf::Keyboard::isKeyPressed((key)Keyboard::getCurrentKeyBinds().at("mLeft")))
@@ -47,6 +52,7 @@ namespace Illusion
 
 	void Player::update(const float &dt)
 	{
+		pcamera_->update(Game::getWindow());
 		_movement->update(dt);
 		_hitbox->update();
 
