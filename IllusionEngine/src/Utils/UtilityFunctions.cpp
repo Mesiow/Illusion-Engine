@@ -45,7 +45,7 @@ namespace Illusion
 				mousePosWindow = sf::Mouse::getPosition(Game::getWindow());
 				mousePosView = Game::getWindow().mapPixelToCoords(mousePosWindow); //map pixel on the window to coordinates
 			}
-			
+
 			void mousePositions::updateMouseGridPosition(int gridDimension)
 			{
 				mousePosGrid.x = (int)mousePosView.x / gridDimension;
@@ -55,7 +55,7 @@ namespace Illusion
 
 			void mousePositions::draw()
 			{
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) && time::keyTime::checkKeyTime())
 				{
 					if (enableMousePos)
 						enableMousePos = false;
@@ -91,32 +91,57 @@ namespace Illusion
 
 			Game::getWindow().draw(text);
 		}
+
+
+		namespace file
+		{
+			void checkFileStatus(std::ifstream &file)
+			{
+				if (file.bad())
+					std::cout << "File is bad" << std::endl;
+				else if (file.fail())
+					std::cout << "Filed failed" << std::endl;
+				else if (file.eof())
+					std::cout << "File is at the end" << std::endl;
+			}
+
+			std::ifstream &gotoLine(std::ifstream &file, unsigned int line)
+			{
+				file.seekg(std::ios::beg); //seek to the beginning of file
+
+				for (int i = 0; i < line - 1; i++)
+				{
+					//ignore each line up until line - 1
+					file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				}
+				return file;
+			}
+
+			bool isEmpty(std::ifstream &file)
+			{
+				return (file.peek() == std::ifstream::traits_type::eof()); //returns true if it is empty
+			}
+
+		}
+
+		namespace time
+		{
+			float keyTime::time = 0.0f;
+
+			bool keyTime::checkKeyTime()
+			{
+				if (time < maxKeyTime)
+				{
+					time++;
+					return false;
+				}
+				else
+				{
+					time = 0.0f;
+					return true;
+				}
+			}
+		}
 	}
-}
 
-void Illusion::util::file::checkFileStatus(std::ifstream &file)
-{
-	if (file.bad())
-		std::cout << "File is bad" << std::endl;
-	else if (file.fail())
-		std::cout << "Filed failed" << std::endl;
-	else if (file.eof())
-		std::cout << "File is at the end" << std::endl;
-}
-
-std::ifstream &Illusion::util::file::gotoLine(std::ifstream &file, unsigned int line)
-{
-	file.seekg(std::ios::beg); //seek to the beginning of file
-
-	for (int i = 0; i < line - 1; i++)
-	{
-		//ignore each line up until line - 1
-		file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-	}
-	return file;
-}
-
-bool Illusion::util::file::isEmpty(std::ifstream &file)
-{
-	return (file.peek() == std::ifstream::traits_type::eof()); //returns true if it is empty
 }

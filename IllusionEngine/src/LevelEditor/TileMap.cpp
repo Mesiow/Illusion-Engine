@@ -125,6 +125,26 @@ namespace Illusion
 
 	}
 
+	void TileMap::checkCollision(Entity *e)
+	{
+		for (std::size_t i = 0; i < this->layerCount_; ++i)
+		{
+			for (std::size_t t = 0; t < layers_[i]->getTiles().size(); ++t)
+			{
+				if (layers_[i]->getTiles()[t] != nullptr) //check if tile is there
+				{
+					if (layers_[i]->getTiles()[t]->isCollider()) //check if tile is a collidable one
+					{
+						if (e->getGlobalBounds().intersects(layers_[i]->getTiles()[t]->getGlobalBounds())) //check if we collide
+						{
+							std::cout << "Entity collided with tile!" << std::endl;
+						}
+					}
+				}
+			}
+		}
+	}
+
 	//pass in file to parse data from and store parsed data in DataFormat 
 	void TileMap::parseMap(std::ifstream &file, MapData &data, const std::string &path)
 	{

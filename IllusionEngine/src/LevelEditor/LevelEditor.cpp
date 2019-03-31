@@ -35,7 +35,7 @@ namespace Illusion
 	void LevelEditor::addTile(const sf::Vector2u &position, const sf::IntRect &rect)
 	{
 		//add tile
-		map_->addTile(position, rect, this->getActiveLayer(), tileCollideFlag_);
+		map_->addTile(position, rect, this->getActiveLayer(), this->tileCollideFlag_);
 	}
 
 	void LevelEditor::deleteTile(const sf::Vector2u &position)
@@ -87,7 +87,7 @@ namespace Illusion
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 				camera_->move(400.0f, 0.0f, dt);
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::C) && util::time::keyTime::checkKeyTime())
 				tileCollideFlag_ == true ? tileCollideFlag_ = false : tileCollideFlag_ = true; //change flag for tile collision
 				
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) //handle adding and deleting tiles

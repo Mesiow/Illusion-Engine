@@ -16,6 +16,7 @@ namespace Illusion
 
 	public:
 		virtual const sf::Vector2f getPosition()const { return sf::Vector2f(); }
+		virtual const sf::FloatRect getGlobalBounds()const { return sf::FloatRect(); }
 
 	protected:
 		//construct components functions

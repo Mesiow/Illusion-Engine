@@ -2,7 +2,6 @@
 
 namespace Illusion
 {
-
 	class Tile
 	{
 	public:
@@ -17,8 +16,9 @@ namespace Illusion
 		unsigned short getLayerNumber()const { return this->layerNumber_; }
 		bool isCollider()const { return this->collider_; }
 
-		sf::Vector2f getPosition()const { return this->position_; }
 		const sf::IntRect &getTileRect()const { return this->tileRect_; }
+		sf::Vector2f getPosition()const { return this->position_; }
+		sf::FloatRect getGlobalBounds()const { return this->tile_.getGlobalBounds(); }
 		std::string getTextureRectAsString();
 
 	private:
@@ -28,5 +28,7 @@ namespace Illusion
 
 		unsigned short layerNumber_;
 		bool collider_;
+
+
 	};
 }

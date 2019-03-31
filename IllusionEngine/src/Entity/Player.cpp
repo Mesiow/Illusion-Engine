@@ -21,6 +21,11 @@ namespace Illusion
 		delete pcamera_;
 	}
 
+	const sf::FloatRect Player::getGlobalBounds() const //return bounds of the players hitbox
+	{
+		return _hitbox->getBounds();
+	}
+
 	const sf::Vector2f Player::getPosition() const
 	{
 		return sf::Vector2f(_sprite.getPosition().x + _sprite.getGlobalBounds().width / 2,

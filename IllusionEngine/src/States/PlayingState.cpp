@@ -42,6 +42,7 @@ namespace Illusion
 	void PlayingState::update(float &dt)
 	{
 		p1_->update(dt);
+		map_->checkCollision(p1_);
 	}
 
 	void PlayingState::draw(sf::RenderTarget &target)

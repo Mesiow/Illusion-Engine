@@ -16,6 +16,9 @@ namespace Illusion
 	public:
 		bool checkCollision(const sf::FloatRect &rect);
 
+	public:
+		sf::FloatRect getBounds()const { return hitbox_.getGlobalBounds(); }
+
 	private:
 		float offsetX_, offsetY_;
 		float width_, height_;

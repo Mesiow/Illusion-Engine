@@ -1,5 +1,6 @@
 #pragma once
 #include "Layer.h"
+#include "../Entity/Entity.h"
 #include "../Utils/UtilityFunctions.h"
 
 #define MAX_LAYERS 10
@@ -48,6 +49,9 @@ namespace Illusion
 		   void parseMap(std::ifstream &file, MapData &data, const std::string &path);
 		   void freeLayersAndTiles()const;
 		   void clearMapVariables();
+
+	  public:
+		void checkCollision(Entity *e);
 
 
 	    public://getters

@@ -18,7 +18,7 @@ namespace Illusion
 
 	public:
 		sf::Sprite &getSprite() { return this->_sprite; }
-		sf::FloatRect getBounds()const { return this->_sprite.getGlobalBounds(); }
+		const sf::FloatRect getGlobalBounds()const override;
 		sf::Vector2f &getVelocity() { return this->_movement->getVelocity(); }
 
 		const sf::Vector2f getPosition()const override;

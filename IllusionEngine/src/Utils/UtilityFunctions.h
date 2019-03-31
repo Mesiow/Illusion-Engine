@@ -3,7 +3,7 @@
 namespace Illusion
 {
 	namespace util
-	{
+	{	
 		namespace string //string utility functions will reside under this namespace
 		{
 			std::string getSubStr(const std::string &str, std::string delimiter, int offset);
@@ -41,6 +41,19 @@ namespace Illusion
 		}
 
 		void drawToScreen(std::string str, const sf::Vector2f &position);
+
+
+		namespace time
+		{
+			constexpr float maxKeyTime = 3.0f;
+
+			struct keyTime //used to avoid key spamming
+			{
+				static bool checkKeyTime();
+
+				static float time;
+			};
+		}
 		//other....
 	}
 }
