@@ -2,8 +2,7 @@
 #include "TileMap.h"
 namespace Illusion
 {
-	//TODO: Find the texture sheet path to load when loading map in the playing state
-
+	//TODO: get tile collision working
 	TileMap::TileMap(sf::Texture &sheet, unsigned int width, unsigned int height, int tileWorldDim)
 		:sheet_(&sheet)
 	{

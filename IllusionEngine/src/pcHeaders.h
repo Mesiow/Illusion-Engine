@@ -24,3 +24,4 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Network.hpp>
+#include <Box2D/Box2D.h>
