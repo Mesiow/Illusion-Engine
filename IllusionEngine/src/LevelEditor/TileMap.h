@@ -43,11 +43,11 @@ namespace Illusion
 			//2nd parameter is used for if we are loading without passing the texture into the constructor that takes one such as in gamestate
 			bool loadMap(const std::string &mapPath, sf::Texture *mapTextureSheet = nullptr);
 			bool saveMap(const std::string &mapPath, const std::string &textureSheetPath);
+			void reset();
 
 	   private:
 		   void initLayersAndTiles(unsigned int width, unsigned int height);
-		   void parseMap(std::ifstream &file, MapData &data, const std::string &path);
-		   void freeLayersAndTiles()const;
+		   void parseMap(std::ifstream& file, MapData& data, const std::string& path);
 		   void clearMapVariables();
 
 	  public:
@@ -69,6 +69,7 @@ namespace Illusion
 
 		    sf::Vector2f getBorderPosition()const { return border_.getPosition(); }
 			sf::FloatRect getBorderBounds()const { return border_.getGlobalBounds(); }
+			const std::string getCurrentLevelPath() { return this->currentLevelPath_; }
 			////////////// 
 
 		private:
@@ -77,6 +78,7 @@ namespace Illusion
 			sf::Texture *sheet_;
 			
 
+			std::string currentLevelPath_;
 			unsigned int mapSize_;
 			unsigned int width_;
 			unsigned int height_;

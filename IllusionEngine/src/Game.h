@@ -19,10 +19,10 @@ namespace Illusion
 	class Game : public sf::NonCopyable
 	{
 	public:
-		Game();
+		Game(const std::string &title);
 		~Game();
 
-		void initWindow();
+		void initWindow(const std::string &title);
 		void initSupportedKeys();
 		void run();
 

@@ -116,9 +116,22 @@ namespace Illusion
 				itemList.erase(itemList.end() - 1);
 			}
 			else
-				throw("Item to remove not found (gui::DropDownList)");
+				return false;
 
 			return true;
+		}
+
+		bool DropDownList::removeAllFromList()
+		{
+			for (auto &b : buttonsList_)
+			{
+				delete b.second;
+			}
+
+			if (buttonsList_.empty())
+				return true;
+
+			return false;
 		}
 
 		void DropDownList::setListPosition(const sf::Vector2f &position)

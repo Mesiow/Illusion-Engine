@@ -23,7 +23,6 @@
     <ClInclude Include="src\LevelEditor\TextureSelector.h" />
     <ClInclude Include="src\LevelEditor\TileMap.h" />
     <ClInclude Include="src\pcHeaders.h" />
-    <ClInclude Include="src\Components\AnimationComponent.h" />
     <ClInclude Include="src\Components\Components.h" />
     <ClInclude Include="src\Components\HitBoxComponent.h" />
     <ClInclude Include="src\Components\MovementComponent.h" />
@@ -71,7 +70,6 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="src\Components\AnimationComponent.cpp" />
     <ClCompile Include="src\Components\HitBoxComponent.cpp" />
     <ClCompile Include="src\Components\MovementComponent.cpp" />
     <ClCompile Include="src\Entity\Entity.cpp" />

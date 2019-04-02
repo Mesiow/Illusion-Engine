@@ -7,11 +7,11 @@ namespace Illusion
 {
 	sf::RenderWindow *Game::window_ = nullptr;
 
-	Game::Game()
+	Game::Game(const std::string &title)
 		:fps()
 	{
 		initSupportedKeys();
-		initWindow();
+		initWindow(title);
 	}
 
 	Game::~Game()
@@ -21,7 +21,7 @@ namespace Illusion
 	}
 
 
-	void Game::initWindow()
+	void Game::initWindow(const std::string &title)
 	{
 		std::fstream windowFile("res/Config/window_setup.ini");
 
@@ -29,12 +29,10 @@ namespace Illusion
 			throw("ERROR: window_setup.ini failed to open");
 
 		int width, height;
-		std::string title;
 		bool fullScreen;
 
 		windowFile >> width; //read data from file into these variables
 		windowFile >> height;
-		windowFile >> title;
 		windowFile >> fullScreen;
 
 		windowFile.close();

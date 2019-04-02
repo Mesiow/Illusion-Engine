@@ -7,23 +7,17 @@ namespace Illusion
 	{
 		this->_texture = nullptr;
 		this->_movement = nullptr;
-		this->_animation = nullptr;
 	}
 
 	Entity::~Entity()
 	{
 		delete this->_movement;
-		delete this->_animation;
+		delete this->_hitbox;
 	}
 
 	void Entity::createMovementComponent(float maxVelocity, float acceleration, float deceleration)
 	{
 		_movement = new MovementComponent(this->_sprite, maxVelocity, acceleration, deceleration);
-	}
-
-	void Entity::createAnimationComponent(sf::Texture &textureSheet)
-	{
-		_animation = new AnimationComponent(this->_sprite, textureSheet);
 	}
 
 	void Entity::createHitBoxComponent(float offsetX, float offsetY, float width, float height)

@@ -15,7 +15,7 @@ namespace Illusion
 
 	public:
 		sf::Vector2f &getVelocity() { return velocity_; }
-		const bool isIdle()const { return velocity_.x==0.0f && velocity_.y==0 ; }
+		bool isIdle()const { return velocity_.x == 0.0f && velocity_.y == 0.0f; }
 		const float getMaxVelocity()const { return maxVelocity_; }
 
 	private:

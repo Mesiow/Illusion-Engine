@@ -21,7 +21,6 @@ namespace Illusion
 	protected:
 		//construct components functions
 		void createMovementComponent(float maxVelocity, float acceleration, float deceleration);
-		void createAnimationComponent(sf::Texture &textureSheet);
 		void createColliderComponent(){}
 		void createHitBoxComponent(float offsetX, float offsetY, float width, float height);
 
@@ -33,7 +32,6 @@ namespace Illusion
 		sf::Texture *_texture;
 
 		MovementComponent *_movement;
-		AnimationComponent *_animation;
 		HitBoxComponent *_hitbox;
 	};
 }

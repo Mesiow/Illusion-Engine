@@ -61,10 +61,7 @@ namespace Illusion
 		}
 
 		util::mouse::mousePositions::update();
-		//updateMousePositions();
-
 		util::mouse::mousePositions::updateMouseGridPosition(editor_->getMapTileDimension());
-		//updateMouseGridPosition(editor_->getMapTileDimension());
 	}
 
 	void EditorState::draw(sf::RenderTarget &target)

@@ -20,6 +20,7 @@ namespace Illusion
 		public:
 			void addToList(const std::string &item);
 			bool removeFromList(const std::string &item);
+			bool removeAllFromList();
 			void setButtonFunction(const std::string &id, std::function<void(void)> func);
 
 		public:

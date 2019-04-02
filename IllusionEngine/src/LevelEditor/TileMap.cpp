@@ -6,6 +6,7 @@ namespace Illusion
 	TileMap::TileMap(sf::Texture &sheet, unsigned int width, unsigned int height, int tileWorldDim)
 		:sheet_(&sheet)
 	{
+		this->currentLevelPath_ = "";
 		this->tileWorldDim_ = tileWorldDim;
 		this->width_ = width;
 		this->height_ = height;
@@ -23,7 +24,7 @@ namespace Illusion
 
 	TileMap::~TileMap()
 	{
-		freeLayersAndTiles();
+		reset();
 	}
 
 
@@ -105,12 +106,15 @@ namespace Illusion
 		layerCount_--;
 	}
 
-	void TileMap::freeLayersAndTiles()const
+	void TileMap::reset()
 	{
-		for (std::size_t i = 0; i < this->layerCount_; i++)
+		if (layers_.size() > 0)
 		{
-			if (layers_[i] != nullptr) //delete if not already null
-				delete layers_[i];
+			for (std::size_t i = 0; i < this->layerCount_; i++)
+			{
+				if (layers_[i] != nullptr) //delete if not already null
+					delete layers_[i];
+			}
 		}
 	}
 
@@ -220,7 +224,7 @@ namespace Illusion
 			this->tileCount_ = data.tilesInMap;
 			this->layerCount_ = data.layerCount;
 
-			freeLayersAndTiles(); //make room to load
+			reset(); //make room to load
 			initLayersAndTiles(this->width_, this->height_); //init first layer and tiles
 
 			std::cout << "Width: " << width_ << std::endl;
@@ -264,6 +268,7 @@ namespace Illusion
 		}
 			
 		MapData data;
+		currentLevelPath_ = path;
 
 		if (mapTextureSheet) //if valid pointer to some memory
 			this->sheet_ = mapTextureSheet; //save the texture sheet
