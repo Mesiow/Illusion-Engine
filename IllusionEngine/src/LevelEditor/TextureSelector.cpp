@@ -36,50 +36,70 @@ namespace Illusion
 
 	}
 
-	void TextureSelector::handleInput()
+	void TextureSelector::handleInput(const sf::Vector2f &mouseViewPos)
 	{
 		if (active_) //if texture selector is active
 		{
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			if (isInTextureBounds(mouseViewPos)) //if we are in the textures bounds
 			{
-				selectedTexture_ = sf::IntRect(mousePosTextureGrid_.x * textureGridSize_, 
-					mousePosTextureGrid_.y * textureGridSize_,
-					textureGridSize_, textureGridSize_); //choose the texture we clicked
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) //then we can select tiles
+				{
+					selectedTexture_ = sf::IntRect(mousePosTextureGrid_.x * textureGridSize_,
+						mousePosTextureGrid_.y * textureGridSize_,
+						textureGridSize_, textureGridSize_); //choose the texture we clicked
+				}
 			}
 
 		}
 	}
 
-	void TextureSelector::update(const sf::Vector2f &mouseViewPos)
+	void TextureSelector::update(const sf::Vector2f &mouseViewPos, const sf::Vector2f &viewPosition) //takes view pos to update the position of the sheet
 	{
 		//if the mouse position is within the texture bounds set true else false
-		isInTextureBounds(mouseViewPos) ? active_ = true : active_ = false;
 		
 		if (active_) //if the selector is active
 		{
-			mousePosTextureGrid_.x = (mouseViewPos.x - textureBounds_.getPosition().x) / textureGridSize_;
-			mousePosTextureGrid_.y = (mouseViewPos.y - textureBounds_.getPosition().y) / textureGridSize_;
+			textureBounds_.setPosition(viewPosition);
+			sheet_.setPosition(textureBounds_.getPosition());
+			if (isInTextureBounds(mouseViewPos)) //if the mouse position is within the texture bounds
+			{
+				mousePosTextureGrid_.x = (mouseViewPos.x - textureBounds_.getPosition().x) / textureGridSize_;
+				mousePosTextureGrid_.y = (mouseViewPos.y - textureBounds_.getPosition().y) / textureGridSize_;
 
-			selector_.setPosition(sf::Vector2f(textureBounds_.getPosition().x + mousePosTextureGrid_.x * textureGridSize_,
-				textureBounds_.getPosition().y + mousePosTextureGrid_.y * textureGridSize_));
+				selector_.setPosition(sf::Vector2f(textureBounds_.getPosition().x + mousePosTextureGrid_.x * textureGridSize_,
+					textureBounds_.getPosition().y + mousePosTextureGrid_.y * textureGridSize_));
 
-			std::stringstream ss;
-			ss << "Texture Rect Position: " << mousePosTextureGrid_.x * textureGridSize_ << ", " << mousePosTextureGrid_.y * textureGridSize_;
-			textureRectPos_.setString(ss.str());
-			textureRectPos_.setPosition(mouseViewPos.x + 20, mouseViewPos.y + 50);
+				std::stringstream ss;
+				ss << "Texture Rect Position: " << mousePosTextureGrid_.x * textureGridSize_ << ", " << mousePosTextureGrid_.y * textureGridSize_;
+				textureRectPos_.setString(ss.str());
+				textureRectPos_.setPosition(mouseViewPos.x + 20, mouseViewPos.y + 50);
+			}
 		}
 	}
 
-	void TextureSelector::draw(sf::RenderTarget &target)
+	void TextureSelector::draw(sf::RenderTarget &target, const sf::Vector2f &mouseViewPos)
 	{
-		target.draw(sheet_);
-		target.draw(textureBounds_);
+		if (active_)
+		{
+			target.draw(sheet_);
+			target.draw(textureBounds_);
 
-		if(active_)
-			target.draw(selector_);
+			if (isInTextureBounds(mouseViewPos))
+			{
+				target.draw(selector_);
+				target.draw(textureRectPos_);
+			}
+		}
+	}
 
-		if(active_)
-			target.draw(textureRectPos_);
+    bool TextureSelector::isOverLapping(const sf::FloatRect &otherBounds) //check if texture sheet is overlapping tiles or something else
+	{
+		if (active_)
+		{
+			if (textureBounds_.getGlobalBounds().intersects(otherBounds)) //if we overlapping something else
+				return true;
+		}
+		return false;
 	}
 
 	bool TextureSelector::isInTextureBounds(const sf::Vector2f &mouseViewPos)

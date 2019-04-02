@@ -7,6 +7,7 @@ namespace Illusion
 	LevelEditor::LevelEditor(sf::Texture &textureSheet, int gridWidth, int gridHeight, int tileWorldDim)
 		:textureSheet_(textureSheet)
 	{
+		this->activeEditor_ = true;
 		camera_ = new Camera(sf::FloatRect(0.0f, 0.0f, (float)Game::getWindow().getSize().x, (float)Game::getWindow().getSize().y));
 
 		map_ = new TileMap(textureSheet, gridWidth, gridHeight, tileWorldDim);
@@ -27,6 +28,7 @@ namespace Illusion
 
 	LevelEditor::~LevelEditor()
 	{
+		freeGui();
 		delete camera_;
 		delete textureSelector_;
 		delete map_;
@@ -67,6 +69,7 @@ namespace Illusion
 		removeLayerButton_->handleEvents(e);
 
 		listOfLayers_->handleEvents(e);
+		textureSelectorButton_->handleEvents(e);
 	}
 
 	void LevelEditor::handleInput(const sf::Vector2u &mousePosGrid, const float &dt)
@@ -76,7 +79,7 @@ namespace Illusion
 
 		if (begin_)
 		{
-			textureSelector_->handleInput(); //handle texture selector input
+			textureSelector_->handleInput(util::mouse::mousePositions::mousePosView); //handle texture selector input
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) //handle view input
 				camera_->move(0.0f, -400.0f, dt);
@@ -90,13 +93,16 @@ namespace Illusion
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::C) && util::time::keyTime::checkKeyTime())
 				tileCollideFlag_ == true ? tileCollideFlag_ = false : tileCollideFlag_ = true; //change flag for tile collision
 				
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) //handle adding and deleting tiles
+			if (activeEditor_)
 			{
-				if (getCurrentSelectedTexture() != sf::IntRect(0, 0, 0 ,0)) //check if current selected rect is empty, if it is we cannot add tiles
-					addTile(mousePosGrid, getCurrentSelectedTexture());
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) //handle adding and deleting tiles
+				{
+					if (getCurrentSelectedTexture() != sf::IntRect(0, 0, 0, 0)) //check if current selected rect is empty, if it is we cannot add tiles
+						addTile(mousePosGrid, getCurrentSelectedTexture());
+				}
+				else if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+					deleteTile(mousePosGrid);
 			}
-			else if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
-				deleteTile(mousePosGrid);
 		}
 		
 	}
@@ -111,17 +117,26 @@ namespace Illusion
 		
 		updateSelectorRect(gridPosition);
 
-		textureSelector_->update(mouseViewPos);
+		textureSelector_->update(mouseViewPos, sf::Vector2f(camera_->getCenter().x - camera_->getSize().x/2.2f - 50.0f,
+			camera_->getCenter().y - camera_->getSize().y/2.5f));
+
+		if (textureSelector_->isOverLapping(map_->getBorderBounds()))
+			activeEditor_ = false;
+		else
+			activeEditor_ = true;
 	}
 
 	void LevelEditor::updateSelectorRect(const sf::Vector2u &gridPosition)
 	{
 		//if we are in tilemap editing bounds
-		setSelectorTexture();
-		if (isInLevelBounds(gridPosition))
+		if (activeEditor_) //if the editor is active at the moment
 		{
-			selector_.setPosition(sf::Vector2f((float)gridPosition.x * map_->getTileDimension(),
-				(float)gridPosition.y * map_->getTileDimension()));
+			setSelectorTexture();
+			if (isInLevelBounds(gridPosition))
+			{
+				selector_.setPosition(sf::Vector2f((float)gridPosition.x * map_->getTileDimension(),
+					(float)gridPosition.y * map_->getTileDimension()));
+			}
 		}
 	}
 
@@ -152,8 +167,10 @@ namespace Illusion
 	{
 		map_->draw(target);
 
-		target.draw(selector_);
-		textureSelector_->draw(target);
+		if(activeEditor_)
+			target.draw(selector_);
+
+		textureSelector_->draw(target, util::mouse::mousePositions::mousePosView);
 
 		drawText(target);
 		drawGui(target);
@@ -161,14 +178,17 @@ namespace Illusion
 
 	void LevelEditor::updateGui()
 	{
-		addLayerButton_->setPosition(sf::Vector2f(camera_->getCenter().x + camera_->getSize().x / 2 - addLayerButton_->getBounds().width, camera_->getCenter().y - 350));
-		removeLayerButton_->setPosition(sf::Vector2f(camera_->getCenter().x + camera_->getSize().x / 2 - removeLayerButton_->getBounds().width, camera_->getCenter().y - 300));
-		listOfLayers_->setListPosition(sf::Vector2f(camera_->getCenter().x + camera_->getSize().x / 2 - listOfLayers_->getActiveButton()->getBounds().width - 20, camera_->getCenter().y - 200));
+		//update positions of gui elements
+		addLayerButton_->setPosition(sf::Vector2f(camera_->getCenter().x + camera_->getSize().x / 2.0f - addLayerButton_->getBounds().width, camera_->getCenter().y - 350));
+		removeLayerButton_->setPosition(sf::Vector2f(camera_->getCenter().x + camera_->getSize().x / 2.0f - removeLayerButton_->getBounds().width, camera_->getCenter().y - 300));
+		listOfLayers_->setListPosition(sf::Vector2f(camera_->getCenter().x + camera_->getSize().x / 2.0f - listOfLayers_->getActiveButton()->getBounds().width - 20, camera_->getCenter().y - 200));
+		textureSelectorButton_->setPosition(sf::Vector2f(camera_->getCenter().x - camera_->getSize().x / 2.0f + 20.0f, camera_->getCenter().y - camera_->getSize().y / 2.0f + 20.0f));
 
 		addLayerButton_->update();
 		removeLayerButton_->update();
 
 		listOfLayers_->update();
+		textureSelectorButton_->update();
 	}
 
 	void LevelEditor::drawGui(sf::RenderTarget &target)
@@ -177,6 +197,15 @@ namespace Illusion
 		removeLayerButton_->draw(target);
 
 		listOfLayers_->draw(target);
+		textureSelectorButton_->draw(target);
+	}
+
+	void LevelEditor::freeGui()const
+	{
+		delete listOfLayers_;
+		delete addLayerButton_;
+		delete removeLayerButton_;
+		delete textureSelectorButton_;
 	}
 
 	void LevelEditor::initText(const int gridWidth, const int gridHeight, const int tileWorldDim)
@@ -212,7 +241,7 @@ namespace Illusion
 			map_->addLayer(); //add layer to tilemap
 			listOfLayers_->addToList(std::string("Layer ") + std::to_string(map_->getLayerCount())); //then add it to the list
 			layerCountText_.setString(std::string("Layers: ") + std::to_string(map_->getLayerCount())); //update layer count text when we add a layer
-		});
+			});
 
 		removeLayerButton_ = new gui::Button(sf::Vector2f(map_->getBorderPosition().x + map_->getBorderBounds().width / 4, map_->getBorderPosition().y - 50.0f),
 			gui::Size::Small);
@@ -221,11 +250,21 @@ namespace Illusion
 			sf::Color(90, 90, 90, 150), sf::Color(140, 140, 140, 220), sf::Color(190, 190, 190, 255));
 
 		removeLayerButton_->setFunction([&]() {
-			
-			if(listOfLayers_->removeFromList(std::string("Layer ") + std::to_string(map_->getLayerCount())) == true) //removes latest layer from the list first
+
+			if (listOfLayers_->removeFromList(std::string("Layer ") + std::to_string(map_->getLayerCount())) == true) //removes latest layer from the list first
 				map_->removeLayer(); //if we are trying to remove the active layer, prohibit that
 
 			layerCountText_.setString(std::string("Layers: ") + std::to_string(map_->getLayerCount()));
+			});
+
+		textureSelectorButton_ = new gui::Button(sf::Vector2f(50.0f, 50.0f), gui::Size::Small,
+			sf::Color(70, 70, 70, 120), sf::Color(100, 100, 100, 200), sf::Color(150, 150, 150, 255));
+
+		textureSelectorButton_->setText(std::string("Texture Sheet"), ResourceManager::getFont("rubik"), 20,
+			sf::Color(90, 90, 90, 150), sf::Color(140, 140, 140, 220), sf::Color(190, 190, 190, 255));
+
+		textureSelectorButton_->setFunction([&]() {
+			textureSelector_->toggle();
 		});
 	}
 

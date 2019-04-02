@@ -9,11 +9,14 @@ namespace Illusion
 		~TextureSelector();
 
 
-		void handleInput();
-		void update(const sf::Vector2f &mouseViewPos);
-		void draw(sf::RenderTarget &target);
+		void handleInput(const sf::Vector2f &mouseViewPos);
+		void update(const sf::Vector2f &mouseViewPos, const sf::Vector2f &viewPosition);
+		void draw(sf::RenderTarget &target, const sf::Vector2f &mouseViewPos);
+
+		void toggle() { active_ == true ? active_ = false : active_ = true; }
 
 	public:
+		bool isOverLapping(const sf::FloatRect &otherBounds);
 		bool isActive()const { return this->active_; }
 		const sf::IntRect &getSelectedRect()const;
 

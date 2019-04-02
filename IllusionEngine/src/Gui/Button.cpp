@@ -6,7 +6,7 @@ namespace Illusion
 {
 	namespace gui
 	{
-		Button::Button(sf::Vector2f position, Size size, 
+		Button::Button(sf::Vector2f position, Size size,
 			sf::Color idle, sf::Color hover, sf::Color pressed)
 		{
 			flag_ = Flag::idle;
@@ -32,7 +32,7 @@ namespace Illusion
 			}
 
 			//set position of button in middle of window without setting the buttons origin
-			button_.setPosition(sf::Vector2f(position.x - button_.getGlobalBounds().width/2, 
+			button_.setPosition(sf::Vector2f(position.x - button_.getGlobalBounds().width/2,
 				position.y + button_.getGlobalBounds().height/2));
 
 			button_.setFillColor(btnColors_[Colors::idleColor]);
@@ -67,7 +67,7 @@ namespace Illusion
 
 			default:
 				break;
-			} 
+			}
 		}
 
 		void Button::update()

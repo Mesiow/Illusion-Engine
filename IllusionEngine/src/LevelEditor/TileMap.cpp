@@ -107,7 +107,7 @@ namespace Illusion
 
 	void TileMap::freeLayersAndTiles()const
 	{
-		for (std::size_t i = 0; i < layers_.size(); i++)
+		for (std::size_t i = 0; i < this->layerCount_; i++)
 		{
 			if (layers_[i] != nullptr) //delete if not already null
 				delete layers_[i];

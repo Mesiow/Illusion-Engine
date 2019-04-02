@@ -26,3 +26,11 @@
 #include <SFML/Network.hpp>
 #include <Box2D/Box2D.h>
 #include <Thor/Animations.hpp>
+#include <Thor/Graphics.hpp>
+#include <Thor/Input.hpp>
+#include <Thor/Math.hpp>
+#include <Thor/Math.hpp>
+#include <Thor/Particles.hpp>
+#include <Thor/Shapes.hpp>
+#include <Thor/Time.hpp>
+#include <Thor/Vectors.hpp>
