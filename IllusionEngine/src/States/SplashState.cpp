@@ -61,7 +61,11 @@ namespace Illusion
 		ResourceManager::loadTexture("logo", "res/Assets/splashscreen.png");
 		ResourceManager::loadFont("rubik", "res/Fonts/Rubik.ttf");
 
-		ResourceManager::loadTexture("player", "res/Assets/undead_idle_sheet.png");
+		ResourceManager::loadTexture("player_idle", "res/Assets/undead_idle_sheet.png");
+		ResourceManager::loadTexture("player_walk", "res/Assets/undead_walk_sheet.png");
+		ResourceManager::loadTexture("player_hurt", "res/Assets/undead_hurt_sheet.png");
+		ResourceManager::loadTexture("player_attack", "res/Assets/undead_attack_sheet.png");
+		ResourceManager::loadTexture("player_death", "res/Assets/undead_death_sheet.png");
 
 		ResourceManager::loadTexture("dungeon", "res/Assets/Dungeon_Tileset.png");
 	}

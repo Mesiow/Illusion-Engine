@@ -1,5 +1,6 @@
 #pragma once
 #include "../Components/Components.h"
+#include "../ResourceManagement/ResourceManager.h"
 
 namespace Illusion
 {
@@ -22,7 +23,7 @@ namespace Illusion
 		//construct components functions
 		void createMovementComponent(float maxVelocity, float acceleration, float deceleration);
 		void createColliderComponent(){}
-		void createAnimationComponent(thor::AnimationMap<sf::Sprite, std::string> &animationMap);
+		void createAnimationComponent();
 		void createHitBoxComponent(float offsetX, float offsetY, float width, float height);
 
 		void move(const float xdir, const float ydir, const float &dt); //updates velocity of movement component
@@ -34,7 +35,7 @@ namespace Illusion
 
 		MovementComponent *_movement;
 		HitBoxComponent *_hitbox;
-		thor::Animator<sf::Sprite, std::string> *_animator;
+	
 	};
 }
 

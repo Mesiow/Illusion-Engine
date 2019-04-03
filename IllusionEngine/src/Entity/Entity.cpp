@@ -13,7 +13,6 @@ namespace Illusion
 	{
 		delete this->_movement;
 		delete this->_hitbox;
-		delete this->_animator;
 	}
 
 	void Entity::createMovementComponent(float maxVelocity, float acceleration, float deceleration)
@@ -21,9 +20,9 @@ namespace Illusion
 		_movement = new MovementComponent(this->_sprite, maxVelocity, acceleration, deceleration);
 	}
 
-	void Entity::createAnimationComponent(thor::AnimationMap<sf::Sprite, std::string> &animationMap)
+	void Entity::createAnimationComponent()
 	{
-		_animator = new thor::Animator<sf::Sprite, std::string>(animationMap); //animator takes animations to animate
+		
 	}
 
 	void Entity::createHitBoxComponent(float offsetX, float offsetY, float width, float height)
