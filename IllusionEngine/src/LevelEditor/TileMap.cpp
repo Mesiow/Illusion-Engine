@@ -4,15 +4,8 @@ namespace Illusion
 {
 	//TODO: get tile collision working
 	TileMap::TileMap(sf::Texture &sheet, unsigned int width, unsigned int height, int tileWorldDim)
-		:sheet_(&sheet)
+		:sheet_(&sheet), currentLevelPath_(""), tileWorldDim_(tileWorldDim), width_(width), height_(height), tileCount_(0), layerCount_(1)
 	{
-		this->currentLevelPath_ = "";
-		this->tileWorldDim_ = tileWorldDim;
-		this->width_ = width;
-		this->height_ = height;
-		this->tileCount_ = 0;
-		this->layerCount_ = 1;
-
 		initLayersAndTiles(width, height);
 
 		border_.setSize(sf::Vector2f(float(width * tileWorldDim), float(height * tileWorldDim))); //calculate size of entire map/level
@@ -244,7 +237,8 @@ namespace Illusion
 				>> data.tileRect.width >> data.tileRect.height >> data.tileLayerNumber >> data.collider)
 			{
 				//add tile at position
-				addTile(sf::Vector2u(data.tileGridPosition.x, data.tileGridPosition.y), data.tileRect, data.tileLayerNumber, data.collider); //load the tiles from the file
+				addTile(sf::Vector2u((unsigned int)data.tileGridPosition.x, (unsigned int)data.tileGridPosition.y),
+					data.tileRect, data.tileLayerNumber, data.collider); //load the tiles from the file
 			}
 		
 		}

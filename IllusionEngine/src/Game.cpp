@@ -6,6 +6,7 @@
 namespace Illusion
 {
 	sf::RenderWindow *Game::window_ = nullptr;
+	sf::Clock Game::clock_;
 
 	Game::Game(const std::string &title)
 		:fps()

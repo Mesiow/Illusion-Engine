@@ -56,6 +56,9 @@ namespace Illusion
 	private:
 		void checkPop();
 
+	public:
+		static sf::Clock clock_;
+
 	private:
 		std::vector<statePtr> states_;
 		statePtr changeStatePtr_;
@@ -68,7 +71,6 @@ namespace Illusion
 		bool exitGame_ = false;
 
 		FPS fps;
-		sf::Clock clock_;
 		float dt_;
 	};
 

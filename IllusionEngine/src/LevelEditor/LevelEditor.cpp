@@ -272,7 +272,7 @@ namespace Illusion
 
 	void LevelEditor::initTextureSelector()
 	{
-		textureSelector_ = new TextureSelector(textureSheet_, sf::Vector2f(map_->getBorderPosition().x - map_->getBorderBounds().width / 1.5, map_->getBorderPosition().y),
+		textureSelector_ = new TextureSelector(textureSheet_, sf::Vector2f(map_->getBorderPosition().x - map_->getBorderBounds().width / 1.5f, map_->getBorderPosition().y),
 			map_->getTileDimension());
 	}
 

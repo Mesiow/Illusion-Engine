@@ -16,6 +16,10 @@ namespace Illusion
 		void update(const float &dt)override;
 		void draw(sf::RenderTarget &target)override;
 
+
+	public:
+		void addAnimation(const std::string id, thor::FrameAnimation& animation, sf::Time time);
+
 	public:
 		sf::Sprite &getSprite() { return this->_sprite; }
 		const sf::FloatRect getGlobalBounds()const override;
@@ -28,6 +32,8 @@ namespace Illusion
 		void initAnimation();
 
 	private:
+		thor::AnimationMap<sf::Sprite, std::string> animations_;
+		thor::FrameAnimation idle;
 		Camera *pcamera_;
 	};
 }

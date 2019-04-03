@@ -113,7 +113,7 @@ namespace Illusion
 	void EditorState::initGui()
 	{
 		pauseMenuContainer_.setFillColor(sf::Color(70, 70, 70, 80));
-		pauseMenuContainer_.setSize(sf::Vector2f(Game::getWindow().getSize().x / 3, Game::getWindow().getSize().y / 1.2));
+		pauseMenuContainer_.setSize(sf::Vector2f(Game::getWindow().getSize().x / 3.0f, Game::getWindow().getSize().y / 1.2f));
 		pauseMenuContainer_.setOrigin(sf::Vector2f(pauseMenuContainer_.getGlobalBounds().left + pauseMenuContainer_.getGlobalBounds().width / 2.0f,
 			pauseMenuContainer_.getGlobalBounds().top + pauseMenuContainer_.getGlobalBounds().height / 2.0f));
 		pauseMenuContainer_.setPosition(Game::getWindow().getSize().x / 2.0f, Game::getWindow().getSize().y / 2.0f);

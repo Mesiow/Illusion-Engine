@@ -79,14 +79,11 @@ namespace Illusion
 			
 
 			std::string currentLevelPath_;
-			unsigned int mapSize_;
 			unsigned int width_;
 			unsigned int height_;
 			unsigned int tileCount_;
 			unsigned short layerCount_;
 
 			int tileWorldDim_;
-			int tileTextureDim_;
-
 		};
 }
