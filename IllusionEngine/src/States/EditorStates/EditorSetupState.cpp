@@ -71,7 +71,7 @@ namespace Illusion
 		);
 
 
-		std::vector<std::string> sheets{ "dungeon" };
+		std::vector<std::string> sheets{ "dungeon", "roads" };
 		options_["Texture_Sheets"] = new gui::DropDownList
 		(
 			sf::Vector2f(Game::getWindow().getSize().x / 1.5f + gui::getButtonSize(gui::Size::Small).x, 200),

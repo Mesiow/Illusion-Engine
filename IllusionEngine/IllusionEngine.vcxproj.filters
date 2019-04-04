@@ -109,6 +109,9 @@
     <ClInclude Include="src\Components\AnimationComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Components\Collision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Utils\Controller.cpp">
@@ -178,6 +181,7 @@
     <ClCompile Include="src\LevelEditor\Layer.cpp" />
     <ClCompile Include="src\Utils\Camera.cpp" />
     <ClCompile Include="src\Components\AnimationComponent.cpp" />
+    <ClCompile Include="src\Components\Collision.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Input\editor_state_key_binds.ini">

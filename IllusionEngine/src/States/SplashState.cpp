@@ -68,6 +68,7 @@ namespace Illusion
 		ResourceManager::loadTexture("player_death", "res/Assets/undead_death_sheet.png");
 
 		ResourceManager::loadTexture("dungeon", "res/Assets/Dungeon_Tileset.png");
+		ResourceManager::loadTexture("roads", "res/Assets/roads.jpg");
 	}
 
 	void SplashState::freeTextures()

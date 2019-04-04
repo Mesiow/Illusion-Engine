@@ -33,11 +33,11 @@ namespace Illusion
 		void addAnimation(const std::string id, thor::FrameAnimation& animation, sf::Time time);
 
 	public:
-		sf::Sprite &getSprite() { return this->_sprite; }
 		const sf::FloatRect getGlobalBounds()const override;
 		sf::Vector2f &getVelocity() { return this->_movement->getVelocity(); }
 
 		const sf::Vector2f getPosition()const override;
+		const sf::Sprite &getSprite()override { return this->_sprite; }
 
 	private:
 		void initComponents();
