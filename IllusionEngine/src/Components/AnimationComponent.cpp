@@ -19,10 +19,10 @@ namespace Illusion
 
 	void Animation::update(const float &dt)
 	{
-		time += dt;
-		while (time >= holdTime_)
+		time_ += dt;
+		while (time_ >= holdTime_)
 		{
-			time -= holdTime_; //decrease
+			time_ -= holdTime_; //decrease
 			advance();
 		}
 	}

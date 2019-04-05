@@ -1,12 +1,12 @@
 #pragma once
 #include "../pcHeaders.h"
 #include "PauseState.h"
-#include "../Game.h"
+#include "../Engine.h"
 #include "PlayingState.h"
 
 namespace Illusion
 {
-	PauseState::PauseState(Game &game)
+	PauseState::PauseState(Engine &game)
 		:State(game)
 	{
 		

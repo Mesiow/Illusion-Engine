@@ -2,7 +2,7 @@
 #include "Utils/FPS.h"
 #include "States/State.h"
 
-//Game class manages and runs all states in the game
+//Engine class manages and runs all states in the game
 
 #define FPS_LIMIT 60
 namespace Illusion
@@ -16,13 +16,13 @@ namespace Illusion
 		bool fullScreen;
 	};
 
-	class Game : public sf::NonCopyable
+	class Engine : public sf::NonCopyable
 	{
 	public:
-		Game(const std::string &title);
-		~Game();
+		Engine(const std::string &gameTitle);
+		~Engine();
 
-		void initWindow(const std::string &title);
+		void initWindow(const std::string &gameTitle);
 		void initSupportedKeys();
 		void run();
 
@@ -75,7 +75,7 @@ namespace Illusion
 	};
 
 	template<typename T, typename ...Args>
-	inline void Game::changeState(Args && ...args)
+	inline void Engine::changeState(Args && ...args)
 	{
 		popState_ = true;
 		changeState_ = true;
@@ -83,7 +83,7 @@ namespace Illusion
 	}
 
 	template<typename T, typename ...Args>
-	inline void Game::pushState(Args && ...args)
+	inline void Engine::pushState(Args && ...args)
 	{
 		pushState(std::make_unique<T>(std::forward<Args>(args)...));
 	}

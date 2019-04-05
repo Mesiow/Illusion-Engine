@@ -1,6 +1,6 @@
 #include "../pcHeaders.h"
 #include "MenuState.h"
-#include "../Game.h"
+#include "../Engine.h"
 #include "EditorStates/EditorSetupState.h"
 #include "Settings.h"
 #include "PlayingState.h"
@@ -8,7 +8,7 @@
 namespace Illusion
 {
 
-	MenuState::MenuState(Game &game)
+	MenuState::MenuState(Engine &game)
 		:State(game)
 	{
 		initKeyBinds();
@@ -48,7 +48,7 @@ namespace Illusion
 	void MenuState::initGui()
 	{
 		std::string names[4] = { "Start","Editor", "Settings", "Exit" };
-		menu = new gui::StackMenu(sf::Vector2f(Game::getWindow().getSize().x / 2.0f, Game::getWindow().getSize().y/3.0f),
+		menu = new gui::StackMenu(sf::Vector2f(Engine::getWindow().getSize().x / 2.0f, Engine::getWindow().getSize().y/3.0f),
 			names, gui::Size::Small, 4);
 
 		menu->setButtonFunction("Start", [&]() {

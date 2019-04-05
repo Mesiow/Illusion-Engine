@@ -35,8 +35,7 @@ namespace Illusion
 		sf::Texture *_texture;
 
 		MovementComponent *_movement;
-		HitBoxComponent *_hitbox;
-	
+		HitBoxComponent *_hitbox;	
 	};
 }
 

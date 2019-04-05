@@ -7,7 +7,7 @@ namespace Illusion
 	class SplashState : public State
 	{
 	public:
-		SplashState(Game &game);
+		SplashState(Engine &game, float time);
 		~SplashState();
 
 	public:
@@ -20,7 +20,7 @@ namespace Illusion
 		void freeTextures()override;
 		
 	private:
-		const float waitTime_ = 1.0f;
+		float waitTime_;
 		sf::RectangleShape splashScreen_;
 
 		const float transitionTime_ = 1.0f;

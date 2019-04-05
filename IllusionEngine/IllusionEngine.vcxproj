@@ -30,7 +30,7 @@
     <ClInclude Include="src\Components\MovementComponent.h" />
     <ClInclude Include="src\Entity\Entity.h" />
     <ClInclude Include="src\Entity\Player.h" />
-    <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\Gui\Button.h" />
     <ClInclude Include="src\Gui\DropDownList.h" />
     <ClInclude Include="src\Gui\Gui.h" />
@@ -78,7 +78,7 @@
     <ClCompile Include="src\Components\MovementComponent.cpp" />
     <ClCompile Include="src\Entity\Entity.cpp" />
     <ClCompile Include="src\Entity\Player.cpp" />
-    <ClCompile Include="src\Game.cpp">
+    <ClCompile Include="src\Engine.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pcHeaders.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pcHeaders.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pcHeaders.h</PrecompiledHeaderFile>

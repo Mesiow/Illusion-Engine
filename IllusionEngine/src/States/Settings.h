@@ -6,12 +6,12 @@
 
 namespace Illusion
 {
-	class Game;
+	class Engine;
 	class Settings : public State
 	{
 	
 	public:
-		Settings(Game &game);
+		Settings(Engine &game);
 		~Settings();
 
 

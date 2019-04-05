@@ -14,10 +14,12 @@ namespace Illusion
 		void draw(sf::RenderTarget &target);
 
 	public:
+		void updateOffset(float x, float y);
 		bool checkCollision(const sf::FloatRect &rect);
 
 	public:
 		sf::FloatRect getBounds()const { return hitbox_.getGlobalBounds(); }
+		sf::Vector2f getOffset()const { return sf::Vector2f(offsetX_, offsetY_); }
 
 	private:
 		float offsetX_, offsetY_;

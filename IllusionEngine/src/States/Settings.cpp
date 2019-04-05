@@ -1,11 +1,11 @@
 #include "../pcHeaders.h"
 #include "Settings.h"
-#include "../Game.h"
+#include "../Engine.h"
 #include "MenuState.h"
 
 namespace Illusion
 {
-	Settings::Settings(Game &game)
+	Settings::Settings(Engine &game)
 		:State(game)
 	{
 		initGui();
@@ -31,10 +31,10 @@ namespace Illusion
 			);
 		}
 
-		ResolutionList_ = new gui::DropDownList(sf::Vector2f(Game::getWindow().getSize().x/2.0f, Game::getWindow().getSize().y / 10.0f),
+		ResolutionList_ = new gui::DropDownList(sf::Vector2f(Engine::getWindow().getSize().x/2.0f, Engine::getWindow().getSize().y / 10.0f),
 			videoModeStrings, gui::Size::Small, 0);
 
-		back_ = new gui::Button(sf::Vector2f(50.0f, (float)Game::getWindow().getSize().y - 50),
+		back_ = new gui::Button(sf::Vector2f(50.0f, (float)Engine::getWindow().getSize().y - 50),
 			gui::Size::Small);
 		back_->setText("Back", ResourceManager::getFont("rubik"), 20,
 			sf::Color(85, 85, 85, 200), sf::Color(120, 120, 120, 220), sf::Color(150, 150, 150, 250));
@@ -42,7 +42,7 @@ namespace Illusion
 			_game->changeState<MenuState>(*_game);
 		});
 
-		apply_ = new gui::Button(sf::Vector2f((float)Game::getWindow().getSize().x - 50, (float)Game::getWindow().getSize().y - 50),
+		apply_ = new gui::Button(sf::Vector2f((float)Engine::getWindow().getSize().x - 50, (float)Engine::getWindow().getSize().y - 50),
 			gui::Size::Small);
 		apply_->setText("Apply", ResourceManager::getFont("rubik"), 20,
 			sf::Color(85, 85, 85, 200), sf::Color(120, 120, 120, 220), sf::Color(150, 150, 150, 250));
@@ -68,7 +68,7 @@ namespace Illusion
 
 
 
-		slider_ = new gui::Slider(sf::Vector2f(Game::getWindow().getSize().x /9.0f, Game::getWindow().getSize().y / 10.0f),
+		slider_ = new gui::Slider(sf::Vector2f(Engine::getWindow().getSize().x /9.0f, Engine::getWindow().getSize().y / 10.0f),
 			sf::Vector2f(15, 30),
 			sf::Color(85, 85, 85, 200), sf::Color(120, 120, 120, 220), sf::Color(150, 150, 150, 250));
 	}

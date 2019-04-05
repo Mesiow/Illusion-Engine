@@ -10,7 +10,7 @@ namespace Illusion
 	class PlayingState : public State
 	{
 	public:
-		PlayingState(Game &game);
+		PlayingState(Engine &game);
 		~PlayingState();
 
 	public:

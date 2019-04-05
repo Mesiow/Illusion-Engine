@@ -9,7 +9,7 @@
 
 namespace Illusion
 {
-	class Game;
+	class Engine;
 	class LevelEditor
 	{
 	public:

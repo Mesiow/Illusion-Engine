@@ -1,11 +1,11 @@
 #include "../../pcHeaders.h"
 #include "EditorSetupState.h"
-#include "../../Game.h"
+#include "../../Engine.h"
 #include "EditorState.h"
 
 namespace Illusion
 {
-	EditorSetupState::EditorSetupState(Game &game)
+	EditorSetupState::EditorSetupState(Engine &game)
 		:State(game)
 	{
 		initGui();
@@ -60,26 +60,26 @@ namespace Illusion
 	void EditorSetupState::initGui()
 	{
 		std::vector<std::string> mapSizes{ "64 x 64", "48 x 48", "32 x 32" };
-		options_["Map_Sizes"] = new gui::DropDownList(sf::Vector2f(Game::getWindow().getSize().x / 6.0f, 200), mapSizes, gui::Size::Small, 0);
+		options_["Map_Sizes"] = new gui::DropDownList(sf::Vector2f(Engine::getWindow().getSize().x / 6.0f, 200), mapSizes, gui::Size::Small, 0);
 
 
 		std::vector<std::string> gridDimensions{ "32", "16" };
 		options_["Grid_Dimensions"] = new gui::DropDownList
 		(
-			sf::Vector2f(Game::getWindow().getSize().x / 2.7f + gui::getButtonSize(gui::Size::Small).x, 200),
+			sf::Vector2f(Engine::getWindow().getSize().x / 2.7f + gui::getButtonSize(gui::Size::Small).x, 200),
 			gridDimensions, gui::Size::Small, 0
 		);
 
 
-		std::vector<std::string> sheets{ "dungeon", "roads" };
+		std::vector<std::string> sheets{ "dungeon", "roads" , "pac" };
 		options_["Texture_Sheets"] = new gui::DropDownList
 		(
-			sf::Vector2f(Game::getWindow().getSize().x / 1.5f + gui::getButtonSize(gui::Size::Small).x, 200),
+			sf::Vector2f(Engine::getWindow().getSize().x / 1.5f + gui::getButtonSize(gui::Size::Small).x, 200),
 			sheets, gui::Size::Small, 0
 		);
 
-		createButton_ = new gui::Button(sf::Vector2f((float)Game::getWindow().getSize().x - 50,
-			(float)Game::getWindow().getSize().y - 50), gui::Size::Small);
+		createButton_ = new gui::Button(sf::Vector2f((float)Engine::getWindow().getSize().x - 50,
+			(float)Engine::getWindow().getSize().y - 50), gui::Size::Small);
 		createButton_->setText(std::string("Create"), ResourceManager::getFont("rubik"), 20,
 			sf::Color(70, 70, 70, 200), sf::Color(100, 100, 100, 230), sf::Color(150, 150, 150, 255));
 		createButton_->setFunction([&]() {
@@ -109,7 +109,7 @@ namespace Illusion
 
 		buttons_.push_back(*createButton_);
 
-		backButton_ = new gui::Button(sf::Vector2f(50.0f, (float)Game::getWindow().getSize().y - 50),
+		backButton_ = new gui::Button(sf::Vector2f(50.0f, (float)Engine::getWindow().getSize().y - 50),
 			gui::Size::Small);
 		backButton_->setText(std::string("Back"), ResourceManager::getFont("rubik"), 20,
 			sf::Color(70, 70, 70, 200), sf::Color(100, 100, 100, 230), sf::Color(150, 150, 150, 255));

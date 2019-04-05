@@ -1,6 +1,6 @@
 #include "../pcHeaders.h"
 #include "Player.h"
-#include "../Game.h"
+#include "../Engine.h"
 
 
 namespace Illusion
@@ -10,7 +10,7 @@ namespace Illusion
 		this->pos = position;
 		_texture = &texture;
 
-		_sprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
+		_sprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
 		_sprite.setTexture(texture);
 		_sprite.setPosition(position);
 		_sprite.setOrigin(_sprite.getGlobalBounds().width / 2, _sprite.getGlobalBounds().height / 2);
@@ -36,39 +36,45 @@ namespace Illusion
 
 	void Player::initComponents()
 	{
-		pcamera_ = new Camera(sf::FloatRect(sf::FloatRect(0.0f, 0.0f, (float)Game::getWindow().getSize().x, (float)Game::getWindow().getSize().y)));
+		pcamera_ = new Camera(sf::FloatRect(sf::FloatRect(0.0f, 0.0f, (float)Engine::getWindow().getSize().x, (float)Engine::getWindow().getSize().y)));
 		createMovementComponent(300.0f, 50.0f, 15.0f);
-		createHitBoxComponent(40.0f, 15.0f, 25.0f, 50.0f);
-		createAnimationComponent();
+		createHitBoxComponent(0.0f, 0.0f, 32.0f, 32.0f);
 	}
 
 	void Player::initAnimation()
 	{
-		//init animation
-		animations_[(int)AnimIndex::Idle] = Animation(ResourceManager::getTexture("player_idle"),0, 0, 48, 32, 17, 0.1f);
-		animations_[(int)AnimIndex::WalkRight] = Animation(ResourceManager::getTexture("player_walk"), 0, 0, 56, 48, 20, 0.1f);
-		animations_[(int)AnimIndex::WalkLeft] = Animation(ResourceManager::getTexture("player_walk"), 0, 0, 56, 48, 20, 0.1f);
-		animations_[(int)AnimIndex::Attack] = Animation(ResourceManager::getTexture("player_attack"), 0, 0, 56, 48, 20, 0.05f);
+		animations_[(int)AnimIndex::Idle] = Animation(*_texture, 32, 0, 16, 16, 1, 0.1f);
+		animations_[(int)AnimIndex::Right] = Animation(*_texture, 0, 0, 16, 16, 3, 0.1f);
+		animations_[(int)AnimIndex::Left] = Animation(*_texture, 0, 16, 16, 16, 3, 0.1f);
+		animations_[(int)AnimIndex::Up] = Animation(*_texture, 0, 32, 16, 16, 3, 0.1f);
+		animations_[(int)AnimIndex::Down] = Animation(*_texture, 0, 48, 16, 16, 3, 0.1f);
 	}
 
 	void Player::setDir(const sf::Vector2f& dir)
 	{
-		if (currAnimation_ != AnimIndex::Attack)
+		//if (currAnimation_ != AnimIndex::Attack)
 		{
 			if (dir.x > 0.0f)
 			{
-				currAnimation_ = AnimIndex::WalkRight;
-				_sprite.setScale(1, 1);
+				currAnimation_ = AnimIndex::Right;
 			}
 			else if (dir.x < 0.0f)
 			{
 				//walk left
-				currAnimation_ = AnimIndex::WalkLeft;
-				_sprite.setScale(-1, 1);
+				currAnimation_ = AnimIndex::Left;
+			}
+			else if (dir.y < 0.0f) //up
+			{
+				currAnimation_ = AnimIndex::Up;
+			}
+			else if (dir.y > 0.0f) //down
+			{
+				currAnimation_ = AnimIndex::Down;
 			}
 			else
 			{
 				currAnimation_ = AnimIndex::Idle;
+				//_sprite.setTextureRect(sf::IntRect(3 * 16, 0, 16, 16));
 				/*if (vel.x > 0.0f)
 				{
 					currAnimation_ = AnimIndex::StandingRight;
@@ -95,14 +101,14 @@ namespace Illusion
 		if (pcamera_)
 			pcamera_->follow(this);
 
-		if (attackTime.isExpired())
-			currAnimation_ = AnimIndex::Idle;
+		//if (attackTime.isExpired())
+			//currAnimation_ = AnimIndex::Idle;
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
 			attackTime.reset(sf::seconds(1.0f));
 			attackTime.start();
-			currAnimation_ = AnimIndex::Attack;
+			//currAnimation_ = AnimIndex::Attack;
 		}
 
 		sf::Vector2f dir = { 0.0f,0.0f };
@@ -137,7 +143,7 @@ namespace Illusion
 	void Player::update(const float &dt)
 	{
 		pos += vel * dt;
-		pcamera_->update(Game::getWindow());
+		pcamera_->update(Engine::getWindow());
 
 		//_movement->update(dt);
 		_hitbox->update();
@@ -152,10 +158,4 @@ namespace Illusion
 		_hitbox->draw(target);
 		target.draw(_sprite);
 	}
-
-	void Player::addAnimation(const std::string id, thor::FrameAnimation& animation, sf::Time time)
-	{
-		
-	}
-
 }

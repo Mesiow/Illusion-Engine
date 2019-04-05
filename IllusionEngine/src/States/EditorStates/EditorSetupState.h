@@ -9,7 +9,7 @@ namespace Illusion
 	class EditorSetupState : public State
 	{
 	public:
-		EditorSetupState(Game &game);
+		EditorSetupState(Engine &game);
 		~EditorSetupState();
 
 	public:

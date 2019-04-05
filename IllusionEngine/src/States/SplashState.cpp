@@ -1,12 +1,12 @@
 #include "../pcHeaders.h"
 #include "SplashState.h"
 #include "MenuState.h"
-#include "../Game.h"
+#include "../Engine.h"
 
 namespace Illusion
 {
-	SplashState::SplashState(Game &game)
-		:State(game)
+	SplashState::SplashState(Engine &game, float time)
+		:State(game), waitTime_(time)
 	{
 		loadResources();
 		initSplashScreen();
@@ -22,13 +22,13 @@ namespace Illusion
 		transitionColor_ = sf::Color::Transparent;
 		transition_.setFillColor(transitionColor_);
 		transition_.setPosition(0.0f, 0.0f);
-		transition_.setSize(sf::Vector2f((float)Game::getWindow().getSize().x,
-			(float)Game::getWindow().getSize().y));
+		transition_.setSize(sf::Vector2f((float)Engine::getWindow().getSize().x,
+			(float)Engine::getWindow().getSize().y));
 
 
 		splashScreen_.setPosition(0, 0);
-		splashScreen_.setSize(sf::Vector2f((float)Game::getWindow().getSize().x,
-			(float)Game::getWindow().getSize().y));
+		splashScreen_.setSize(sf::Vector2f((float)Engine::getWindow().getSize().x,
+			(float)Engine::getWindow().getSize().y));
 		splashScreen_.setTexture(&ResourceManager::getTexture("logo"));
 	}
 
@@ -61,14 +61,16 @@ namespace Illusion
 		ResourceManager::loadTexture("logo", "res/Assets/splashscreen.png");
 		ResourceManager::loadFont("rubik", "res/Fonts/Rubik.ttf");
 
-		ResourceManager::loadTexture("player_idle", "res/Assets/undead_idle_sheet.png");
+		/*ResourceManager::loadTexture("player_idle", "res/Assets/undead_idle_sheet.png");
 		ResourceManager::loadTexture("player_walk", "res/Assets/undead_walk_sheet.png");
 		ResourceManager::loadTexture("player_hurt", "res/Assets/undead_hurt_sheet.png");
 		ResourceManager::loadTexture("player_attack", "res/Assets/undead_attack_sheet.png");
-		ResourceManager::loadTexture("player_death", "res/Assets/undead_death_sheet.png");
+		ResourceManager::loadTexture("player_death", "res/Assets/undead_death_sheet.png");*/
 
 		ResourceManager::loadTexture("dungeon", "res/Assets/Dungeon_Tileset.png");
 		ResourceManager::loadTexture("roads", "res/Assets/roads.jpg");
+		ResourceManager::loadTexture("pac", "res/Assets/pac.png");
+		ResourceManager::loadTexture("pacman", "res/Assets/pacman.png");
 	}
 
 	void SplashState::freeTextures()

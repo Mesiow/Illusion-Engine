@@ -6,11 +6,11 @@
 
 namespace Illusion
 {
-	class Game;
+	class Engine;
 	class State : public sf::NonCopyable
 	{
 	public:
-		State(Game &game)
+		State(Engine &game)
 			:_game(&game) {}
 
 		virtual ~State() = default;
@@ -27,6 +27,6 @@ namespace Illusion
 		virtual void freeSoundBuffers(){}
 
 	protected:
-		Game *_game;
+		Engine *_game;
 	};
 }

@@ -8,6 +8,7 @@ namespace Illusion
 	{
 		hitbox_.setPosition(sf::Vector2f(sprite.getPosition().x + offsetX, sprite.getPosition().y + offsetY));
 		hitbox_.setSize(sf::Vector2f(width, height));
+		hitbox_.setOrigin(sf::Vector2f(hitbox_.getGlobalBounds().width / 2.0f, hitbox_.getGlobalBounds().height / 2.0f));
 		hitbox_.setFillColor(sf::Color::Transparent);
 		hitbox_.setOutlineThickness(1.0f);
 		hitbox_.setOutlineColor(sf::Color::Green);
@@ -26,6 +27,12 @@ namespace Illusion
 	void HitBoxComponent::draw(sf::RenderTarget & target)
 	{
 		target.draw(hitbox_);
+	}
+
+	void HitBoxComponent::updateOffset(float x, float y)
+	{
+		offsetX_ = x;
+		offsetY_ = y;
 	}
 
 	bool HitBoxComponent::checkCollision(const sf::FloatRect & rect)

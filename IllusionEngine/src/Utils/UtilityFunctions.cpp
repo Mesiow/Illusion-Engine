@@ -1,6 +1,6 @@
 #include "../pcHeaders.h"
 #include "UtilityFunctions.h"
-#include "../Game.h"
+#include "../Engine.h"
 
 namespace Illusion
 {
@@ -42,8 +42,8 @@ namespace Illusion
 			void mousePositions::update()
 			{
 				mousePosScreen = sf::Mouse::getPosition();
-				mousePosWindow = sf::Mouse::getPosition(Game::getWindow());
-				mousePosView = Game::getWindow().mapPixelToCoords(mousePosWindow); //map pixel on the window to coordinates
+				mousePosWindow = sf::Mouse::getPosition(Engine::getWindow());
+				mousePosView = Engine::getWindow().mapPixelToCoords(mousePosWindow); //map pixel on the window to coordinates
 			}
 
 			void mousePositions::updateMouseGridPosition(int gridDimension)
@@ -75,10 +75,11 @@ namespace Illusion
 
 					text.setString(ss.str());
 
-					Game::getWindow().draw(text);
+					Engine::getWindow().draw(text);
 				}
 			}
 		}
+
 		void drawToScreen(std::string str, const sf::Vector2f &position)
 		{
 			sf::Text text(str, ResourceManager::getFont("rubik"), 15);
@@ -89,7 +90,7 @@ namespace Illusion
 
 			text.setString(ss.str());
 
-			Game::getWindow().draw(text);
+			Engine::getWindow().draw(text);
 		}
 
 

@@ -12,7 +12,7 @@ namespace Illusion
 	class MenuState : public State
 	{
 	public:
-		MenuState(Game &game);
+		MenuState(Engine &game);
 		virtual ~MenuState();
 
 	public:

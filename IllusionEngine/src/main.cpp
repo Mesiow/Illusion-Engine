@@ -1,9 +1,9 @@
 #include "pcHeaders.h"
-#include "Game.h"
+#include "Engine.h"
 
 int main()
 {
-	Illusion::Game game("Game");
+	Illusion::Engine game("Game");
 	game.run();
 
 	return 0;

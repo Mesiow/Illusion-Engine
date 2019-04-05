@@ -1,17 +1,17 @@
 #include "../pcHeaders.h"
 #include "PlayingState.h"
-#include "../Game.h"
+#include "../Engine.h"
 #include "PauseState.h"
 
 namespace Illusion
 {
-	PlayingState::PlayingState(Game &game)
+	PlayingState::PlayingState(Engine &game)
 		:State(game)
 	{
 		//TEST
 		map_ = new TileMap();
-		map_->loadMap(std::string("res/Maps/Test.txt"), &ResourceManager::getTexture("dungeon")); //load map test.txt which uses the dungeon texture
-		p1_ = new Player(ResourceManager::getTexture("player"), sf::Vector2f(200, 200));
+		map_->loadMap(std::string("res/Maps/Pacman.txt"), &ResourceManager::getTexture("pac")); //load map test.txt which uses the dungeon texture
+		p1_ = new Player(ResourceManager::getTexture("pacman"), sf::Vector2f(200, 200));
 		//
 	}
 

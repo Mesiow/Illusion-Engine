@@ -1,11 +1,11 @@
 #include "../../pcHeaders.h"
 #include "EditorState.h"
-#include "../../Game.h"
+#include "../../Engine.h"
 #include "../MenuState.h"
 
 namespace Illusion
 {
-	EditorState::EditorState(Game &game, sf::Texture &sheet, int mapWidth, int mapHeight, int tileDim)
+	EditorState::EditorState(Engine &game, sf::Texture &sheet, int mapWidth, int mapHeight, int tileDim)
 		:State(game)
 	{
 		initKeyBinds();
@@ -113,10 +113,10 @@ namespace Illusion
 	void EditorState::initGui()
 	{
 		pauseMenuContainer_.setFillColor(sf::Color(70, 70, 70, 80));
-		pauseMenuContainer_.setSize(sf::Vector2f(Game::getWindow().getSize().x / 3.0f, Game::getWindow().getSize().y / 1.2f));
+		pauseMenuContainer_.setSize(sf::Vector2f(Engine::getWindow().getSize().x / 3.0f, Engine::getWindow().getSize().y / 1.2f));
 		pauseMenuContainer_.setOrigin(sf::Vector2f(pauseMenuContainer_.getGlobalBounds().left + pauseMenuContainer_.getGlobalBounds().width / 2.0f,
 			pauseMenuContainer_.getGlobalBounds().top + pauseMenuContainer_.getGlobalBounds().height / 2.0f));
-		pauseMenuContainer_.setPosition(Game::getWindow().getSize().x / 2.0f, Game::getWindow().getSize().y / 2.0f);
+		pauseMenuContainer_.setPosition(Engine::getWindow().getSize().x / 2.0f, Engine::getWindow().getSize().y / 2.0f);
 
 		std::string menuOptions[3] = { "Save Map", "Load Map", "Quit" };
 		pauseMenu_ = new gui::StackMenu(sf::Vector2f(pauseMenuContainer_.getPosition().x, pauseMenuContainer_.getPosition().y - gui::getButtonSize(gui::Size::medium).y - 60.0f),
@@ -127,7 +127,7 @@ namespace Illusion
 		});
 
 		pauseMenu_->setButtonFunction(std::string("Load Map"), [&]() {
-			editor_->loadLevel(std::string("res/Maps/Test.txt"));
+			editor_->loadLevel(std::string("res/Maps/Pacman.txt"));
 		});
 
 		pauseMenu_->setButtonFunction(std::string("Quit"), [&]() {

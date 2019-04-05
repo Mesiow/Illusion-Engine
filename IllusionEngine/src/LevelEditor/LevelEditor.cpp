@@ -1,6 +1,6 @@
 #include "../pcHeaders.h"
 #include "LevelEditor.h"
-#include "../Game.h"
+#include "../Engine.h"
 
 namespace Illusion
 {
@@ -8,7 +8,7 @@ namespace Illusion
 		:textureSheet_(textureSheet)
 	{
 		this->activeEditor_ = true;
-		camera_ = new Camera(sf::FloatRect(0.0f, 0.0f, (float)Game::getWindow().getSize().x, (float)Game::getWindow().getSize().y));
+		camera_ = new Camera(sf::FloatRect(0.0f, 0.0f, (float)Engine::getWindow().getSize().x, (float)Engine::getWindow().getSize().y));
 
 		map_ = new TileMap(textureSheet, gridWidth, gridHeight, tileWorldDim);
 
@@ -215,17 +215,17 @@ namespace Illusion
 		mapSizeText_.setFont(ResourceManager::getFont("rubik"));
 		mapSizeText_.setCharacterSize(15);
 		mapSizeText_.setString(std::string("TileMap Size: ") + std::to_string(gridWidth) + " x " + std::to_string(gridHeight));
-		mapSizeText_.setPosition(50.0f, (float)Game::getWindow().getSize().y - 15);
+		mapSizeText_.setPosition(50.0f, (float)Engine::getWindow().getSize().y - 15);
 
 		tileDimText_.setFont(ResourceManager::getFont("rubik"));
 		tileDimText_.setCharacterSize(15);
 		tileDimText_.setString(std::string("Tile Dimensions: ") + std::to_string(tileWorldDim) + " x " + std::to_string(tileWorldDim));
-		tileDimText_.setPosition(float(Game::getWindow().getSize().x - tileDimText_.getGlobalBounds().width), (float)Game::getWindow().getSize().y);
+		tileDimText_.setPosition(float(Engine::getWindow().getSize().x - tileDimText_.getGlobalBounds().width), (float)Engine::getWindow().getSize().y);
 
 		layerCountText_.setFont(ResourceManager::getFont("rubik"));
 		layerCountText_.setCharacterSize(15);
 		layerCountText_.setString(std::string("Layers: ") + std::to_string(map_->getLayerCount()));
-		layerCountText_.setPosition(50.0f, (float)Game::getWindow().getSize().y - 30);
+		layerCountText_.setPosition(50.0f, (float)Engine::getWindow().getSize().y - 30);
 	}
 
 

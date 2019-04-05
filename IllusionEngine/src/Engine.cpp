@@ -1,28 +1,28 @@
 #include "pcHeaders.h"
-#include "Game.h"
+#include "Engine.h"
 #include "States/SplashState.h"
 #include "Utils/Keyboard.h"
 
 namespace Illusion
 {
-	sf::RenderWindow *Game::window_ = nullptr;
-	sf::Clock Game::clock_;
+	sf::RenderWindow *Engine::window_ = nullptr;
+	sf::Clock Engine::clock_;
 
-	Game::Game(const std::string &title)
+	Engine::Engine(const std::string &title)
 		:fps()
 	{
 		initSupportedKeys();
 		initWindow(title);
 	}
 
-	Game::~Game()
+	Engine::~Engine()
 	{
 		if (this->window_ != nullptr)
 			delete this->window_;
 	}
 
 
-	void Game::initWindow(const std::string &title)
+	void Engine::initWindow(const std::string &title)
 	{
 		std::fstream windowFile("res/Config/window_setup.ini");
 
@@ -50,10 +50,10 @@ namespace Illusion
 		window_ = new sf::RenderWindow(sf::VideoMode(width, height), title, sf::Style::Default | fullScreenFlag);
 		window_->setFramerateLimit(FPS_LIMIT);
 
-		pushState<SplashState>(*this); //push the splash state
+		pushState<SplashState>(*this, 2.0f); //push the splash state
 	}
 
-	void Game::initSupportedKeys()
+	void Engine::initSupportedKeys()
 	{
 		std::fstream file("res/Input/supported_keys.ini");
 
@@ -76,7 +76,7 @@ namespace Illusion
 		Keyboard::printSupportedKeys();
 	}
 
-	void Game::run()
+	void Engine::run()
 	{
 		while (window_->isOpen() && !states_.empty())
 		{
@@ -106,13 +106,13 @@ namespace Illusion
 		}
 	}
 
-	void Game::updateDt()
+	void Engine::updateDt()
 	{
 		//updates delta time(time it takes to update and render one frame)
 		dt_ = clock_.restart().asSeconds();
 	}
 
-	void Game::pollEvents(sf::Event &e)
+	void Engine::pollEvents(sf::Event &e)
 	{
 		while (window_->pollEvent(e))
 		{
@@ -139,22 +139,22 @@ namespace Illusion
 		}
 	}
 
-	void Game::display()
+	void Engine::display()
 	{
 		window_->display();
 	}
 
-	void Game::clear()
+	void Engine::clear()
 	{
 		window_->clear();
 	}
 
-	void Game::pushState(statePtr newState)
+	void Engine::pushState(statePtr newState)
 	{
 		states_.push_back(std::move(newState));
 	}
 
-	void Game::checkPop()
+	void Engine::checkPop()
 	{
 		if (popState_)
 		{
@@ -176,12 +176,12 @@ namespace Illusion
 		}
 	}
 
-	void Game::pop()
+	void Engine::pop()
 	{
 		popState_ = true;
 	}
 
-	void Game::exit()
+	void Engine::exit()
 	{
 		popState_ = true;
 		exitGame_ = true;

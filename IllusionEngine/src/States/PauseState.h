@@ -6,7 +6,7 @@ namespace Illusion
 	class PauseState : public State
 	{
 	public:
-		PauseState(Game &game);
+		PauseState(Engine &game);
 		~PauseState();
 
 		void handleEvents(sf::Event &e)override;

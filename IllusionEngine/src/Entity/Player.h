@@ -11,11 +11,11 @@ namespace Illusion
 	private:
 		enum class AnimIndex
 		{
-			Idle = 0,
-			WalkRight,
-			WalkLeft,
-			Attack,
-			Hurt,
+			Idle,
+			Up,
+			Down,
+			Left,
+			Right,
 			Die,
 			Count
 		};
@@ -27,10 +27,6 @@ namespace Illusion
 		void handleInput(const float &dt)override;
 		void update(const float &dt)override;
 		void draw(sf::RenderTarget &target)override;
-
-
-	public:
-		void addAnimation(const std::string id, thor::FrameAnimation& animation, sf::Time time);
 
 	public:
 		const sf::FloatRect getGlobalBounds()const override;
